@@ -4,15 +4,5 @@ using System.Globalization;
 using System.Reflection;
 using System.Resources;
 
-Console.WriteLine("Hello, World!");
+new MainController();
 
-namespace Programmation_Système.developpement
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            new MainController();
-        }
-    }
-}
