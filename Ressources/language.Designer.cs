@@ -61,6 +61,24 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à An error occured when trying to change language.
+        /// </summary>
+        internal static string ChangeLanguageError {
+            get {
+                return ResourceManager.GetString("ChangeLanguageError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Language successfully changed.
+        /// </summary>
+        internal static string ChangeLanguageSuccess {
+            get {
+                return ResourceManager.GetString("ChangeLanguageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Choose a language :.
         /// </summary>
         internal static string ChooseLanguage {

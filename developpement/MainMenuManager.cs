@@ -10,38 +10,46 @@ namespace Projet_Programmation_Système.developpement
     {
         public MainMenuManager()
         {
-            DisplayMainMenu();
+
         }
 
         private void DisplayMainMenu()
         {
+            ConsoleManager.DisplayArrayLanguage(new string[] { "MainMenu", "MainMenu1", "MainMenu2", "MainMenu3", "MainMenu4" });
+            ConsoleManager.DisplayEmptyLine();
+        }
+
+        public void ChooseItem()
+        {
             bool isValid = false;
             while (!isValid)
             {
-                ConsoleManager.DisplayArrayLanguage(new string[] { "MainMenu", "MainMenu1", "MainMenu2", "MainMenu3", "MainMenu4" });
+                DisplayMainMenu();
                 switch (ConsoleManager.GetInput())
                 {
                     case "1":
-                        ConsoleManager.DisplayLanguage("MainMenu1");
+                        ConsoleManager.DisplayEmptyLine();
                         isValid = true;
                         break;
 
                     case "2":
-                        ConsoleManager.DisplayLanguage("MainMenu2");
+                        ConsoleManager.DisplayEmptyLine();
+                        ConsoleManager.languageControl.ChangeLanguage();
                         isValid = true;
                         break;
 
                     case "3":
-                        ConsoleManager.DisplayLanguage("MainMenu3");
+                        ConsoleManager.DisplayEmptyLine();
                         isValid = true;
                         break;
 
                     case "4":
-                        ConsoleManager.DisplayLanguage("MainMenu4");
+                        ConsoleManager.DisplayEmptyLine();
                         isValid = true;
                         break;
 
                     default:
+                        ConsoleManager.DisplayEmptyLine();
                         ConsoleManager.DisplayLanguage("InvalidInput");
                         break;
                 }

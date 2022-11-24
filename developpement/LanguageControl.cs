@@ -29,9 +29,17 @@ public class LanguageControl
         public void ChangeLanguage()
         {
             AskLanguage();
-            var cultureInfo = new CultureInfo(language);
-            CultureInfo.CurrentCulture = cultureInfo;
-            CultureInfo.CurrentUICulture = cultureInfo;
+            try
+            {
+                var cultureInfo = new CultureInfo(language);
+                CultureInfo.CurrentCulture = cultureInfo;
+                CultureInfo.CurrentUICulture = cultureInfo;
+                ConsoleManager.DisplayLanguage("ChangeLanguageSuccess"); 
+            }
+            catch (Exception e)
+            {
+                ConsoleManager.DisplayLanguage("ChangeLanguageError");
+            }
         }
 
         private void AskLanguage()

@@ -15,16 +15,11 @@ public class Main {
 
     public static void Run()
     {
-        ChangeLanguage();
+        MainMenuManager mainMenu = new MainMenuManager();
         while (true)
         {
-            new MainMenuManager();
+            mainMenu.ChooseItem();
         }
-    }
-
-    public static void ChangeLanguage()
-    {
-        ConsoleManager.languageControl.ChangeLanguage();
     }
 }
 

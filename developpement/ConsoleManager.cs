@@ -16,6 +16,12 @@ namespace Projet_Programmation_Système.developpement
             Console.WriteLine(languageControl.GetString(message));
         }
 
+        public static void DisplayEmptyLine()
+        {
+            Console.WriteLine();
+        }
+        
+
         public static void Display(string? message)
         {
             Console.WriteLine(message);

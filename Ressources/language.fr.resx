@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChangeLanguageError" xml:space="preserve">
+    <value>Une erreur est survenue lors du changement de la langue</value>
+  </data>
+  <data name="ChangeLanguageSuccess" xml:space="preserve">
+    <value>La langue a été modifiée</value>
+  </data>
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Choisissez une langue :</value>
   </data>
