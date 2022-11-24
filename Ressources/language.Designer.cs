@@ -61,15 +61,6 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à 2 - Choose a language .
-        /// </summary>
-        internal static string ChangeLanguage {
-            get {
-                return ResourceManager.GetString("ChangeLanguage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Choose a language :.
         /// </summary>
         internal static string ChooseLanguage {
@@ -88,11 +79,56 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Error : Invalid Input.
+        /// </summary>
+        internal static string InvalidInput {
+            get {
+                return ResourceManager.GetString("InvalidInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Choose an option :.
+        /// </summary>
+        internal static string MainMenu {
+            get {
+                return ResourceManager.GetString("MainMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à 1 - Create a save .
         /// </summary>
-        internal static string Menu_CreateSave {
+        internal static string MainMenu1 {
             get {
-                return ResourceManager.GetString("Menu_CreateSave", resourceCulture);
+                return ResourceManager.GetString("MainMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 2 - Choose a language .
+        /// </summary>
+        internal static string MainMenu2 {
+            get {
+                return ResourceManager.GetString("MainMenu2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à rgergre.
+        /// </summary>
+        internal static string MainMenu3 {
+            get {
+                return ResourceManager.GetString("MainMenu3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Quit.
+        /// </summary>
+        internal static string MainMenu4 {
+            get {
+                return ResourceManager.GetString("MainMenu4", resourceCulture);
             }
         }
     }

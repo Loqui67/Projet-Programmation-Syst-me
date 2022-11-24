@@ -117,16 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ChangeLanguage" xml:space="preserve">
-    <value>2 - Choose a language </value>
-  </data>
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Choose a language :</value>
   </data>
   <data name="hello" xml:space="preserve">
     <value>hello</value>
   </data>
-  <data name="Menu_CreateSave" xml:space="preserve">
+  <data name="InvalidInput" xml:space="preserve">
+    <value>Error : Invalid Input</value>
+  </data>
+  <data name="MainMenu" xml:space="preserve">
+    <value>Choose an option :</value>
+  </data>
+  <data name="MainMenu1" xml:space="preserve">
     <value>1 - Create a save </value>
+  </data>
+  <data name="MainMenu2" xml:space="preserve">
+    <value>2 - Choose a language </value>
+  </data>
+  <data name="MainMenu3" xml:space="preserve">
+    <value>rgergre</value>
+  </data>
+  <data name="MainMenu4" xml:space="preserve">
+    <value>Quit</value>
   </data>
 </root>
