@@ -12,12 +12,12 @@
     <Compile Update="Ressources\language.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>language.resx</DependentUpon>
+      <DependentUpon>Language.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Ressources\language.resx">
+    <EmbeddedResource Update="Ressources\Language.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>language.Designer.cs</LastGenOutput>
     </EmbeddedResource>

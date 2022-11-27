@@ -126,8 +126,14 @@
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Choisissez une langue :</value>
   </data>
-  <data name="hello" xml:space="preserve">
-    <value>coucou</value>
+  <data name="DestinationPath" xml:space="preserve">
+    <value>Choississez l'emplacement du fichier de destination :</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Vide</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Sur quel emplacement souhaitez vous créer votre travail ?</value>
   </data>
   <data name="InvalidInput" xml:space="preserve">
     <value>Erreur : entrée invalide</value>
@@ -136,15 +142,33 @@
     <value>Choisissez une option :</value>
   </data>
   <data name="MainMenu1" xml:space="preserve">
-    <value>1 - Créer une sauvegarde </value>
+    <value>1 - Exécuter travaux de sauvegarde</value>
   </data>
   <data name="MainMenu2" xml:space="preserve">
-    <value>2 - Choisir une langue </value>
+    <value>2 - Créer un travail de sauvegarde</value>
   </data>
   <data name="MainMenu3" xml:space="preserve">
-    <value>zefzfer</value>
+    <value>3 - Modifier un travail de sauvegarde</value>
   </data>
   <data name="MainMenu4" xml:space="preserve">
-    <value>Quitter</value>
+    <value>4 - Supprimer un travail de sauvegarde</value>
+  </data>
+  <data name="MainMenu5" xml:space="preserve">
+    <value>5 - Changer la langue</value>
+  </data>
+  <data name="MainMenu6" xml:space="preserve">
+    <value>6 - Quitter</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Choisissez le nom du travail :</value>
+  </data>
+  <data name="NoBackupJobError" xml:space="preserve">
+    <value>Une erreur est survenue lors de la récupération des travaux de sauvegarde</value>
+  </data>
+  <data name="SourcePath" xml:space="preserve">
+    <value>Choississez l'emplacement du fichier source :</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Sauvegarde complète (1) ou différentielle (2) ?</value>
   </data>
 </root>

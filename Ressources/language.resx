@@ -126,8 +126,14 @@
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Choose a language :</value>
   </data>
-  <data name="hello" xml:space="preserve">
-    <value>hello</value>
+  <data name="DestinationPath" xml:space="preserve">
+    <value>Choose the destination folder :</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>On which slot would you create this backup job ?</value>
   </data>
   <data name="InvalidInput" xml:space="preserve">
     <value>Error : Invalid Input</value>
@@ -136,15 +142,33 @@
     <value>Choose an option :</value>
   </data>
   <data name="MainMenu1" xml:space="preserve">
-    <value>1 - Create a save </value>
+    <value>1 - Execute backup job</value>
   </data>
   <data name="MainMenu2" xml:space="preserve">
-    <value>2 - Choose a language </value>
+    <value>2 - Create a backup job</value>
   </data>
   <data name="MainMenu3" xml:space="preserve">
-    <value>rgergre</value>
+    <value>3 - Modify a backup job</value>
   </data>
   <data name="MainMenu4" xml:space="preserve">
-    <value>Quit</value>
+    <value>4 - Delete a backup job</value>
+  </data>
+  <data name="MainMenu5" xml:space="preserve">
+    <value>5 - Change language</value>
+  </data>
+  <data name="MainMenu6" xml:space="preserve">
+    <value>6 - Quit</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Choose a name for this backup job :</value>
+  </data>
+  <data name="NoBackupJobError" xml:space="preserve">
+    <value>An error occured when trying to get the backup job</value>
+  </data>
+  <data name="SourcePath" xml:space="preserve">
+    <value>Choose the source folder :</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>full (1) or differential (2) backup ?</value>
   </data>
 </root>

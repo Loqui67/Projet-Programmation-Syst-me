@@ -22,14 +22,14 @@ namespace Projet_Programmation_Système.Ressources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class language {
+    internal class Language {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal language() {
+        internal Language() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Projet_Programmation_Système.Ressources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Projet_Programmation_Système.Ressources.language", typeof(language).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Projet_Programmation_Système.Ressources.Language", typeof(Language).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -88,11 +88,29 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à hello.
+        ///   Recherche une chaîne localisée semblable à Choose the destination folder :.
         /// </summary>
-        internal static string hello {
+        internal static string DestinationPath {
             get {
-                return ResourceManager.GetString("hello", resourceCulture);
+                return ResourceManager.GetString("DestinationPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Empty.
+        /// </summary>
+        internal static string Empty {
+            get {
+                return ResourceManager.GetString("Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à On which slot would you create this backup job ?.
+        /// </summary>
+        internal static string Id {
+            get {
+                return ResourceManager.GetString("Id", resourceCulture);
             }
         }
         
@@ -115,7 +133,7 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à 1 - Create a save .
+        ///   Recherche une chaîne localisée semblable à 1 - Execute backup job.
         /// </summary>
         internal static string MainMenu1 {
             get {
@@ -124,7 +142,7 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à 2 - Choose a language .
+        ///   Recherche une chaîne localisée semblable à 2 - Create a backup job.
         /// </summary>
         internal static string MainMenu2 {
             get {
@@ -133,7 +151,7 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à rgergre.
+        ///   Recherche une chaîne localisée semblable à 3 - Modify a backup job.
         /// </summary>
         internal static string MainMenu3 {
             get {
@@ -142,11 +160,65 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Quit.
+        ///   Recherche une chaîne localisée semblable à 4 - Delete a backup job.
         /// </summary>
         internal static string MainMenu4 {
             get {
                 return ResourceManager.GetString("MainMenu4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 5 - Change language.
+        /// </summary>
+        internal static string MainMenu5 {
+            get {
+                return ResourceManager.GetString("MainMenu5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 6 - Quit.
+        /// </summary>
+        internal static string MainMenu6 {
+            get {
+                return ResourceManager.GetString("MainMenu6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Choose a name for this backup job :.
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à An error occured when trying to get the backup job.
+        /// </summary>
+        internal static string NoBackupJobError {
+            get {
+                return ResourceManager.GetString("NoBackupJobError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Choose the source folder :.
+        /// </summary>
+        internal static string SourcePath {
+            get {
+                return ResourceManager.GetString("SourcePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à full (1) or differential (2) backup ?.
+        /// </summary>
+        internal static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
             }
         }
     }

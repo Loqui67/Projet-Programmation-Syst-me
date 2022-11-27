@@ -10,10 +10,10 @@ namespace Projet_Programmation_Système.developpement
 {
     public static class ConsoleManager
     {
-        public static LanguageControl languageControl;
+        public static LanguageControl languageControl = new LanguageControl();
         public static void DisplayLanguage(string message)
         {
-            Console.WriteLine(languageControl.GetString(message));
+            Console.WriteLine(languageControl.GetLanguageString(message));
         }
 
         public static void DisplayEmptyLine()
@@ -31,7 +31,7 @@ namespace Projet_Programmation_Système.developpement
         {
             foreach (string s in array)
             {
-                Console.WriteLine(languageControl.GetString(s));
+                Console.WriteLine(languageControl.GetLanguageString(s));
             }
         }
         public static void DisplayArray(string?[] array)
@@ -42,9 +42,29 @@ namespace Projet_Programmation_Système.developpement
             }
         }
 
+        public static void DisplayArrayInLine(string?[] array)
+        {
+            foreach (string? s in array)
+            {
+                Console.Write(s);
+            }
+        }
+
         public static string? GetInput()
         {
             return Console.ReadLine();
+        }
+
+        public static string GetInputNotNull()
+
+        {
+            string? input = Console.ReadLine();
+            if (input == null)
+            {
+                DisplayLanguage("InvalidInput");
+                return GetInputNotNull();
+            }
+            return input;
         }
     }
 }

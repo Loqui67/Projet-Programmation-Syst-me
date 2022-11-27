@@ -15,7 +15,7 @@ namespace Projet_Programmation_Système.developpement
 
         private void DisplayMainMenu()
         {
-            ConsoleManager.DisplayArrayLanguage(new string[] { "MainMenu", "MainMenu1", "MainMenu2", "MainMenu3", "MainMenu4" });
+            ConsoleManager.DisplayArrayLanguage(new string[] { "MainMenu", "MainMenu1", "MainMenu2", "MainMenu3", "MainMenu4", "MainMenu5", "MainMenu6" });
             ConsoleManager.DisplayEmptyLine();
         }
 
@@ -25,34 +25,38 @@ namespace Projet_Programmation_Système.developpement
             while (!isValid)
             {
                 DisplayMainMenu();
+                isValid = true;
                 switch (ConsoleManager.GetInput())
                 {
                     case "1":
-                        ConsoleManager.DisplayEmptyLine();
-                        isValid = true;
+                        BackupJobsManager.DisplayBackupJobs();
                         break;
 
                     case "2":
-                        ConsoleManager.DisplayEmptyLine();
-                        ConsoleManager.languageControl.ChangeLanguage();
-                        isValid = true;
+                        BackupJobsManager.DisplayBackupJobs();
+                        BackupJobsManager.WriteBackupJob(BackupJobsManager.CreateBackupJob());
                         break;
 
                     case "3":
-                        ConsoleManager.DisplayEmptyLine();
-                        isValid = true;
                         break;
 
                     case "4":
-                        ConsoleManager.DisplayEmptyLine();
-                        isValid = true;
+                        break;
+
+                    case "5":
+                        ConsoleManager.languageControl.ChangeLanguage();
+                        break;
+                        
+                    case "6":
+                        Main.Exit();
                         break;
 
                     default:
-                        ConsoleManager.DisplayEmptyLine();
                         ConsoleManager.DisplayLanguage("InvalidInput");
+                        isValid = false;
                         break;
                 }
+                ConsoleManager.DisplayEmptyLine();
             }
         }
     }

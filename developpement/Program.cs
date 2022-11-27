@@ -4,14 +4,9 @@ using System.Globalization;
 using System.Reflection;
 using System.Resources;
 
-new Main();
+Main.Run();
 
-public class Main {
-    public Main()
-    {
-        ConsoleManager.languageControl = new LanguageControl();
-        Run();
-    }
+public static class Main {
 
     public static void Run()
     {
@@ -20,6 +15,11 @@ public class Main {
         {
             mainMenu.ChooseItem();
         }
+    }
+
+    public static void Exit()
+    {
+        Environment.Exit(0);
     }
 }
 
