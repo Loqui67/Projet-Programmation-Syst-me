@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AreYouSureDelete" xml:space="preserve">
+    <value>Etes vous sûr de vouloir supprimer ce travail ? (o/n)</value>
+  </data>
   <data name="ChangeLanguageError" xml:space="preserve">
     <value>Une erreur est survenue lors du changement de la langue</value>
   </data>
@@ -126,6 +129,15 @@
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Choisissez une langue :</value>
   </data>
+  <data name="ChooseSlotToCreate" xml:space="preserve">
+    <value>Sur quel emplacement souhaitez vous créer le travail de sauvegarde ?</value>
+  </data>
+  <data name="ChooseSlotToDelete" xml:space="preserve">
+    <value>Quel travail souhaitez vous supprimer ?</value>
+  </data>
+  <data name="ChooseSlotToModify" xml:space="preserve">
+    <value>Quel travail souhaitez vous modifier ?</value>
+  </data>
   <data name="DestinationPath" xml:space="preserve">
     <value>Choississez l'emplacement du fichier de destination :</value>
   </data>
@@ -133,7 +145,7 @@
     <value>Vide</value>
   </data>
   <data name="Id" xml:space="preserve">
-    <value>Sur quel emplacement souhaitez vous créer votre travail ?</value>
+    <value>Selectionnez un emplacement :</value>
   </data>
   <data name="InvalidInput" xml:space="preserve">
     <value>Erreur : entrée invalide</value>
@@ -162,6 +174,9 @@
   <data name="Name" xml:space="preserve">
     <value>Choisissez le nom du travail :</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>non</value>
+  </data>
   <data name="NoBackupJobError" xml:space="preserve">
     <value>Une erreur est survenue lors de la récupération des travaux de sauvegarde</value>
   </data>
@@ -170,5 +185,8 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>Sauvegarde complète (1) ou différentielle (2) ?</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>oui</value>
   </data>
 </root>

@@ -33,14 +33,18 @@ namespace Projet_Programmation_Système.developpement
                         break;
 
                     case "2":
+                        ConsoleManager.DisplayLanguage("ChooseSlotToCreate");
                         BackupJobsManager.DisplayBackupJobs();
                         BackupJobsManager.WriteBackupJob(BackupJobsManager.CreateBackupJob());
                         break;
 
                     case "3":
+                        ConsoleManager.DisplayLanguage("ChooseSlotToModify");
+                        BackupJobsManager.DisplayBackupJobs();
                         break;
 
                     case "4":
+                        Delete();
                         break;
 
                     case "5":
@@ -58,6 +62,16 @@ namespace Projet_Programmation_Système.developpement
                 }
                 ConsoleManager.DisplayEmptyLine();
             }
+        }
+        
+        
+        private void Delete()
+        {
+            ConsoleManager.DisplayLanguage("ChooseSlotToDelete");
+            BackupJobsManager.DisplayBackupJobs();
+            var a = BackupJobsManager.DeleteBackupJob();
+            ConsoleManager.DisplayLanguage("AreYouSureDelete");
+            if (ConsoleManager.AskForConfirmation()) BackupJobsManager.WriteBackupJob(a);
         }
     }
 }

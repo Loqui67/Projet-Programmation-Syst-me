@@ -40,6 +40,7 @@ namespace Projet_Programmation_Système.developpement
             {
                 if (backupJob.name == "")
                 {
+                    ConsoleManager.DisplayArrayInLine(new string[] { backupJob.id, " - " });
                     ConsoleManager.DisplayLanguage("Empty");
                 } else {
                     ConsoleManager.DisplayArrayInLine(new string[] { backupJob.id, " - ", backupJob.name, " / ", backupJob.type });
@@ -87,7 +88,19 @@ namespace Projet_Programmation_Système.developpement
                 name = AskForName(),
                 sourcePath = AskForSourcePath(),
                 destinationPath = AskForDestinationPath(),
-                type = AskForType(),
+                type = AskForType()
+            };
+        }
+
+        public static BackupJob DeleteBackupJob()
+        {
+            return new BackupJob
+            {
+                id = AskForId(),
+                name = "",
+                sourcePath = "",
+                destinationPath = "",
+                type = ""
             };
         }
 

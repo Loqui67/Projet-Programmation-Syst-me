@@ -22,14 +22,14 @@ namespace Projet_Programmation_Système.Ressources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Language {
+    internal class language {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Language() {
+        internal language() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Projet_Programmation_Système.Ressources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Projet_Programmation_Système.Ressources.Language", typeof(Language).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Projet_Programmation_Système.Ressources.language", typeof(language).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,15 @@ namespace Projet_Programmation_Système.Ressources {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Are you sure that you want to delete this backup job ? (y/n).
+        /// </summary>
+        internal static string AreYouSureDelete {
+            get {
+                return ResourceManager.GetString("AreYouSureDelete", resourceCulture);
             }
         }
         
@@ -88,6 +97,33 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à On which slot would you create this backup job ?.
+        /// </summary>
+        internal static string ChooseSlotToCreate {
+            get {
+                return ResourceManager.GetString("ChooseSlotToCreate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Which backup job do you want to delete ?.
+        /// </summary>
+        internal static string ChooseSlotToDelete {
+            get {
+                return ResourceManager.GetString("ChooseSlotToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Which backup job do you want to modify ?.
+        /// </summary>
+        internal static string ChooseSlotToModify {
+            get {
+                return ResourceManager.GetString("ChooseSlotToModify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Choose the destination folder :.
         /// </summary>
         internal static string DestinationPath {
@@ -106,7 +142,7 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à On which slot would you create this backup job ?.
+        ///   Recherche une chaîne localisée semblable à Choose a slot :.
         /// </summary>
         internal static string Id {
             get {
@@ -196,6 +232,15 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à no.
+        /// </summary>
+        internal static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à An error occured when trying to get the backup job.
         /// </summary>
         internal static string NoBackupJobError {
@@ -219,6 +264,15 @@ namespace Projet_Programmation_Système.Ressources {
         internal static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à yes.
+        /// </summary>
+        internal static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

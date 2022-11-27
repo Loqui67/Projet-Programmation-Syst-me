@@ -65,5 +65,19 @@ namespace Projet_Programmation_Système.developpement
             }
             return input;
         }
+
+        public static bool AskForConfirmation()
+        {
+            string? input = GetInput();
+            if (input == null)
+            {
+                DisplayLanguage("InvalidInput");
+                return AskForConfirmation();
+            }
+            if (input == "y" || input == "o") return true;
+            if (input == "n") return false;
+            DisplayLanguage("InvalidInput");
+            return AskForConfirmation();
+        }
     }
 }
