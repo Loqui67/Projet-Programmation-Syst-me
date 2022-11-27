@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -148,8 +149,26 @@ namespace Projet_Programmation_Système.developpement
 
 
         //probablement beaucoup d'amélioration contre la redondance de code possible
+        
 
+        public static string AskPathAndCheckIfExist(Func<string> MethodName, bool emptyAccepted)
+        {
+            string input = ConsoleManager.GetInput();
+            if (AssertThatPathExist(input) || (input == "" && emptyAccepted)) return input;
+            ConsoleManager.DisplayLanguage("PathDoesntExist");
+            return MethodName();
+        }
 
+        public static string AskTypeAndCheck(Func<string> MethodName, bool emptyAccepted)
+        {
+            string input = ConsoleManager.GetInput();
+            if ((Int32.TryParse(input, out int x) && (x == 1 || x == 2)) || (input == "" && emptyAccepted))
+            {
+                return input;
+            }
+            ConsoleManager.DisplayLanguage("InvalidInput");
+            return MethodName();
+        }
 
         public static string AskForNameModification()
         {
@@ -166,61 +185,37 @@ namespace Projet_Programmation_Système.developpement
         public static string AskForSourcePathModification()
         {
             ConsoleManager.DisplayLanguage("ModifySourcePath");
-            string input = ConsoleManager.GetInput();
-            if (AssertThatPathExist(input)) return input;
-            ConsoleManager.DisplayLanguage("PathDoesntExist");
-            return AskForSourcePathModification();
+            return AskPathAndCheckIfExist(AskForSourcePathModification, true);
         }
-
+        
         public static string AskForSourcePathNotEmpty()
         {
             ConsoleManager.DisplayLanguage("SourcePath");
-            string input = ConsoleManager.GetInput();
-            if (AssertThatPathExist(input)) return input;
-            ConsoleManager.DisplayLanguage("PathDoesntExist");
-            return AskForSourcePathNotEmpty();
+            return AskPathAndCheckIfExist(AskForSourcePathNotEmpty, false);
         }
 
         public static string AskForDestinationPathModification()
         {
             ConsoleManager.DisplayLanguage("ModifyDestinationPath");
-            string input = ConsoleManager.GetInput();
-            if (AssertThatPathExist(input)) return input;
-            ConsoleManager.DisplayLanguage("PathDoesntExist");
-            return AskForDestinationPathModification();
+            return AskPathAndCheckIfExist(AskForDestinationPathModification, true);
         }
 
         public static string AskForDestinationPathNotEmpty()
         {
             ConsoleManager.DisplayLanguage("DestinationPath");
-            string input = ConsoleManager.GetInput();
-            if (AssertThatPathExist(input)) return input;
-            ConsoleManager.DisplayLanguage("PathDoesntExist");
-            return AskForDestinationPathNotEmpty();
+            return AskPathAndCheckIfExist(AskForDestinationPathNotEmpty, false);
         }
 
         public static string AskForTypeModification()
         {
             ConsoleManager.DisplayLanguage("ModifyType");
-            string input = ConsoleManager.GetInput();
-            if (Int32.TryParse(input, out int x) && (x == 1 || x == 2))
-            {
-                return input;
-            }
-            ConsoleManager.DisplayLanguage("InvalidInput");
-            return AskForTypeModification();
+            return AskTypeAndCheck(AskForTypeModification, true);
         }
 
         public static string AskForTypeNotEmpty()
         {
             ConsoleManager.DisplayLanguage("Type");
-            string input = ConsoleManager.GetInput();
-            if (Int32.TryParse(input, out int x) && (x == 1 || x == 2))
-            {
-                return input;
-            }
-            ConsoleManager.DisplayLanguage("InvalidInput");
-            return AskForTypeNotEmpty();
+            return AskTypeAndCheck(AskForTypeNotEmpty, false);
         }
     }
 }
