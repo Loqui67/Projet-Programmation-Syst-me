@@ -25,12 +25,12 @@ namespace Projet_Programmation_Système.developpement
                     break;
                 }
             }
-            FileManagement.WriteFile(backupJobs);
+            JsonBackupJobFileManager.WriteFile(backupJobs);
         }
 
         public static IList<BackupJob>? GetBackupJobs()
         {
-            return FileManagement.ReadBackupJobFile();
+            return JsonBackupJobFileManager.ReadBackupJobFile();
         }
 
         public static void DisplayBackupJobs()

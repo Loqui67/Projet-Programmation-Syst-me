@@ -56,7 +56,6 @@ namespace Projet_Programmation_Système.developpement
         }
 
         public static string GetInputNotNull()
-
         {
             string? input = Console.ReadLine();
             if (input == null)
