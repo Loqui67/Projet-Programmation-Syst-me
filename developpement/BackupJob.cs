@@ -17,14 +17,9 @@ public class BackupJob
     public string destinationPath { set; get; }
     public string type { set; get; }
     
-    public bool AssertThatPathExist(string path)
-    {
-        return System.IO.Directory.Exists(path);
-    }
-
     public void Save()
     {
-        if (!AssertThatPathExist(sourcePath)) {
+        if (!BackupJobsManager.AssertThatPathExist(sourcePath)) {
             ConsoleManager.DisplayLanguage("SourcePathDoesntExist");
             return;
         }

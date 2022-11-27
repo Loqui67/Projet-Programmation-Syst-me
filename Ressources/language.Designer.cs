@@ -22,14 +22,14 @@ namespace Projet_Programmation_Système.Ressources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class language {
+    internal class Language {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal language() {
+        internal Language() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Projet_Programmation_Système.Ressources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Projet_Programmation_Système.Ressources.language", typeof(language).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Projet_Programmation_Système.Ressources.Language", typeof(Language).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -223,6 +223,42 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Choose the new destination path for this job (empty if it is the same) :.
+        /// </summary>
+        internal static string ModifyDestinationPath {
+            get {
+                return ResourceManager.GetString("ModifyDestinationPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Choose the new name for this job (empty if it is the same) :.
+        /// </summary>
+        internal static string ModifyName {
+            get {
+                return ResourceManager.GetString("ModifyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Choose the new source path for this job (empty if it is the same) :.
+        /// </summary>
+        internal static string ModifySourcePath {
+            get {
+                return ResourceManager.GetString("ModifySourcePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Choose the new type (full (1) or differential (2)) for this job (empty if it is the same) :.
+        /// </summary>
+        internal static string ModifyType {
+            get {
+                return ResourceManager.GetString("ModifyType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Choose a name for this backup job :.
         /// </summary>
         internal static string Name {
@@ -246,6 +282,15 @@ namespace Projet_Programmation_Système.Ressources {
         internal static string NoBackupJobError {
             get {
                 return ResourceManager.GetString("NoBackupJobError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à No directory found.
+        /// </summary>
+        internal static string PathDoesntExist {
+            get {
+                return ResourceManager.GetString("PathDoesntExist", resourceCulture);
             }
         }
         

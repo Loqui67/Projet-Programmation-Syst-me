@@ -50,30 +50,31 @@ namespace Projet_Programmation_Système.developpement
             }
         }
 
-        public static string? GetInput()
-        {
-            return Console.ReadLine();
-        }
-
-        public static string GetInputNotNull()
+        public static string GetInput()
         {
             string? input = Console.ReadLine();
             if (input == null)
             {
                 DisplayLanguage("InvalidInput");
-                return GetInputNotNull();
+                return GetInputNotEmpty();
+            }
+            return input;
+        }
+
+        public static string GetInputNotEmpty()
+        {
+            string? input = Console.ReadLine();
+            if (input == null || input == "")
+            {
+                DisplayLanguage("InvalidInput");
+                return GetInputNotEmpty();
             }
             return input;
         }
 
         public static bool AskForConfirmation()
         {
-            string? input = GetInput();
-            if (input == null)
-            {
-                DisplayLanguage("InvalidInput");
-                return AskForConfirmation();
-            }
+            string input = GetInputNotEmpty();
             if (input == "y" || input == "o") return true;
             if (input == "n") return false;
             DisplayLanguage("InvalidInput");

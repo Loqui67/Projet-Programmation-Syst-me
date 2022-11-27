@@ -171,6 +171,18 @@
   <data name="MainMenu6" xml:space="preserve">
     <value>6 - Quit</value>
   </data>
+  <data name="ModifyDestinationPath" xml:space="preserve">
+    <value>Choose the new destination path for this job (empty if it is the same) :</value>
+  </data>
+  <data name="ModifyName" xml:space="preserve">
+    <value>Choose the new name for this job (empty if it is the same) :</value>
+  </data>
+  <data name="ModifySourcePath" xml:space="preserve">
+    <value>Choose the new source path for this job (empty if it is the same) :</value>
+  </data>
+  <data name="ModifyType" xml:space="preserve">
+    <value>Choose the new type (full (1) or differential (2)) for this job (empty if it is the same) :</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Choose a name for this backup job :</value>
   </data>
@@ -179,6 +191,9 @@
   </data>
   <data name="NoBackupJobError" xml:space="preserve">
     <value>An error occured when trying to get the backup job</value>
+  </data>
+  <data name="PathDoesntExist" xml:space="preserve">
+    <value>No directory found</value>
   </data>
   <data name="SourcePath" xml:space="preserve">
     <value>Choose the source folder :</value>
