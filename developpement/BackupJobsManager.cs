@@ -129,6 +129,13 @@ namespace Projet_Programmation_Système.developpement
             return backupJob;
         }
 
+        public static void LaunchSave()
+        {
+            string id = AskForId();
+            BackupJob? backupJob = GetBackupJob(id);
+            backupJob.Save();
+        }
+
         public static bool AssertThatPathExist(string path)
         {
             return System.IO.Directory.Exists(path);
@@ -148,7 +155,7 @@ namespace Projet_Programmation_Système.developpement
 
 
 
-        //probablement beaucoup d'amélioration contre la redondance de code possible
+        //probablement beaucoup d'améliorations contre la redondance de code possibles
         
 
         public static string AskPathAndCheckIfExist(Func<string> MethodName, bool emptyAccepted)

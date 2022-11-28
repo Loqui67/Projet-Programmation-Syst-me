@@ -138,6 +138,9 @@
   <data name="ChooseSlotToModify" xml:space="preserve">
     <value>Quel travail souhaitez vous modifier ?</value>
   </data>
+  <data name="ChooseSlotToSave" xml:space="preserve">
+    <value>Choisissez le travail à éxécuter</value>
+  </data>
   <data name="DestinationPath" xml:space="preserve">
     <value>Choississez l'emplacement du fichier de destination :</value>
   </data>

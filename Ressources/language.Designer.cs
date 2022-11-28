@@ -124,6 +124,15 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Choose a backup job to execute.
+        /// </summary>
+        internal static string ChooseSlotToSave {
+            get {
+                return ResourceManager.GetString("ChooseSlotToSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Choose the destination folder :.
         /// </summary>
         internal static string DestinationPath {

@@ -29,7 +29,9 @@ namespace Projet_Programmation_Système.developpement
                 switch (ConsoleManager.GetInput())
                 {
                     case "1":
+                        ConsoleManager.DisplayLanguage("ChooseSlotToSave");
                         BackupJobsManager.DisplayBackupJobs();
+                        BackupJobsManager.LaunchSave();
                         break;
 
                     case "2":

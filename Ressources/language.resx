@@ -138,6 +138,9 @@
   <data name="ChooseSlotToModify" xml:space="preserve">
     <value>Which backup job do you want to modify ?</value>
   </data>
+  <data name="ChooseSlotToSave" xml:space="preserve">
+    <value>Choose a backup job to execute</value>
+  </data>
   <data name="DestinationPath" xml:space="preserve">
     <value>Choose the destination folder :</value>
   </data>
