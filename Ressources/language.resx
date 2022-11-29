@@ -144,8 +144,14 @@
   <data name="ChooseSlotToSave" xml:space="preserve">
     <value>Choose a backup job to execute</value>
   </data>
+  <data name="CopyFiles" xml:space="preserve">
+    <value>Processing files . . .</value>
+  </data>
   <data name="DestinationPath" xml:space="preserve">
     <value>Choose the destination folder :</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done !</value>
   </data>
   <data name="Empty" xml:space="preserve">
     <value>Empty</value>

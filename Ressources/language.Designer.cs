@@ -142,11 +142,29 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Processing files . . ..
+        /// </summary>
+        internal static string CopyFiles {
+            get {
+                return ResourceManager.GetString("CopyFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Choose the destination folder :.
         /// </summary>
         internal static string DestinationPath {
             get {
                 return ResourceManager.GetString("DestinationPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Done !.
+        /// </summary>
+        internal static string Done {
+            get {
+                return ResourceManager.GetString("Done", resourceCulture);
             }
         }
         

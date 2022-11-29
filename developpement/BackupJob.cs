@@ -45,9 +45,11 @@ public class BackupJob
         //Création d'un nouveau dossier de sauvegarde.
         //Creation of a new backup folder.
         fileSize = 0;
+        DisplayLanguage("CopyFiles");
         Copy(new DirectoryInfo(sourcePath));
+        DisplayEmptyLine();
+        DisplayLanguage("Done");
         fileTransferTime = DateTime.Now - date1;
-
         JsonFileManager.WriteDailyLogToFile(GenerateLog());
     }
 
@@ -61,6 +63,7 @@ public class BackupJob
             string fileToCopy = fi.FullName.Replace(sourcePath, destinationPath);
             if (!File.Exists(fileToCopy) || type == "1")
             {
+                Console.Write("\r{0}%   ", fi.Name);
                 File.Copy(fi.FullName, fileToCopy, true);
                 fileSize += fi.Length;
             }

@@ -144,8 +144,14 @@
   <data name="ChooseSlotToSave" xml:space="preserve">
     <value>Choisissez le travail à éxécuter</value>
   </data>
+  <data name="CopyFiles" xml:space="preserve">
+    <value>Les fichiers sont en cours de traitement . . .</value>
+  </data>
   <data name="DestinationPath" xml:space="preserve">
     <value>Choississez l'emplacement du fichier de destination :</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Terminé !</value>
   </data>
   <data name="Empty" xml:space="preserve">
     <value>Vide</value>
