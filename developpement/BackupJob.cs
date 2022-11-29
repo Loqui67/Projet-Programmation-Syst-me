@@ -26,6 +26,8 @@ public class BackupJob
         
         if (type == "1") FullSave();
         else DifferentialSave();
+
+        JsonFileManager.WriteDailyLogToFile(GenerateLog());
     }
 
     public void FullSave()
@@ -42,23 +44,37 @@ public class BackupJob
         foreach (string file in allFiles)
         {
             string fileToCopy = file.Replace(sourcePath, destinationPath);
-            File.Copy(file, fileToCopy);
+            File.Copy(file, fileToCopy, true);
         }
     }
     
+
     public void DifferentialSave() {
         var allDirectories = Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories);
         foreach (string dir in allDirectories)
         {
-            string dirToCreate = dir.Replace(sourcePath, destinationPath + name);
+            string dirToCreate = dir.Replace(sourcePath, destinationPath);
             if (!Directory.Exists(dirToCreate)) Directory.CreateDirectory(dirToCreate);
         }
         var allFiles = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
         foreach (string file in allFiles)
         {
-            string fileToCopy = file.Replace(sourcePath, destinationPath + name);
+            string fileToCopy = file.Replace(sourcePath, destinationPath);
             if (!File.Exists(fileToCopy)) File.Replace(file, fileToCopy, null);
         }
+    }
+
+    public Log GenerateLog()
+    {
+        return new Log {
+            name = name,
+            sourcePath = sourcePath,
+            destinationPath = destinationPath,
+            type = type,
+            fileSize = "0",
+            fileTransferTime = "0",
+            date = DateTime.Now
+        };
     }
 }
 

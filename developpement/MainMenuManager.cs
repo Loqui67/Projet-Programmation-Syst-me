@@ -8,11 +8,6 @@ namespace Projet_Programmation_Système.developpement
 {
     public class MainMenuManager
     {
-        public MainMenuManager()
-        {
-
-        }
-
         private void DisplayMainMenu()
         {
             ConsoleManager.DisplayArrayLanguage(new string[] { "MainMenu", "MainMenu1", "MainMenu2", "MainMenu3", "MainMenu4", "MainMenu5", "MainMenu6" });
