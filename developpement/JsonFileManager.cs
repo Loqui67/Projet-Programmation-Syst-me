@@ -10,7 +10,10 @@ namespace Projet_Programmation_Système.developpement
     public static class JsonFileManager
     {
         private const string backupJobFileName = "SaveBackupJob.json";
-
+        private static JsonSerializerOptions optionsWriteIndented = new JsonSerializerOptions
+        {
+            WriteIndented = true
+        };
 
         public static void CreateJsonBackupJobFileIfNotExist()
         {
@@ -33,7 +36,7 @@ namespace Projet_Programmation_Système.developpement
             {
                 using (FileStream fs = File.OpenWrite(backupJobFileName))
                 {
-                    string jsonString = JsonSerializer.Serialize(backupJobs);
+                    string jsonString = JsonSerializer.Serialize(backupJobs, optionsWriteIndented);
                     byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
                     fs.Write(jsonBytes, 0, jsonBytes.Length);
                 }
@@ -56,13 +59,16 @@ namespace Projet_Programmation_Système.developpement
 
         public static void WriteDailyLogToFile(Log dailyLog)
         {
+            if (!Directory.Exists("logs")) Directory.CreateDirectory("logs");
+
             List<Log>? logs;
             logs = ReadDailyLogFile();
             logs.Add(dailyLog);
             
             using (FileStream fs = File.Create(GetDailyFileName()))
             {
-                string jsonString = JsonSerializer.Serialize(logs);
+
+                string jsonString = JsonSerializer.Serialize(logs, optionsWriteIndented);
                 byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
                 fs.Write(jsonBytes, 0, jsonBytes.Length);
                 //File.WriteAllText(GetDailyFileName(), JsonSerializer.Serialize(logs));
@@ -71,14 +77,18 @@ namespace Projet_Programmation_Système.developpement
 
         public static List<Log>? ReadDailyLogFile()
         {
-            using (FileStream fs = File.OpenRead(GetDailyFileName()))
-            {
-                byte[] jsonBytes = new byte[fs.Length];
-                fs.Read(jsonBytes, 0, jsonBytes.Length);
-                string jsonString = Encoding.UTF8.GetString(jsonBytes);
-                return JsonSerializer.Deserialize<List<Log>>(jsonString);
-                //return JsonSerializer.Deserialize<List<Log>>(File.ReadAllText(GetDailyFileName()));
+            if (File.Exists(GetDailyFileName())) {
+                using (FileStream fs = File.OpenRead(GetDailyFileName()))
+                {
+                    byte[] jsonBytes = new byte[fs.Length];
+                    fs.Read(jsonBytes, 0, jsonBytes.Length);
+                    string jsonString = Encoding.UTF8.GetString(jsonBytes);
+                    return JsonSerializer.Deserialize<List<Log>>(jsonString);
+                    //return JsonSerializer.Deserialize<List<Log>>(File.ReadAllText(GetDailyFileName()));
+                }
             }
+            return new List<Log>();
+
         }
 
         private static string GetDailyFileName()

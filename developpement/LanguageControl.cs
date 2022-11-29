@@ -7,6 +7,7 @@ using System.Resources;
 using System.Reflection;
 using System.Globalization;
 using Projet_Programmation_Système.developpement;
+using static Projet_Programmation_Système.developpement.ConsoleManager;
 
 public class LanguageControl
 {
@@ -26,17 +27,17 @@ public class LanguageControl
     public void ChangeLanguage()
     {
         AskLanguage();
-        ConsoleManager.DisplayEmptyLine();
+        DisplayEmptyLine();
         try
         {
             CultureInfo cultureInfo = new CultureInfo(language);
             CultureInfo.CurrentCulture = cultureInfo;
             CultureInfo.CurrentUICulture = cultureInfo;
-            ConsoleManager.DisplayLanguage("ChangeLanguageSuccess"); 
+            DisplayLanguage("ChangeLanguageSuccess"); 
         }
         catch (Exception)
         {
-        ConsoleManager.DisplayLanguage("ChangeLanguageError");
+            DisplayLanguage("ChangeLanguageError");
         }
     }
 
@@ -46,23 +47,24 @@ public class LanguageControl
         language = "EN";
         while (!isValid)
         {
-            ConsoleManager.DisplayEmptyLine();
-            ConsoleManager.DisplayArray(new string?[] { GetLanguageString("ChooseLanguage"), "FR : 1 - EN : 2" });
+            
+            DisplayEmptyLine();
+            DisplayArray(new string?[] { GetLanguageString("ChooseLanguage"), "FR : 1 - EN : 2" });
             isValid = true;
-            switch (ConsoleManager.GetInput())
+            switch (GetInput())
             {
                 case "1":
-                    ConsoleManager.Display("FR");
+                    Display("FR");
                     language = "fr";
                     break;
 
                 case "2":
-                    ConsoleManager.Display("EN");
+                    Display("EN");
                     language = "en";
                     break;
-
+                    
                 default:
-                    ConsoleManager.DisplayLanguage("InvalidInput");
+                    DisplayLanguage("InvalidInput");
                     language = "error";
                     isValid = false;
                     break;

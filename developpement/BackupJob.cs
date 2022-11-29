@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
 using Projet_Programmation_Système.developpement;
+using static Projet_Programmation_Système.developpement.ConsoleManager;
 
 
 public class BackupJob
@@ -20,7 +21,7 @@ public class BackupJob
     public void Save()
     {
         if (!BackupJobsManager.AssertThatPathExist(sourcePath)) {
-            ConsoleManager.DisplayLanguage("SourcePathDoesntExist");
+            DisplayLanguage("SourcePathDoesntExist");
             return;
         }
         

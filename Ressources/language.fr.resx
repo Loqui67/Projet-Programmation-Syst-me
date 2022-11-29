@@ -120,6 +120,9 @@
   <data name="AreYouSureDelete" xml:space="preserve">
     <value>Etes vous sûr de vouloir supprimer ce travail ? (o/n)</value>
   </data>
+  <data name="AskQuit" xml:space="preserve">
+    <value>Etes vous sûr de vouloir quitter ? (o/n)</value>
+  </data>
   <data name="ChangeLanguageError" xml:space="preserve">
     <value>Une erreur est survenue lors du changement de la langue</value>
   </data>

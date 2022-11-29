@@ -70,6 +70,15 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Are you sure you want to quit ? (y/n).
+        /// </summary>
+        internal static string AskQuit {
+            get {
+                return ResourceManager.GetString("AskQuit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à An error occured when trying to change language.
         /// </summary>
         internal static string ChangeLanguageError {

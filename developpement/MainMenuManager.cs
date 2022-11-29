@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Projet_Programmation_Système.developpement.ConsoleManager;
 
 namespace Projet_Programmation_Système.developpement
 {
@@ -10,8 +11,8 @@ namespace Projet_Programmation_Système.developpement
     {
         private void DisplayMainMenu()
         {
-            ConsoleManager.DisplayArrayLanguage(new string[] { "MainMenu", "MainMenu1", "MainMenu2", "MainMenu3", "MainMenu4", "MainMenu5", "MainMenu6" });
-            ConsoleManager.DisplayEmptyLine();
+            DisplayArrayLanguage(new string[] { "MainMenu", "MainMenu1", "MainMenu2", "MainMenu3", "MainMenu4", "MainMenu5", "MainMenu6" });
+            DisplayEmptyLine();
         }
 
         public void ChooseItem()
@@ -21,7 +22,7 @@ namespace Projet_Programmation_Système.developpement
             {
                 DisplayMainMenu();
                 isValid = true;
-                switch (ConsoleManager.GetInput())
+                switch (GetInput())
                 {
                     case "1":
                         Save();
@@ -40,52 +41,53 @@ namespace Projet_Programmation_Système.developpement
                         break;
 
                     case "5":
-                        ConsoleManager.languageControl.ChangeLanguage();
+                        languageControl.ChangeLanguage();
                         break;
                         
                     case "6":
-                        Main.Exit();
+                        DisplayLanguage("AskQuit");
+                        if (AskForConfirmation()) Main.Exit();
                         break;
 
                     default:
-                        ConsoleManager.DisplayLanguage("InvalidInput");
+                        DisplayLanguage("InvalidInput");
                         isValid = false;
                         break;
                 }
-                ConsoleManager.DisplayEmptyLine();
+                DisplayEmptyLine();
             }
         }
 
         private void Save()
         {
-            ConsoleManager.DisplayLanguage("Save");
-            if (ConsoleManager.AskForConfirmation()) BackupJobsManager.LaunchAllSave();
+            DisplayLanguage("Save");
+            if (AskForConfirmation()) BackupJobsManager.LaunchAllSave();
 
-            ConsoleManager.DisplayLanguage("ChooseSlotToSave");
+            DisplayLanguage("ChooseSlotToSave");
             BackupJobsManager.DisplayBackupJobs();
             BackupJobsManager.LaunchSave();
         }
 
         private void Create()
         {
-            ConsoleManager.DisplayLanguage("ChooseSlotToCreate");
+            DisplayLanguage("ChooseSlotToCreate");
             BackupJobsManager.DisplayBackupJobs();
             BackupJobsManager.WriteBackupJob(BackupJobsManager.CreateBackupJob());
         }
 
         private void Modify()
         {
-            ConsoleManager.DisplayLanguage("ChooseSlotToModify");
+            DisplayLanguage("ChooseSlotToModify");
             BackupJobsManager.DisplayBackupJobs();
             BackupJobsManager.WriteBackupJob(BackupJobsManager.ModifyBackupJob());
         }
         private void Delete()
         {
-            ConsoleManager.DisplayLanguage("ChooseSlotToDelete");
+            DisplayLanguage("ChooseSlotToDelete");
             BackupJobsManager.DisplayBackupJobs();
             var a = BackupJobsManager.DeleteBackupJob();
-            ConsoleManager.DisplayLanguage("AreYouSureDelete");
-            if (ConsoleManager.AskForConfirmation()) BackupJobsManager.WriteBackupJob(a);
+            DisplayLanguage("AreYouSureDelete");
+            if (AskForConfirmation()) BackupJobsManager.WriteBackupJob(a);
         }
 
 
