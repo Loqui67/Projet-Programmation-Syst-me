@@ -61,7 +61,7 @@ public class BackupJob
         foreach (FileInfo fi in fis)
         {
             string fileToCopy = fi.FullName.Replace(sourcePath, destinationPath);
-            if (!File.Exists(fileToCopy) || type == "1")
+            if (!File.Exists(fileToCopy) || type == "1") //full save or differential save 
             {
                 Console.Write("\r{0}%   ", fi.Name);
                 File.Copy(fi.FullName, fileToCopy, true);
@@ -72,7 +72,7 @@ public class BackupJob
         foreach (DirectoryInfo di in dis)
         {
             string dirToCreate = di.FullName.Replace(sourcePath, destinationPath);
-            if (!File.Exists(dirToCreate) || type == "1") Directory.CreateDirectory(dirToCreate);
+            if (!File.Exists(dirToCreate) || type == "1") Directory.CreateDirectory(dirToCreate); //full save or differential save 
             Copy(di);
         }
     }
