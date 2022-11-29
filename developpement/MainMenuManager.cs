@@ -85,10 +85,12 @@ namespace Projet_Programmation_Système.developpement
         {
             DisplayLanguage("Save");
             if (AskForConfirmation()) BackupJobsManager.LaunchAllSave();
-
-            DisplayLanguage("ChooseSlotToSave");
-            BackupJobsManager.DisplayBackupJobs();
-            BackupJobsManager.LaunchSave();
+            else
+            {
+                DisplayLanguage("ChooseSlotToSave");
+                BackupJobsManager.DisplayBackupJobs();
+                BackupJobsManager.LaunchSave();
+            }
         }
 
         //Création d'une méthode qui permet de gérer l'affichage du menu de création des sauvegardes.

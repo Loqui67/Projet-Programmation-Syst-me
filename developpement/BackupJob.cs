@@ -8,6 +8,7 @@ using System.IO;
 using System.Text.Json;
 using Projet_Programmation_Système.developpement;
 using static Projet_Programmation_Système.developpement.ConsoleManager;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 //Création d'une classe pour les sauvegardes.
 //Creating a class for backups.
@@ -21,6 +22,8 @@ public class BackupJob
     public string destinationPath { set; get; }
     public string type { set; get; }
 
+    private long fileSize = 0;
+    private TimeSpan fileTransferTime;
     //Création d'un constructeur pour les sauvegardes.
     //Creation of a constructor for backups.
     public void Save()
@@ -43,13 +46,17 @@ public class BackupJob
     //Creation of a method for full backups.
     public void FullSave()
     {
+        DateTime date1 = DateTime.Now;
         //Création d'un nouveau dossier de sauvegarde.
         //Creation of a new backup folder.
+        fileSize = DirSize(new DirectoryInfo(sourcePath));
         System.IO.Directory.Delete(destinationPath, true);
         System.IO.Directory.CreateDirectory(destinationPath);
         var allDirectories = Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories);
         //Création d'un dossier pour chaque dossier du dossier source durant la sauvegarde.
         //Creation of a folder for each folder of the source folder during the backup.
+
+        
         foreach (string dir in allDirectories)
         {
             string dirToCreate = dir.Replace(sourcePath, destinationPath);
@@ -65,11 +72,14 @@ public class BackupJob
             string fileToCopy = file.Replace(sourcePath, destinationPath);
             File.Copy(file, fileToCopy, true);
         }
+        fileTransferTime = DateTime.Now - date1;
     }
+
 
     //Création d'une méthode pour les sauvegardes différentielles.
     //Creation of a method for differential backups.
     public void DifferentialSave() {
+        DateTime date1 = DateTime.Now;
         //Création d'un nouveau dossier de sauvegarde.
         //Creation of a new backup folder.
         var allDirectories = Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories);
@@ -90,6 +100,25 @@ public class BackupJob
             //If the file does not exist in the backup folder, we copy it.
             if (!File.Exists(fileToCopy)) File.Replace(file, fileToCopy, null);
         }
+        fileTransferTime = DateTime.Now - date1;
+    }
+
+    public static long DirSize(DirectoryInfo d)
+    {
+        long size = 0;
+        // Add file sizes.
+        FileInfo[] fis = d.GetFiles();
+        foreach (FileInfo fi in fis)
+        {
+            size += fi.Length;
+        }
+        // Add subdirectory sizes.
+        DirectoryInfo[] dis = d.GetDirectories();
+        foreach (DirectoryInfo di in dis)
+        {
+            size += DirSize(di);
+        }
+        return size;
     }
 
     //Création d'une méthode pour générer un log.
@@ -101,8 +130,8 @@ public class BackupJob
             sourcePath = sourcePath,
             destinationPath = destinationPath,
             type = type,
-            fileSize = "0",
-            fileTransferTime = "0",
+            fileSize = fileSize.ToString(),
+            fileTransferTime = fileTransferTime.TotalMilliseconds.ToString() + "ms",
             date = DateTime.Now
         };
     }
