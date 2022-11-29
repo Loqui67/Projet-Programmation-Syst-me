@@ -46,7 +46,6 @@ namespace Projet_Programmation_Système.developpement
         }
 
 
-
         public static void DisplayBackupJobs()
         {
             foreach (BackupJob backupJob in backupJobs)
@@ -61,22 +60,6 @@ namespace Projet_Programmation_Système.developpement
                 }
             }
             ConsoleManager.DisplayEmptyLine();
-        }
-
-        public static List<BackupJob>? GetConfigureBackupJob()
-        {
-            {
-                List<BackupJob> configureBackupJobs = new List<BackupJob>();
-
-                foreach (BackupJob backupJob in backupJobs)
-                {
-                    if (backupJob.name != "")
-                    {
-                        configureBackupJobs.Add(backupJob);
-                    }
-                }
-                return configureBackupJobs;
-            }
         }
 
         public static bool IsBackupJobsNull()
@@ -136,10 +119,23 @@ namespace Projet_Programmation_Système.developpement
             backupJob.Save();
         }
 
+        public static void LaunchAllSave()
+        {
+            foreach (BackupJob backupJob in backupJobs)
+            {
+                if (backupJob.name != "")
+                {
+                    backupJob.Save();
+                }
+            }
+        }
+
         public static bool AssertThatPathExist(string path)
         {
             return System.IO.Directory.Exists(path);
         }
+
+        
 
         public static string AskForId()
         {
@@ -224,5 +220,8 @@ namespace Projet_Programmation_Système.developpement
             ConsoleManager.DisplayLanguage("Type");
             return AskTypeAndCheck(AskForTypeNotEmpty, false);
         }
+        
+        delegate string Ask();
+        
     }
 }

@@ -198,6 +198,9 @@
   <data name="PathDoesntExist" xml:space="preserve">
     <value>Aucun dossier trouvé</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Voulez vous executer tous vos travaux de sauvegarde ? (o/n)</value>
+  </data>
   <data name="SourcePath" xml:space="preserve">
     <value>Choississez l'emplacement du fichier source :</value>
   </data>

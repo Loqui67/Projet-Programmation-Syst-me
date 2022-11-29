@@ -22,14 +22,14 @@ namespace Projet_Programmation_Système.Ressources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Language {
+    internal class language {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Language() {
+        internal language() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Projet_Programmation_Système.Ressources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Projet_Programmation_Système.Ressources.Language", typeof(Language).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Projet_Programmation_Système.Ressources.language", typeof(language).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -300,6 +300,15 @@ namespace Projet_Programmation_Système.Ressources {
         internal static string PathDoesntExist {
             get {
                 return ResourceManager.GetString("PathDoesntExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Do you want to execute all your backup job ? (y/n).
+        /// </summary>
+        internal static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
             }
         }
         

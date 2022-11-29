@@ -24,9 +24,7 @@ namespace Projet_Programmation_Système.developpement
                 switch (ConsoleManager.GetInput())
                 {
                     case "1":
-                        ConsoleManager.DisplayLanguage("ChooseSlotToSave");
-                        BackupJobsManager.DisplayBackupJobs();
-                        BackupJobsManager.LaunchSave();
+                        Save();
                         break;
 
                     case "2":
@@ -58,7 +56,15 @@ namespace Projet_Programmation_Système.developpement
             }
         }
 
+        private void Save()
+        {
+            ConsoleManager.DisplayLanguage("Save");
+            if (ConsoleManager.AskForConfirmation()) BackupJobsManager.LaunchAllSave();
 
+            ConsoleManager.DisplayLanguage("ChooseSlotToSave");
+            BackupJobsManager.DisplayBackupJobs();
+            BackupJobsManager.LaunchSave();
+        }
 
         private void Create()
         {

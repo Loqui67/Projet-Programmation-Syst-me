@@ -198,6 +198,9 @@
   <data name="PathDoesntExist" xml:space="preserve">
     <value>No directory found</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Do you want to execute all your backup job ? (y/n)</value>
+  </data>
   <data name="SourcePath" xml:space="preserve">
     <value>Choose the source folder :</value>
   </data>

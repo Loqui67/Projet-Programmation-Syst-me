@@ -27,11 +27,12 @@ public class BackupJob
         if (type == "1") FullSave();
         else DifferentialSave();
 
-        //JsonFileManager.WriteDailyLogToFile(GenerateLog());
+        JsonFileManager.WriteDailyLogToFile(GenerateLog());
     }
 
     public void FullSave()
     {
+        System.IO.Directory.Delete(destinationPath, true);
         System.IO.Directory.CreateDirectory(destinationPath);
         var allDirectories = Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories);
         foreach (string dir in allDirectories)
