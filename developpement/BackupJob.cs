@@ -27,7 +27,7 @@ public class BackupJob
         if (type == "1") FullSave();
         else DifferentialSave();
 
-        JsonFileManager.WriteDailyLogToFile(GenerateLog());
+        //JsonFileManager.WriteDailyLogToFile(GenerateLog());
     }
 
     public void FullSave()

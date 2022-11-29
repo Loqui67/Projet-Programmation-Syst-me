@@ -10,51 +10,61 @@ namespace Projet_Programmation_Système.developpement
     public static class JsonFileManager
     {
         private const string backupJobFileName = "SaveBackupJob.json";
-        private static FileStream backupJobStream = OpenFileStream(backupJobFileName);
-        private static FileStream dailyLogStream = OpenFileStream(GetDailyFileName());
-        
-        public static FileStream CreateJsonFileIfNotExist()
+
+
+        public static void CreateJsonFileIfNotExist()
         {
-            FileStream stream = OpenFileStream(backupJobFileName);
-            
             if (!File.Exists(backupJobFileName)) 
             {
-                IList<BackupJob> backupJobs = new List<BackupJob>();
-                File.Create(backupJobFileName);
-                for (int i = 1; i < 6; i++)
+                List<BackupJob> backupJobs = new List<BackupJob>();
+                using (FileStream fs = File.Create(backupJobFileName))
                 {
-                    backupJobs.Add(new BackupJob{ id = i.ToString() });
+                    for (int i = 1; i < 6; i++)
+                    {
+                        backupJobs.Add(new BackupJob { id = i.ToString(), name = "" });
+                    }
                 }
                 WriteBackupJobToFile(backupJobs);
             }
-            return stream;
         }
         
-        public static void WriteBackupJobToFile(IList<BackupJob> backupJobs) {
-            File.WriteAllText(backupJobFileName, JsonSerializer.Serialize(backupJobs));
+        public static void WriteBackupJobToFile(List<BackupJob> backupJobs) {
+            if (File.Exists(backupJobFileName))
+            {
+                using (FileStream fs = File.OpenWrite(backupJobFileName))
+                {
+                    string jsonString = JsonSerializer.Serialize(backupJobs);
+                    byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+                    fs.Write(jsonBytes, 0, jsonBytes.Length);
+                }
+            }
+            //File.WriteAllText(backupJobFileName, JsonSerializer.Serialize(backupJobs));
         }
         
-        public static IList<BackupJob>? ReadBackupJobFile()
+        public static List<BackupJob>? ReadBackupJobFile()
         {
-            return JsonSerializer.Deserialize<IList<BackupJob>>(File.ReadAllText(backupJobFileName));
+            CreateJsonFileIfNotExist();
+            using (FileStream fs = File.OpenRead(backupJobFileName))
+            {
+                byte[] jsonBytes = new byte[fs.Length];
+                fs.Read(jsonBytes, 0, jsonBytes.Length);
+                string jsonString = Encoding.UTF8.GetString(jsonBytes);
+                return JsonSerializer.Deserialize<List<BackupJob>>(jsonString);
+            }
+            //return JsonSerializer.Deserialize<List<BackupJob>>(File.ReadAllText(backupJobFileName));
         }
 
         public static void WriteDailyLogToFile(Log dailyLog)
         {
-                IList<Log>? logs;
+                List<Log>? logs;
                 logs = ReadDailyLogFile();
                 logs.Add(dailyLog);
                 File.WriteAllText(GetDailyFileName(), JsonSerializer.Serialize(logs));
         }
 
-        public static IList<Log>? ReadDailyLogFile()
+        public static List<Log>? ReadDailyLogFile()
         {
-            return JsonSerializer.Deserialize<IList<Log>>(File.ReadAllText(GetDailyFileName()));
-        }
-
-        private static FileStream OpenFileStream(string fileName)
-        {
-            return new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            return JsonSerializer.Deserialize<List<Log>>(File.ReadAllText(GetDailyFileName()));
         }
 
         private static string GetDailyFileName()

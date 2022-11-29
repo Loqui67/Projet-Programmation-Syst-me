@@ -10,7 +10,7 @@ namespace Projet_Programmation_Système.developpement
 {
     public static class BackupJobsManager
     {
-        public static IList<BackupJob>? backupJobs = GetBackupJobs();
+        public static List<BackupJob>? backupJobs = GetBackupJobs();
         
         public static void WriteBackupJob(BackupJob backupJob)
         {
@@ -28,7 +28,7 @@ namespace Projet_Programmation_Système.developpement
             JsonFileManager.WriteBackupJobToFile(backupJobs);
         }
 
-        public static IList<BackupJob>? GetBackupJobs()
+        public static List<BackupJob>? GetBackupJobs()
         {
             return JsonFileManager.ReadBackupJobFile();
         }
@@ -63,10 +63,10 @@ namespace Projet_Programmation_Système.developpement
             ConsoleManager.DisplayEmptyLine();
         }
 
-        public static IList<BackupJob>? GetConfigureBackupJob()
+        public static List<BackupJob>? GetConfigureBackupJob()
         {
             {
-                IList<BackupJob> configureBackupJobs = new List<BackupJob>();
+                List<BackupJob> configureBackupJobs = new List<BackupJob>();
 
                 foreach (BackupJob backupJob in backupJobs)
                 {
