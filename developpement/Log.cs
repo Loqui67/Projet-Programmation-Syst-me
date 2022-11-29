@@ -14,6 +14,6 @@ namespace Projet_Programmation_Système.developpement
         public string type { set; get; }
         public string fileSize { set; get; }
         public string fileTransferTime { set; get; }
-        public DateTime date { set; get; }
+        public string date { set; get; }
     }
 }

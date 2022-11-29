@@ -15,7 +15,7 @@ namespace Projet_Programmation_Système.developpement
             WriteIndented = true
         };
 
-        public static void CreateJsonBackupJobFileIfNotExist()
+        private static void CreateJsonBackupJobFileIfNotExist()
         {
             if (!File.Exists(backupJobFileName)) 
             {

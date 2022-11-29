@@ -73,19 +73,6 @@ namespace Projet_Programmation_Système.developpement
             DisplayEmptyLine();
         }
 
-        //Création d'une méthode qui permet de vérifier si le travail de sauvegarde est vide.
-        //Created a method to check if the backup job is empty.
-        public static bool IsBackupJobsNull()
-        {
-            try {
-                if (backupJobs != null) return false;
-                DisplayLanguage("NoBackupJobError");
-                return true;
-            } catch(Exception) {
-                return true;
-            }
-        }
-
         //Création d'une méthode qui permet de créer un nouveau travail de sauvegarde.
         //Created a method to create a new backup job.
         public static BackupJob CreateBackupJob()
