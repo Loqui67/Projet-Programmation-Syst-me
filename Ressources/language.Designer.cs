@@ -97,6 +97,15 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Choose JSON (1) or XML (2).
+        /// </summary>
+        internal static string ChooseExtension {
+            get {
+                return ResourceManager.GetString("ChooseExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Choose a language :.
         /// </summary>
         internal static string ChooseLanguage {
@@ -268,11 +277,20 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à 7 - Quit.
+        ///   Recherche une chaîne localisée semblable à 7 - Change log extension type.
         /// </summary>
         internal static string MainMenu7 {
             get {
                 return ResourceManager.GetString("MainMenu7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 8 - Quit.
+        /// </summary>
+        internal static string MainMenu8 {
+            get {
+                return ResourceManager.GetString("MainMenu8", resourceCulture);
             }
         }
         

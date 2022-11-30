@@ -129,6 +129,9 @@
   <data name="ChangeLanguageSuccess" xml:space="preserve">
     <value>La langue a été modifiée</value>
   </data>
+  <data name="ChooseExtension" xml:space="preserve">
+    <value>Choisissez JSON (1) ou XML (2)</value>
+  </data>
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Choisissez une langue :</value>
   </data>
@@ -187,7 +190,10 @@
     <value>6 - Changer la langue</value>
   </data>
   <data name="MainMenu7" xml:space="preserve">
-    <value>7 - Quitter</value>
+    <value>7 - Changer le type d'extension des logs</value>
+  </data>
+  <data name="MainMenu8" xml:space="preserve">
+    <value>8 - Quitter</value>
   </data>
   <data name="ModifyDestinationPath" xml:space="preserve">
     <value>Choisissez le nouveau répertoire de destination du travail (vide si identique) :</value>

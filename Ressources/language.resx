@@ -129,6 +129,9 @@
   <data name="ChangeLanguageSuccess" xml:space="preserve">
     <value>Language successfully changed</value>
   </data>
+  <data name="ChooseExtension" xml:space="preserve">
+    <value>Choose JSON (1) or XML (2)</value>
+  </data>
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Choose a language :</value>
   </data>
@@ -187,7 +190,10 @@
     <value>6 - Change language</value>
   </data>
   <data name="MainMenu7" xml:space="preserve">
-    <value>7 - Quit</value>
+    <value>7 - Change log extension type</value>
+  </data>
+  <data name="MainMenu8" xml:space="preserve">
+    <value>8 - Quit</value>
   </data>
   <data name="ModifyDestinationPath" xml:space="preserve">
     <value>Choose the new destination path for this job (empty if it is the same) :</value>

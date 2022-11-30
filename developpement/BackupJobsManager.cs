@@ -16,7 +16,6 @@ namespace Projet_Programmation_Système.developpement
         //Création d'une liste de sauvegarde.
         //Creating a backup list.
         public static List<BackupJob>? backupJobs = GetBackupJobs();
-
         //Création d'une méthode qui permet d'écrire ce que font les travaux de sauvegardes dans le fichier json.
         //Created a method that writes what the backup jobs do in the json file.
         public static void WriteBackupJob(BackupJob backupJob)
@@ -32,13 +31,13 @@ namespace Projet_Programmation_Système.developpement
                     break;
                 }
             }
-            JsonFileManager.WriteBackupJobToFile(backupJobs);
+            FileManager.WriteBackupJobToFile(backupJobs);
         }
 
 
         public static List<BackupJob>? GetBackupJobs()
         {
-            return JsonFileManager.ReadBackupJobFile();
+            return FileManager.ReadBackupJobFile();
         }
 
         //Création d'une méthode qui permet de récupérer un travail de sauvegarde.

@@ -4,24 +4,34 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Projet_Programmation_Système.developpement
 {
-    public static class JsonFileManager
+    public static class FileManager
     {
-        private const string backupJobFileName = "SaveBackupJob.json";
-        private const string activeStateFileName = "activeState.json";
+        private static string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        private static string appDataFolder = "Projet Programmation Système";
+        private static string appDataFolderPath = createFolderIfNotExistAndReturnString(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), appDataFolder));
+        private static string backupJobJsonFileName = Path.Combine(appDataFolderPath, "SaveBackupJob.json");
+        private static string activeStateFileName = Path.Combine(appDataFolderPath, "activeState.json");
         private static JsonSerializerOptions optionsWriteIndented = new JsonSerializerOptions
         {
             WriteIndented = true
         };
 
+        private static string createFolderIfNotExistAndReturnString(string path)
+        {
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            return path;
+        }
+
         private static void CreateJsonBackupJobFileIfNotExist()
         {
-            if (!File.Exists(backupJobFileName)) 
+            if (!File.Exists(backupJobJsonFileName)) 
             {
                 List<BackupJob> backupJobs = new List<BackupJob>();
-                using (FileStream fs = File.Create(backupJobFileName))
+                using (FileStream fs = File.Create(backupJobJsonFileName))
                 {
                     for (int i = 1; i < 6; i++)
                     {
@@ -33,9 +43,9 @@ namespace Projet_Programmation_Système.developpement
         }
         
         public static void WriteBackupJobToFile(List<BackupJob> backupJobs) {
-            if (File.Exists(backupJobFileName))
+            if (File.Exists(backupJobJsonFileName))
             {
-                using (FileStream fs = File.OpenWrite(backupJobFileName))
+                using (FileStream fs = File.OpenWrite(backupJobJsonFileName))
                 {
                     string jsonString = JsonSerializer.Serialize(backupJobs, optionsWriteIndented);
                     byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
@@ -47,7 +57,7 @@ namespace Projet_Programmation_Système.developpement
         public static List<BackupJob>? ReadBackupJobFile()
         {
             CreateJsonBackupJobFileIfNotExist();
-            using (FileStream fs = File.OpenRead(backupJobFileName))
+            using (FileStream fs = File.OpenRead(backupJobJsonFileName))
             {
                 byte[] jsonBytes = new byte[fs.Length];
                 fs.Read(jsonBytes, 0, jsonBytes.Length);
@@ -58,25 +68,24 @@ namespace Projet_Programmation_Système.developpement
 
         public static void WriteDailyLogToFile(Log dailyLog)
         {
-            if (!Directory.Exists("logs")) Directory.CreateDirectory("logs");
-
+            string path = createFolderIfNotExistAndReturnString(Path.Combine(appDataFolderPath, "logs"));
             List<Log>? logs;
-            logs = ReadDailyLogFile();
+            logs = ReadDailyLogFile(path);
             logs.Add(dailyLog);
-            
-            using (FileStream fs = File.Create(GetDailyFileName()))
-            {
 
+            using (FileStream fs = File.Create(Path.Combine(path, GetDailyFileName() + ".json")))
+            {
                 string jsonString = JsonSerializer.Serialize(logs, optionsWriteIndented);
                 byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
                 fs.Write(jsonBytes, 0, jsonBytes.Length);
             }
         }
 
-        public static List<Log>? ReadDailyLogFile()
+        public static List<Log>? ReadDailyLogFile(string path)
         {
-            if (File.Exists(GetDailyFileName())) {
-                using (FileStream fs = File.OpenRead(GetDailyFileName()))
+            string filePath = Path.Combine(path, GetDailyFileName() + ".json");
+            if (File.Exists(filePath)) {
+                using (FileStream fs = File.OpenRead(filePath))
                 {
                     byte[] jsonBytes = new byte[fs.Length];
                     fs.Read(jsonBytes, 0, jsonBytes.Length);
@@ -86,6 +95,39 @@ namespace Projet_Programmation_Système.developpement
             }
             return new List<Log>();
         }
+
+
+        public static void SerializeToXML(Log log)
+        {
+            string path = createFolderIfNotExistAndReturnString(Path.Combine(appDataFolderPath, "logs"));
+            List<Log> logs = DeserializeFromXML(path);
+            logs.Add(log);
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Log>));
+            TextWriter writer = new StreamWriter(Path.Combine(path, GetDailyFileName() + ".xml"));
+            serializer.Serialize(writer, logs);
+            writer.Close();
+        }
+
+        public static List<Log> DeserializeFromXML(string path)
+        {
+            if (File.Exists(GetDailyFileName() + ".xml"))
+            {
+                XmlSerializer deserializer = new XmlSerializer(typeof(List<Log>));
+                TextReader reader = new StreamReader(Path.Combine(path, GetDailyFileName() + ".xml"));
+                object? obj = deserializer.Deserialize(reader);
+                List<Log>? logs = (List<Log>?)obj;
+                reader.Close();
+                if (logs == null) return new List<Log>();
+                return logs;
+            }
+            else
+            {
+                File.Create(GetDailyFileName() + ".json");
+                return new List<Log>();
+            }
+        }
+
+
 
         public async static Task WriteStateLog(StateLog stateLog)
         {
@@ -138,7 +180,7 @@ namespace Projet_Programmation_Système.developpement
 
         private static string GetDailyFileName()
         {
-            return "logs/" + DateTime.Now.ToString("yyyy-MM-dd") + "-log.json";
+            return DateTime.Now.ToString("yyyy-MM-dd") + "-log";
         }
     }
 }
