@@ -20,7 +20,7 @@
                 <ImageBrush ImageSource="/drapeau-anglais.png"/>
             </Button.Background>
         </Button>
-        <Button Content="" HorizontalAlignment="Left" Margin="612,10,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="33" Height="33">
+        <Button Content="" HorizontalAlignment="Left" Margin="613,10,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="33" Height="33">
             <Button.Background>
                 <ImageBrush ImageSource="/delete icon.png"/>
             </Button.Background>
@@ -29,22 +29,19 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="74*"/>
-                    <ColumnDefinition Width="21*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="86*"/>
-                    <RowDefinition Height="89*"/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
-                <ListBox Grid.Column="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,10,10,10" Grid.RowSpan="2" Background="#FFF4F4F4" SelectionChanged="ListBox_SelectionChanged" Grid.ColumnSpan="2"/>
+                <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,10,10,10" Background="#FFF4F4F4" SelectionChanged="ListBox_SelectionChanged"/>
             </Grid>
         </GroupBox>
-        <Button Content="" HorizontalAlignment="Left" Margin="571,7,0,0" VerticalAlignment="Top" Click="Button_Click" Width="41" Height="40" BorderBrush="{x:Null}">
+        <Button Content="" HorizontalAlignment="Left" Margin="575,11,0,0" VerticalAlignment="Top" Click="Button_Click" Width="33" Height="33" BorderBrush="{x:Null}">
             <Button.Background>
-                <ImageBrush ImageSource="/edit_icon.png"/>
+                <ImageBrush ImageSource="/create icon.png"/>
             </Button.Background>
         </Button>
-        <Button Content="" HorizontalAlignment="Left" Margin="538,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.192,-0.279" Height="33" Width="33" Foreground="Black">
+        <Button Content="" HorizontalAlignment="Left" Margin="537,9,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.192,-0.279" Height="34" Width="33" Foreground="Black">
             <Button.Background>
                 <ImageBrush ImageSource="/play green.png"/>
             </Button.Background>
