@@ -4,29 +4,34 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Projet_Programmation_Système.developpement
 {
-
-    //Création d'une classe pour gérer les fichiers Json.
-    //Creation of a class to manage Json files.
-    public static class JsonFileManager
+    public static class FileManager
     {
-        private const string backupJobFileName = "SaveBackupJob.json";
-        private const string activeStateFileName = "activeState.json";
+        private static string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        private static string appDataFolder = "Projet Programmation Système";
+        private static string appDataFolderPath = createFolderIfNotExistAndReturnString(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), appDataFolder));
+        private static string backupJobJsonFileName = Path.Combine(appDataFolderPath, "SaveBackupJob.json");
+        private static string activeStateFileName = Path.Combine(appDataFolderPath, "activeState.json");
         private static JsonSerializerOptions optionsWriteIndented = new JsonSerializerOptions
         {
             WriteIndented = true
         };
 
-        //Création d'une méthode pour sauvegarder les données d'un travaux de sauvegarde dans un fichier Json.
-        //Creation of a method to save the data of a backup job in a Json file.
-        private static void CreateJsonBackupJobFileIfNotExist()
+        private static string createFolderIfNotExistAndReturnString(string path)
         {
-            if (!File.Exists(backupJobFileName)) 
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            return path;
+        }
+
+        private static void CreateJsonBackupJobFileIfNotExist() // COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER et tester en sup dans appdata 
+        {
+            if (!File.Exists(backupJobJsonFileName))
             {
                 List<BackupJob> backupJobs = new List<BackupJob>();
-                using (FileStream fs = File.Create(backupJobFileName))
+                using (FileStream fs = File.Create(backupJobJsonFileName))
                 {
                     for (int i = 1; i < 6; i++)
                     {
@@ -37,12 +42,11 @@ namespace Projet_Programmation_Système.developpement
             }
         }
 
-        //Création d'une méthode pour sauvegarder les données d'un travaux de sauvegarde dans un fichier.
-        //Create a method to save data from a backup job to a file.
-        public static void WriteBackupJobToFile(List<BackupJob> backupJobs) {
-            if (File.Exists(backupJobFileName))
+        public static void WriteBackupJobToFile(List<BackupJob> backupJobs)
+        {
+            if (File.Exists(backupJobJsonFileName))
             {
-                using (FileStream fs = File.OpenWrite(backupJobFileName))
+                using (FileStream fs = File.OpenWrite(backupJobJsonFileName))
                 {
                     string jsonString = JsonSerializer.Serialize(backupJobs, optionsWriteIndented);
                     byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
@@ -51,12 +55,10 @@ namespace Projet_Programmation_Système.developpement
             }
         }
 
-        //Création d'une méthode pour lire les données d'un travaux de sauvegarde dans un fichier.
-        //Create a method to read data from a backup job into a file.
         public static List<BackupJob>? ReadBackupJobFile()
         {
             CreateJsonBackupJobFileIfNotExist();
-            using (FileStream fs = File.OpenRead(backupJobFileName))
+            using (FileStream fs = File.OpenRead(backupJobJsonFileName))
             {
                 byte[] jsonBytes = new byte[fs.Length];
                 fs.Read(jsonBytes, 0, jsonBytes.Length);
@@ -65,31 +67,27 @@ namespace Projet_Programmation_Système.developpement
             }
         }
 
-        //Création d'une méthode pour sauvegarder les logs de maniere journaliere.
-        //Creation of a method to save logs on a daily basis.
         public static void WriteDailyLogToFile(Log dailyLog)
         {
-            if (!Directory.Exists("logs")) Directory.CreateDirectory("logs");
-
+            string path = createFolderIfNotExistAndReturnString(Path.Combine(appDataFolderPath, "logs"));
             List<Log>? logs;
-            logs = ReadDailyLogFile();
+            logs = ReadDailyLogFile(path);
             logs.Add(dailyLog);
-            
-            using (FileStream fs = File.Create(GetDailyFileName()))
-            {
 
+            using (FileStream fs = File.Create(Path.Combine(path, GetDailyFileName() + ".json")))
+            {
                 string jsonString = JsonSerializer.Serialize(logs, optionsWriteIndented);
                 byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
                 fs.Write(jsonBytes, 0, jsonBytes.Length);
             }
         }
 
-        //Méthode qui permet de lire les logs journaliers.
-        //Method to read daily logs.
-        public static List<Log>? ReadDailyLogFile()
+        public static List<Log>? ReadDailyLogFile(string path)
         {
-            if (File.Exists(GetDailyFileName())) {
-                using (FileStream fs = File.OpenRead(GetDailyFileName()))
+            string filePath = Path.Combine(path, GetDailyFileName() + ".json");
+            if (File.Exists(filePath))
+            {
+                using (FileStream fs = File.OpenRead(filePath))
                 {
                     byte[] jsonBytes = new byte[fs.Length];
                     fs.Read(jsonBytes, 0, jsonBytes.Length);
@@ -100,14 +98,12 @@ namespace Projet_Programmation_Système.developpement
             return new List<Log>();
         }
 
-        //Créaton d'une méthode qui permet d'écrireles logs d'activités.
-        //Creation of a method that allows to write activity logs.
 
         public async static Task WriteStateLog(StateLog stateLog)
         {
             List<StateLog> logs = ReadStateLog();
 
-            if(logs != new List<StateLog>())
+            if (logs != new List<StateLog>())
             {
                 foreach (StateLog log in logs.ToList())
                 {
@@ -130,8 +126,6 @@ namespace Projet_Programmation_Système.developpement
             }
         }
 
-        //Création d'une méthode qui permet de lire les logs d'activité.
-        //Creation of a method that allows to read activity logs.
         public static List<StateLog>? ReadStateLog()
         {
             if (File.Exists(activeStateFileName))
@@ -154,11 +148,9 @@ namespace Projet_Programmation_Système.developpement
             return new List<StateLog>();
         }
 
-        //Création d'une méthode qui permet d'obtenir le nom du fichier où sont sauvegardé les logs journalier.
-        //Creation of a method to obtain the name of the file where the daily logs are saved.
         private static string GetDailyFileName()
         {
-            return "logs/" + DateTime.Now.ToString("yyyy-MM-dd") + "-log.json";
+            return DateTime.Now.ToString("yyyy-MM-dd") + "-log";
         }
     }
 }

@@ -32,13 +32,13 @@ namespace Projet_Programmation_Système.developpement
                     break;
                 }
             }
-            JsonFileManager.WriteBackupJobToFile(backupJobs);
+            FileManager.WriteBackupJobToFile(backupJobs);
         }
 
 
         public static List<BackupJob>? GetBackupJobs()
         {
-            return JsonFileManager.ReadBackupJobFile();
+            return FileManager.ReadBackupJobFile();
         }
 
         //Création d'une méthode qui permet de récupérer un travail de sauvegarde.

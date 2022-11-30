@@ -86,7 +86,7 @@ public class BackupJob
         //Générer l'objet de log d'activité a écrire dans les fichiers
         //Generate the activity Log object to write to the files
 
-        Task writeStateLog = JsonFileManager.WriteStateLog(new StateLog
+        Task writeStateLog = FileManager.WriteStateLog(new StateLog
         {
             backupJob = this,
             fileNumber = 0,
@@ -100,7 +100,7 @@ public class BackupJob
 
         fileTransferTime = DateTime.Now - date1;
         
-        JsonFileManager.WriteDailyLogToFile(GenerateLog());
+        FileManager.WriteDailyLogToFile(GenerateLog());
     }
 
 
@@ -122,7 +122,7 @@ public class BackupJob
                 fileNumberLeft--;
                 fileSizeLeft -= fi.Length;
                 
-                Task writeStateLog = JsonFileManager.WriteStateLog(new StateLog { 
+                Task writeStateLog = FileManager.WriteStateLog(new StateLog { 
                     backupJob = this,
                     fileNumber = fileNumberTotal,
                     fileSize = fileSizeTotal,
