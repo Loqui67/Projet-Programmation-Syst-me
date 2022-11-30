@@ -103,6 +103,8 @@ namespace Projet_Programmation_Système.developpement
             return AskForConfirmation();
         }
 
+        //Création d'une méthode qui permet de nettoyer l'affichage de la console.
+        //Creation of a method to clean the console display.
         public static void ClearCurrentConsoleLine()
         {
             int currentLineCursor = Console.CursorTop;
