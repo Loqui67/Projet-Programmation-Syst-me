@@ -171,7 +171,7 @@ public class BackupJob
         try
         {
             FileInfo fileDest = new FileInfo(fileToCopy);
-            if (fileInfo.LastWriteTime != fileDest.LastWriteTime) return true;
+            if (fileInfo.LastWriteTime > fileDest.LastWriteTime) return true;
             else return false;
         }
         catch (Exception)

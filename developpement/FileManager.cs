@@ -39,7 +39,7 @@ namespace Projet_Programmation_Système.developpement
                 {
                     for (int i = 1; i < 6; i++)
                     {
-                        backupJobs.Add(new BackupJob { id = i.ToString(), name = "" });
+                        backupJobs.Add(new BackupJob { id = i.ToString(), name = "", destinationPath = "", sourcePath = "", type = "" });
                     }
                 }
                 WriteBackupJobToFile(backupJobs);
