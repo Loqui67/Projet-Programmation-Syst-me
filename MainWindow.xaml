@@ -8,21 +8,21 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="/background pivot.jpg"/>
+            <ImageBrush ImageSource="/Ressources/ImagesWPF/background pivot.jpg"/>
         </Grid.Background>
         <Button Content="" HorizontalAlignment="Left" Margin="706,10,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="34" Height="34">
             <Button.Background>
-                <ImageBrush ImageSource="/drapeau france.png"/>
+                <ImageBrush ImageSource="/Ressources/ImagesWPF/drapeau france.png"/>
             </Button.Background>
         </Button>
         <Button Content="" HorizontalAlignment="Left" Margin="747,11,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="33" Height="33">
             <Button.Background>
-                <ImageBrush ImageSource="/drapeau-anglais.png"/>
+                <ImageBrush ImageSource="/Ressources/ImagesWPF/drapeau-anglais.png"/>
             </Button.Background>
         </Button>
-        <Button Content="" HorizontalAlignment="Left" Margin="613,10,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="33" Height="33">
+        <Button Content="" HorizontalAlignment="Left" Margin="612,10,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="33" Height="33">
             <Button.Background>
-                <ImageBrush ImageSource="/delete icon.png"/>
+                <ImageBrush ImageSource="/Ressources/ImagesWPF/delete icon.png"/>
             </Button.Background>
         </Button>
         <GroupBox Header="Backup Job" Margin="10,51,10,10" BorderBrush="{x:Null}" Grid.RowSpan="2">
@@ -38,12 +38,12 @@
         </GroupBox>
         <Button Content="" HorizontalAlignment="Left" Margin="575,11,0,0" VerticalAlignment="Top" Click="Button_Click" Width="33" Height="33" BorderBrush="{x:Null}">
             <Button.Background>
-                <ImageBrush ImageSource="/create icon.png"/>
+                <ImageBrush ImageSource="/Ressources/ImagesWPF/create icon.png"/>
             </Button.Background>
         </Button>
         <Button Content="" HorizontalAlignment="Left" Margin="537,9,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.192,-0.279" Height="34" Width="33" Foreground="Black">
             <Button.Background>
-                <ImageBrush ImageSource="/play green.png"/>
+                <ImageBrush ImageSource="/Ressources/ImagesWPF/play green.png"/>
             </Button.Background>
             <Button.BorderBrush>
                 <ImageBrush/>
@@ -59,7 +59,7 @@
         </TextBox>
         <Button Content="" HorizontalAlignment="Left" Margin="494,18,0,0" VerticalAlignment="Top" Height="17" Width="17" BorderBrush="{x:Null}">
             <Button.Background>
-                <ImageBrush ImageSource="/icon recherche.png"/>
+                <ImageBrush ImageSource="/Ressources/ImagesWPF/icon recherche.png"/>
             </Button.Background>
         </Button>
 
