@@ -10,6 +10,7 @@ namespace Projet_Programmation_Système.developpement
     public static class JsonFileManager
     {
         private const string backupJobFileName = "SaveBackupJob.json";
+        private const string activeStateFileName = "activeState.json";
         private static JsonSerializerOptions optionsWriteIndented = new JsonSerializerOptions
         {
             WriteIndented = true
@@ -41,7 +42,6 @@ namespace Projet_Programmation_Système.developpement
                     fs.Write(jsonBytes, 0, jsonBytes.Length);
                 }
             }
-            //File.WriteAllText(backupJobFileName, JsonSerializer.Serialize(backupJobs));
         }
         
         public static List<BackupJob>? ReadBackupJobFile()
@@ -54,7 +54,6 @@ namespace Projet_Programmation_Système.developpement
                 string jsonString = Encoding.UTF8.GetString(jsonBytes);
                 return JsonSerializer.Deserialize<List<BackupJob>>(jsonString);
             }
-            //return JsonSerializer.Deserialize<List<BackupJob>>(File.ReadAllText(backupJobFileName));
         }
 
         public static void WriteDailyLogToFile(Log dailyLog)
@@ -71,7 +70,6 @@ namespace Projet_Programmation_Système.developpement
                 string jsonString = JsonSerializer.Serialize(logs, optionsWriteIndented);
                 byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
                 fs.Write(jsonBytes, 0, jsonBytes.Length);
-                //File.WriteAllText(GetDailyFileName(), JsonSerializer.Serialize(logs));
             }
         }
 
@@ -84,11 +82,58 @@ namespace Projet_Programmation_Système.developpement
                     fs.Read(jsonBytes, 0, jsonBytes.Length);
                     string jsonString = Encoding.UTF8.GetString(jsonBytes);
                     return JsonSerializer.Deserialize<List<Log>>(jsonString);
-                    //return JsonSerializer.Deserialize<List<Log>>(File.ReadAllText(GetDailyFileName()));
                 }
             }
             return new List<Log>();
+        }
 
+        public async static Task WriteStateLog(StateLog stateLog)
+        {
+            List<StateLog> logs = ReadStateLog();
+
+            if(logs != new List<StateLog>())
+            {
+                foreach (StateLog log in logs.ToList())
+                {
+                    if (log.backupJob.id == stateLog.backupJob.id)
+                    {
+                        logs.Remove(log);
+                    }
+                }
+            }
+
+            logs.Add(stateLog);
+
+
+
+            using (FileStream fs = File.Create(activeStateFileName))
+            {
+                string jsonString = JsonSerializer.Serialize(logs, optionsWriteIndented);
+                byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+                await fs.WriteAsync(jsonBytes, 0, jsonBytes.Length);
+            }
+        }
+
+        public static List<StateLog>? ReadStateLog()
+        {
+            if (File.Exists(activeStateFileName))
+            {
+                using (FileStream fs = File.OpenRead(activeStateFileName))
+                {
+                    try
+                    {
+                        byte[] jsonBytes = new byte[fs.Length];
+                        fs.Read(jsonBytes, 0, jsonBytes.Length);
+                        string jsonString = Encoding.UTF8.GetString(jsonBytes);
+                        return JsonSerializer.Deserialize<List<StateLog>>(jsonString);
+                    }
+                    catch (Exception)
+                    {
+                        return new List<StateLog>();
+                    }
+                }
+            }
+            return new List<StateLog>();
         }
 
         private static string GetDailyFileName()

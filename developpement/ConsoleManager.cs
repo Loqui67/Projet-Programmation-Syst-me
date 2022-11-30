@@ -102,5 +102,13 @@ namespace Projet_Programmation_Système.developpement
             DisplayLanguage("InvalidInput");
             return AskForConfirmation();
         }
+
+        public static void ClearCurrentConsoleLine()
+        {
+            int currentLineCursor = Console.CursorTop;
+            Console.SetCursorPosition(0, Console.CursorTop);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, currentLineCursor);
+        }
     }
 }
