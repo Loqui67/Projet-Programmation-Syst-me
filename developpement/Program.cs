@@ -1,18 +1,27 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using Programmation_Système.developpement.Controller;
+using Projet_Programmation_Système.developpement;
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
 
-Console.WriteLine("Hello, World!");
+Main.Run();
 
-namespace Programmation_Système.developpement
-{
-    class Program
+//Création d'une class "Main" pour lancer le programme.
+//Creation of a "Main" class to launch the program.
+public static class Main {
+
+    public static void Run()
     {
-        static void Main(string[] args)
+        MainMenuManager mainMenu = new MainMenuManager();
+        while (true)
         {
-            new MainController();
+            mainMenu.ChooseItem();
         }
     }
+
+    public static void Exit()
+    {
+        Environment.Exit(0);
+    }
 }
+
