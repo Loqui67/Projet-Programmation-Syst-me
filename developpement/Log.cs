@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Fichier servant à la sauvegarde des logs.
+//File used to save logs.
 namespace Projet_Programmation_Système.developpement
 {
     public class Log
