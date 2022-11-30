@@ -31,9 +31,6 @@ public class BackupJob
     private TimeSpan fileTransferTime;
 
 
-
-    //Création d'un constructeur pour les sauvegardes.
-    //Creation of a constructor for backups.
     public async void Save(bool restore)
     {
         //Vérification du chemin d'accès.
@@ -86,8 +83,9 @@ public class BackupJob
         DisplayEmptyLine();
         DisplayLanguage("Done");
 
-        //Création du gestionnaire de fichier json.
-        //Creation of the json file manager.
+        //Générer l'objet de log d'activité a écrire dans les fichiers
+        //Generate the activity Log object to write to the files
+
         Task writeStateLog = JsonFileManager.WriteStateLog(new StateLog
         {
             backupJob = this,
@@ -106,8 +104,8 @@ public class BackupJob
     }
 
 
-    //Création d'une méthode pour faire une sauvegarde différentiel.
-    //Creation of a method to make a differential backup.
+    //Création d'une méthode pour copier les fichiers
+    //Copy files from one directory to another.
     public async Task Copy(DirectoryInfo d, string sourcePath, string destinationPath)
     {
         FileInfo[] fis = d.GetFiles();
@@ -139,8 +137,8 @@ public class BackupJob
         foreach (DirectoryInfo di in dis)
         {
             string dirToCreate = di.FullName.Replace(sourcePath, destinationPath);
-            //Condition qui choisi si l'on fait une sauvegarde complete ou différentiel.
-            //Condition that chooses if we make a complete or differential backup.
+            //On copie tout les sous dossiers, et on rappelle la méthode pour les sous dossiers.
+            //Copy all the subfolders, and call the method for the subfolders.
             if (!File.Exists(dirToCreate) || type == "1") Directory.CreateDirectory(dirToCreate);  
             Task copy = Copy(di, sourcePath, destinationPath);
             await copy;

@@ -100,8 +100,9 @@ namespace Projet_Programmation_Système.developpement
             return new List<Log>();
         }
 
-        //Créaton d'une méthode qui permet d'écrire l'état des logs.
-        //Creation of a method that allows to write the state of the logs.
+        //Créaton d'une méthode qui permet d'écrireles logs d'activités.
+        //Creation of a method that allows to write activity logs.
+
         public async static Task WriteStateLog(StateLog stateLog)
         {
             List<StateLog> logs = ReadStateLog();
@@ -129,8 +130,8 @@ namespace Projet_Programmation_Système.developpement
             }
         }
 
-        //Création d'une méthode qui permet de lire l'état des logs.
-        //Creation of a method to read the state of the logs.
+        //Création d'une méthode qui permet de lire les logs d'activité.
+        //Creation of a method that allows to read activity logs.
         public static List<StateLog>? ReadStateLog()
         {
             if (File.Exists(activeStateFileName))

@@ -146,7 +146,7 @@ namespace Projet_Programmation_Système.developpement
             }
         }
 
-        //Méthode qui vérifier si le chemin éxiste.
+        //Méthode qui vérifier si le chemin existe.
         //Method that checks if the path exists.
         public static bool AssertThatPathExist(string path)
         {
