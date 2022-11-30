@@ -7,6 +7,64 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/background pivot.jpg"/>
+        </Grid.Background>
+        <Button Content="" HorizontalAlignment="Left" Margin="706,10,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="34" Height="34">
+            <Button.Background>
+                <ImageBrush ImageSource="/drapeau france.png"/>
+            </Button.Background>
+        </Button>
+        <Button Content="" HorizontalAlignment="Left" Margin="747,11,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="33" Height="33">
+            <Button.Background>
+                <ImageBrush ImageSource="/drapeau-anglais.png"/>
+            </Button.Background>
+        </Button>
+        <Button Content="" HorizontalAlignment="Left" Margin="612,10,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="33" Height="33">
+            <Button.Background>
+                <ImageBrush ImageSource="/delete icon.png"/>
+            </Button.Background>
+        </Button>
+        <GroupBox Header="Backup Job" Margin="10,51,10,10" BorderBrush="{x:Null}" Grid.RowSpan="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="74*"/>
+                    <ColumnDefinition Width="21*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="86*"/>
+                    <RowDefinition Height="89*"/>
+                </Grid.RowDefinitions>
+                <ListBox Grid.Column="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,10,10,10" Grid.RowSpan="2" Background="#FFF4F4F4" SelectionChanged="ListBox_SelectionChanged" Grid.ColumnSpan="2"/>
+            </Grid>
+        </GroupBox>
+        <Button Content="" HorizontalAlignment="Left" Margin="571,7,0,0" VerticalAlignment="Top" Click="Button_Click" Width="41" Height="40" BorderBrush="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="/edit_icon.png"/>
+            </Button.Background>
+        </Button>
+        <Button Content="" HorizontalAlignment="Left" Margin="538,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.192,-0.279" Height="33" Width="33" Foreground="Black">
+            <Button.Background>
+                <ImageBrush ImageSource="/play green.png"/>
+            </Button.Background>
+            <Button.BorderBrush>
+                <ImageBrush/>
+            </Button.BorderBrush>
+
+        </Button>
+        <TextBox HorizontalAlignment="Left" Margin="22,17,0,0" TextWrapping="Wrap" Text="  Research" VerticalAlignment="Top" Width="494" Height="20">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <Button Content="" HorizontalAlignment="Left" Margin="494,18,0,0" VerticalAlignment="Top" Height="17" Width="17" BorderBrush="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="/icon recherche.png"/>
+            </Button.Background>
+        </Button>
 
     </Grid>
 </Window>

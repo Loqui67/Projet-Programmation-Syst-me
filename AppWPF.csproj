@@ -8,6 +8,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="background pivot.jpg" />
+    <None Remove="background reverse.jpg" />
+    <None Remove="background.png" />
+    <None Remove="delete icon.jpg" />
+    <None Remove="delete icon.png" />
+    <None Remove="drapeau france.png" />
+    <None Remove="drapeau-anglais.png" />
+    <None Remove="edit_icon.png" />
+    <None Remove="icon recherche.png" />
+    <None Remove="play green.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="background pivot.jpg" />
+    <Resource Include="background reverse.jpg" />
+    <Resource Include="background.png" />
+    <Resource Include="delete icon.jpg" />
+    <Resource Include="delete icon.png" />
+    <Resource Include="drapeau france.png" />
+    <Resource Include="drapeau-anglais.png" />
+    <Resource Include="edit_icon.png" />
+    <Resource Include="icon recherche.png" />
+    <Resource Include="play green.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Ressources\language.Designer.cs">
       <DependentUpon>Language.resx</DependentUpon>
       <DesignTime>True</DesignTime>
