@@ -42,12 +42,15 @@ public class BackupJob
             DisplayLanguage("PathDoesntExist");
             return;
         }
-
+        //Calcule de la date dans une variable.
+        //Calculation of the date in a variable.
         DateTime date1 = DateTime.Now;
 
         fileSizeTotal = 0;
         fileNumberTotal = 0;
-        
+
+        //Création d'une méthode pour réstaurer un fichier.
+        //Creation of a method to restore a file.
         DisplayLanguage("CopyFiles");
         DirectoryInfo d;
         if (restore)
@@ -65,6 +68,8 @@ public class BackupJob
         fileSizeLeft = fileSizeTotal;
         fileNumberLeft = fileNumberTotal;
 
+        //Création d'une méthode pour copier les fichiers durant la restauration.
+        //Create a method to copy files during recovery.
         if (restore)
         {
             d = new DirectoryInfo(destinationPath);
@@ -81,6 +86,8 @@ public class BackupJob
         DisplayEmptyLine();
         DisplayLanguage("Done");
 
+        //Création du gestionnaire de fichier json.
+        //Creation of the json file manager.
         Task writeStateLog = JsonFileManager.WriteStateLog(new StateLog
         {
             backupJob = this,
@@ -99,7 +106,8 @@ public class BackupJob
     }
 
 
-
+    //Création d'une méthode pour faire une sauvegarde différentiel.
+    //Creation of a method to make a differential backup.
     public async Task Copy(DirectoryInfo d, string sourcePath, string destinationPath)
     {
         FileInfo[] fis = d.GetFiles();
@@ -131,7 +139,9 @@ public class BackupJob
         foreach (DirectoryInfo di in dis)
         {
             string dirToCreate = di.FullName.Replace(sourcePath, destinationPath);
-            if (!File.Exists(dirToCreate) || type == "1") Directory.CreateDirectory(dirToCreate); //full save or differential save 
+            //Condition qui choisi si l'on fait une sauvegarde complete ou différentiel.
+            //Condition that chooses if we make a complete or differential backup.
+            if (!File.Exists(dirToCreate) || type == "1") Directory.CreateDirectory(dirToCreate);  
             Task copy = Copy(di, sourcePath, destinationPath);
             await copy;
         }
@@ -143,7 +153,7 @@ public class BackupJob
         foreach (FileInfo fi in fis)
         {
             string fileToCopy = fi.FullName.Replace(sourcePath, destinationPath);
-            if (!File.Exists(fileToCopy) || type == "1") //full save or differential save 
+            if (!File.Exists(fileToCopy) || type == "1")
             {
                 fileSizeTotal += fi.Length;
                 fileNumberTotal++;
