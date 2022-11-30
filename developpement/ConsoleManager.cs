@@ -19,7 +19,7 @@ namespace Projet_Programmation_Système.developpement
         //Creation of a variable to display the language. This variable is static because it is common to all instances of the class.
         public static void DisplayLanguage(string message)
         {
-            Console.WriteLine(languageControl.GetLanguageString(message));
+            //Console.WriteLine(languageControl.GetLanguageString(message));
         }
 
         //Création d'une méthode qui affiche une ligne vide. 
@@ -83,7 +83,7 @@ namespace Projet_Programmation_Système.developpement
         //Creation of a method that asks the user to enter a value that is not empty.
         public static string GetInputNotEmpty()
         {
-            string? input = Console.ReadLine();
+            string? input = "Console.ReadLine();";
             if (input == null || input == "")
             {
                 DisplayLanguage("InvalidInput");

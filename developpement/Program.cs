@@ -3,8 +3,10 @@ using Projet_Programmation_Système.developpement;
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
+using System.IO;
+using System;
 
-Main.Run();
+//Main.Run();
 
 public static class Main {
 
