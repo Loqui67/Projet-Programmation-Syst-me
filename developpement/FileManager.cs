@@ -12,7 +12,7 @@ namespace Projet_Programmation_Système.developpement
     {
         private static string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private static string appDataFolder = "Projet Programmation Système";
-        private static string appDataFolderPath = createFolderIfNotExistAndReturnString(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), appDataFolder));
+        private static string appDataFolderPath = createFolderIfNotExistAndReturnString(Path.Combine(appData, appDataFolder));
         private static string backupJobJsonFileName = Path.Combine(appDataFolderPath, "SaveBackupJob.json");
         private static string activeStateFileName = Path.Combine(appDataFolderPath, "activeState.json");
         private static JsonSerializerOptions optionsWriteIndented = new JsonSerializerOptions
@@ -20,13 +20,17 @@ namespace Projet_Programmation_Système.developpement
             WriteIndented = true
         };
 
+        //creer un dossier s'il n'existe pas
+        //create a folder if it doesn't exist
         private static string createFolderIfNotExistAndReturnString(string path)
         {
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
             return path;
         }
 
-        private static void CreateJsonBackupJobFileIfNotExist() // COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER// COMMENTER et tester en sup dans appdata 
+        //creer un fichier s'il n'existe pas
+        //create a file if it doesn't exist
+        private static void CreateJsonBackupJobFileIfNotExist()
         {
             if (!File.Exists(backupJobJsonFileName))
             {
@@ -42,6 +46,8 @@ namespace Projet_Programmation_Système.developpement
             }
         }
 
+        //ecrit dans le fichier les différents travaux de sauvegarde
+        //write in the file the different backup jobs
         public static void WriteBackupJobToFile(List<BackupJob> backupJobs)
         {
             if (File.Exists(backupJobJsonFileName))
@@ -55,6 +61,8 @@ namespace Projet_Programmation_Système.developpement
             }
         }
 
+        //lit le fichier des différents travaux de sauvegarde
+        //read the file of the different backup jobs
         public static List<BackupJob>? ReadBackupJobFile()
         {
             CreateJsonBackupJobFileIfNotExist();
@@ -67,6 +75,8 @@ namespace Projet_Programmation_Système.developpement
             }
         }
 
+        //ecrit dans le fichier les logs journalières
+        //write in the file the daily logs
         public static void WriteDailyLogToFile(Log dailyLog)
         {
             string path = createFolderIfNotExistAndReturnString(Path.Combine(appDataFolderPath, "logs"));
@@ -82,6 +92,8 @@ namespace Projet_Programmation_Système.developpement
             }
         }
 
+        //lit le fichier des logs journalières
+        //read the file of the daily logs
         public static List<Log>? ReadDailyLogFile(string path)
         {
             string filePath = Path.Combine(path, GetDailyFileName() + ".json");
@@ -98,7 +110,8 @@ namespace Projet_Programmation_Système.developpement
             return new List<Log>();
         }
 
-
+        //ecrit le fichier des logs d'activités
+        //write in the file the activity logs
         public async static Task WriteStateLog(StateLog stateLog)
         {
             List<StateLog> logs = ReadStateLog();
@@ -126,6 +139,8 @@ namespace Projet_Programmation_Système.developpement
             }
         }
 
+        //lit le fichier des logs d'activités
+        //read the file of the activity logs
         public static List<StateLog>? ReadStateLog()
         {
             if (File.Exists(activeStateFileName))
@@ -148,6 +163,8 @@ namespace Projet_Programmation_Système.developpement
             return new List<StateLog>();
         }
 
+        //retourne le nom du fichier journalier
+        //return the name of the daily file
         private static string GetDailyFileName()
         {
             return DateTime.Now.ToString("yyyy-MM-dd") + "-log";
