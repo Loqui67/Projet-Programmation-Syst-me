@@ -112,7 +112,7 @@ public class BackupJob
         foreach (FileInfo fi in fis)
         {
             string fileToCopy = fi.FullName.Replace(sourcePath, destinationPath);
-            if (!File.Exists(fileToCopy) || type == "1") //full save or differential save 
+            if (!File.Exists(fileToCopy) || type == "1" || IsFileModified(fi, destinationPath)) //full save or differential save 
             {
                 Console.Write("\r{0}%   ", fi.Name);
                 ClearCurrentConsoleLine();
@@ -151,7 +151,7 @@ public class BackupJob
         foreach (FileInfo fi in fis)
         {
             string fileToCopy = fi.FullName.Replace(sourcePath, destinationPath);
-            if (!File.Exists(fileToCopy) || type == "1")
+            if (!File.Exists(fileToCopy) || type == "1" || IsFileModified(fi, destinationPath))
             {
                 fileSizeTotal += fi.Length;
                 fileNumberTotal++;
@@ -164,6 +164,23 @@ public class BackupJob
             await directoryInfo;
         }
     }
+
+    public bool IsFileModified(FileInfo fileInfo, string destinationPath)
+    {
+        string fileToCopy = fileInfo.FullName.Replace(sourcePath, destinationPath);
+        try
+        {
+            FileInfo fileDest = new FileInfo(fileToCopy);
+            if (fileInfo.LastWriteTime != fileDest.LastWriteTime) return true;
+            else return false;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+
 
     //Création d'une méthode pour générer un log.
     //Creation of a method to generate a log.
