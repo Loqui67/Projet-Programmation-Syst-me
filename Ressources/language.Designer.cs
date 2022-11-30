@@ -133,6 +133,15 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Choose a backup job to restore.
+        /// </summary>
+        internal static string ChooseSlotToRestore {
+            get {
+                return ResourceManager.GetString("ChooseSlotToRestore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Choose a backup job to execute.
         /// </summary>
         internal static string ChooseSlotToSave {
@@ -241,7 +250,7 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à 5 - Change language.
+        ///   Recherche une chaîne localisée semblable à 5 - Restore backup job.
         /// </summary>
         internal static string MainMenu5 {
             get {
@@ -250,11 +259,20 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à 6 - Quit.
+        ///   Recherche une chaîne localisée semblable à 6 - Change language.
         /// </summary>
         internal static string MainMenu6 {
             get {
                 return ResourceManager.GetString("MainMenu6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 7 - Quit.
+        /// </summary>
+        internal static string MainMenu7 {
+            get {
+                return ResourceManager.GetString("MainMenu7", resourceCulture);
             }
         }
         
@@ -327,6 +345,15 @@ namespace Projet_Programmation_Système.Ressources {
         internal static string PathDoesntExist {
             get {
                 return ResourceManager.GetString("PathDoesntExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Do you want to restore all your backups ? (y/n).
+        /// </summary>
+        internal static string Restore {
+            get {
+                return ResourceManager.GetString("Restore", resourceCulture);
             }
         }
         

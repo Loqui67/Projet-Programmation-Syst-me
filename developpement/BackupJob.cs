@@ -34,7 +34,7 @@ public class BackupJob
 
     //Création d'un constructeur pour les sauvegardes.
     //Creation of a constructor for backups.
-    public async void Save()
+    public async void Save(bool restore)
     {
         //Vérification du chemin d'accès.
         //Verification of the access path.
@@ -49,16 +49,34 @@ public class BackupJob
         fileNumberTotal = 0;
         
         DisplayLanguage("CopyFiles");
+        DirectoryInfo d;
+        if (restore)
+        {
+            d = new DirectoryInfo(destinationPath);
+            Task directoryInfo = GetDirectoryInfo(d, destinationPath, sourcePath);
+            await directoryInfo;
+        }
+        else { 
+            d = new DirectoryInfo(sourcePath);
+            Task directoryInfo = GetDirectoryInfo(d, sourcePath, destinationPath);
+            await directoryInfo;
+        }
         
-        DirectoryInfo d = new DirectoryInfo(sourcePath);
-        Task directoryInfo = GetDirectoryInfo(d);
-        await directoryInfo;
-
         fileSizeLeft = fileSizeTotal;
         fileNumberLeft = fileNumberTotal;
 
-        Task copy = Copy(d);
-        await copy;
+        if (restore)
+        {
+            d = new DirectoryInfo(destinationPath);
+            Task copy = Copy(d, destinationPath, sourcePath);
+            await copy;
+        }
+        else
+        {
+            d = new DirectoryInfo(sourcePath);
+            Task copy = Copy(d, sourcePath, destinationPath);
+            await copy;
+        }
 
         DisplayEmptyLine();
         DisplayLanguage("Done");
@@ -82,9 +100,8 @@ public class BackupJob
 
 
 
-    public async Task Copy(DirectoryInfo d)
+    public async Task Copy(DirectoryInfo d, string sourcePath, string destinationPath)
     {
-        
         FileInfo[] fis = d.GetFiles();
         foreach (FileInfo fi in fis)
         {
@@ -107,22 +124,20 @@ public class BackupJob
                     fileNumberLeft = fileNumberLeft,
                     fileSizeLeft = fileSizeLeft 
                 });
-                
                 await writeStateLog;
             }
         }
-
-        
         DirectoryInfo[] dis = d.GetDirectories();
         foreach (DirectoryInfo di in dis)
         {
             string dirToCreate = di.FullName.Replace(sourcePath, destinationPath);
             if (!File.Exists(dirToCreate) || type == "1") Directory.CreateDirectory(dirToCreate); //full save or differential save 
-            Copy(di);
+            Task copy = Copy(di, sourcePath, destinationPath);
+            await copy;
         }
     }
 
-    public async Task GetDirectoryInfo(DirectoryInfo d)
+    public async Task GetDirectoryInfo(DirectoryInfo d, string sourcePath, string destinationPath)
     {
         FileInfo[] fis = d.GetFiles();
         foreach (FileInfo fi in fis)
@@ -137,7 +152,8 @@ public class BackupJob
         DirectoryInfo[] dis = d.GetDirectories();
         foreach (DirectoryInfo di in dis)
         {
-            GetDirectoryInfo(di);
+            Task directoryInfo = GetDirectoryInfo(di, sourcePath, destinationPath);
+            await directoryInfo;
         }
     }
 

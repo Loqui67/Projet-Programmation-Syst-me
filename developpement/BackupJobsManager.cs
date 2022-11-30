@@ -126,22 +126,22 @@ namespace Projet_Programmation_Système.developpement
 
         //Méthode qui permet de lancer une sauvegarde.
         //Method that allows to launch a backup.
-        public static void LaunchSave()
+        public static void LaunchSave(bool restore)
         {
             string id = AskForId();
             BackupJob? backupJob = GetBackupJob(id);
-            backupJob.Save();
+            backupJob.Save(restore);
         }
 
         //Méthode qui permet de lancer toutes les sauvegardes en meme temps.
         //Method which makes it possible to launch all the safeguards at the same time.
-        public static void LaunchAllSave()
+        public static void LaunchAllSave(bool restore)
         {
             foreach (BackupJob backupJob in backupJobs)
             {
                 if (backupJob.name != "")
                 {
-                    backupJob.Save();
+                    backupJob.Save(restore);
                 }
             }
         }
