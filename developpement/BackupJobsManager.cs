@@ -112,16 +112,20 @@ namespace Projet_Programmation_Système.developpement
 
         //Création d'une méthode qui permet de supprimer un travail de sauvegarde.
         //Created a method to delete a backup job.
-        public static BackupJob DeleteBackupJob()
+        public static void DeleteBackupJob()
         {
             //Cherche à avoir les informations sur les travaux de sauvegarde à supprimer.
             //Seeks information about the backup jobs to be deleted.
-            BackupJob? backupJob = GetBackupJob(AskForId());
-            backupJob.name = "";
-            backupJob.sourcePath = "";
-            backupJob.destinationPath = "";
-            backupJob.type = "";
-            return backupJob;
+            string id = AskForId();
+            DisplayLanguage("AreYouSureDelete");
+            if (AskForConfirmation()) {
+                BackupJob? backupJob = GetBackupJob(id);
+                backupJob.name = "";
+                backupJob.sourcePath = "";
+                backupJob.destinationPath = "";
+                backupJob.type = "";
+                WriteBackupJob(backupJob);
+            }
         }
 
         //Méthode qui permet de lancer une sauvegarde.

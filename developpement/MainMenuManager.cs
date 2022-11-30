@@ -125,9 +125,7 @@ namespace Projet_Programmation_Système.developpement
         {
             DisplayLanguage("ChooseSlotToDelete");
             BackupJobsManager.DisplayBackupJobs();
-            var a = BackupJobsManager.DeleteBackupJob();
-            DisplayLanguage("AreYouSureDelete");
-            if (AskForConfirmation()) BackupJobsManager.WriteBackupJob(a);
+            BackupJobsManager.DeleteBackupJob();
         }
 
 
