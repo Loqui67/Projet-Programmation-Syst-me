@@ -39,9 +39,6 @@ public class BackupJob
             DisplayLanguage("PathDoesntExist");
             return;
         }
-        //Calcule de la date dans une variable.
-        //Calculation of the date in a variable.
-        DateTime date1 = DateTime.Now;
 
         fileSizeTotal = 0;
         fileNumberTotal = 0;
@@ -65,6 +62,11 @@ public class BackupJob
         fileSizeLeft = fileSizeTotal;
         fileNumberLeft = fileNumberTotal;
 
+
+        //Calcule de la date dans une variable.
+        //Calculation of the date in a variable.
+        DateTime date1 = DateTime.Now;
+        
         //Création d'une méthode pour copier les fichiers durant la restauration.
         //Create a method to copy files during recovery.
         if (restore)
@@ -79,6 +81,8 @@ public class BackupJob
             Task copy = Copy(d, sourcePath, destinationPath);
             await copy;
         }
+        fileTransferTime = DateTime.Now - date1;
+
 
         DisplayEmptyLine();
         DisplayLanguage("Done");
@@ -98,7 +102,7 @@ public class BackupJob
 
         await writeStateLog;
 
-        fileTransferTime = DateTime.Now - date1;
+
         
         if (MainMenuManager.formatLogs == "json") FileManager.WriteDailyLogToFile(GenerateLog(restore));
         else FileManager.SerializeToXML(GenerateLog(restore));
@@ -178,21 +182,6 @@ public class BackupJob
         {
             Task directoryInfo = GetDirectoryInfo(di, sourcePath, destinationPath);
             await directoryInfo;
-        }
-    }
-
-    public bool IsFileModified(FileInfo fileInfo, string destinationPath)
-    {
-        string fileToCopy = fileInfo.FullName.Replace(sourcePath, destinationPath);
-        try
-        {
-            FileInfo fileDest = new FileInfo(fileToCopy);
-            if (fileInfo.LastWriteTime > fileDest.LastWriteTime) return true;
-            else return false;
-        }
-        catch (Exception)
-        {
-            return false;
         }
     }
 
