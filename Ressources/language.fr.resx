@@ -129,6 +129,9 @@
   <data name="ChangeLanguageSuccess" xml:space="preserve">
     <value>La langue a été modifiée</value>
   </data>
+  <data name="ChooseExtension" xml:space="preserve">
+    <value>Choisissez JSON (1) ou XML (2)</value>
+  </data>
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Choisissez une langue :</value>
   </data>
@@ -140,6 +143,9 @@
   </data>
   <data name="ChooseSlotToModify" xml:space="preserve">
     <value>Quel travail souhaitez vous modifier ?</value>
+  </data>
+  <data name="ChooseSlotToRestore" xml:space="preserve">
+    <value>Choisissez le travail à restaurer</value>
   </data>
   <data name="ChooseSlotToSave" xml:space="preserve">
     <value>Choisissez le travail à éxécuter</value>
@@ -178,10 +184,16 @@
     <value>4 - Supprimer un travail de sauvegarde</value>
   </data>
   <data name="MainMenu5" xml:space="preserve">
-    <value>5 - Changer la langue</value>
+    <value>5 - Restaurer travaux de sauvegarde</value>
   </data>
   <data name="MainMenu6" xml:space="preserve">
-    <value>6 - Quitter</value>
+    <value>6 - Changer la langue</value>
+  </data>
+  <data name="MainMenu7" xml:space="preserve">
+    <value>7 - Changer le type d'extension des logs</value>
+  </data>
+  <data name="MainMenu8" xml:space="preserve">
+    <value>8 - Quitter</value>
   </data>
   <data name="ModifyDestinationPath" xml:space="preserve">
     <value>Choisissez le nouveau répertoire de destination du travail (vide si identique) :</value>
@@ -206,6 +218,9 @@
   </data>
   <data name="PathDoesntExist" xml:space="preserve">
     <value>Aucun dossier trouvé</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Voulez vous restorer toutes vos sauvegardes ? (o/n)</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Voulez vous executer tous vos travaux de sauvegarde ? (o/n)</value>

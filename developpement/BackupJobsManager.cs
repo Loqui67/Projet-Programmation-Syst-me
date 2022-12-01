@@ -16,7 +16,6 @@ namespace Projet_Programmation_Système.developpement
         //Création d'une liste de sauvegarde.
         //Creating a backup list.
         public static List<BackupJob>? backupJobs = GetBackupJobs();
-
         //Création d'une méthode qui permet d'écrire ce que font les travaux de sauvegardes dans le fichier json.
         //Created a method that writes what the backup jobs do in the json file.
         public static void WriteBackupJob(BackupJob backupJob)
@@ -32,13 +31,13 @@ namespace Projet_Programmation_Système.developpement
                     break;
                 }
             }
-            JsonFileManager.WriteBackupJobToFile(backupJobs);
+            FileManager.WriteBackupJobToFile(backupJobs);
         }
 
 
         public static List<BackupJob>? GetBackupJobs()
         {
-            return JsonFileManager.ReadBackupJobFile();
+            return FileManager.ReadBackupJobFile();
         }
 
         //Création d'une méthode qui permet de récupérer un travail de sauvegarde.
@@ -112,41 +111,45 @@ namespace Projet_Programmation_Système.developpement
 
         //Création d'une méthode qui permet de supprimer un travail de sauvegarde.
         //Created a method to delete a backup job.
-        public static BackupJob DeleteBackupJob()
+        public static void DeleteBackupJob()
         {
             //Cherche à avoir les informations sur les travaux de sauvegarde à supprimer.
             //Seeks information about the backup jobs to be deleted.
-            BackupJob? backupJob = GetBackupJob(AskForId());
-            backupJob.name = "";
-            backupJob.sourcePath = "";
-            backupJob.destinationPath = "";
-            backupJob.type = "";
-            return backupJob;
+            string id = AskForId();
+            DisplayLanguage("AreYouSureDelete");
+            if (AskForConfirmation()) {
+                BackupJob? backupJob = GetBackupJob(id);
+                backupJob.name = "";
+                backupJob.sourcePath = "";
+                backupJob.destinationPath = "";
+                backupJob.type = "";
+                WriteBackupJob(backupJob);
+            }
         }
 
         //Méthode qui permet de lancer une sauvegarde.
         //Method that allows to launch a backup.
-        public static void LaunchSave()
+        public static void LaunchSave(bool restore)
         {
             string id = AskForId();
             BackupJob? backupJob = GetBackupJob(id);
-            backupJob.Save();
+            backupJob.Save(restore);
         }
 
         //Méthode qui permet de lancer toutes les sauvegardes en meme temps.
         //Method which makes it possible to launch all the safeguards at the same time.
-        public static void LaunchAllSave()
+        public static void LaunchAllSave(bool restore)
         {
             foreach (BackupJob backupJob in backupJobs)
             {
                 if (backupJob.name != "")
                 {
-                    backupJob.Save();
+                    backupJob.Save(restore);
                 }
             }
         }
 
-        //Méthode qui vérifier si le chemin éxiste.
+        //Méthode qui vérifier si le chemin existe.
         //Method that checks if the path exists.
         public static bool AssertThatPathExist(string path)
         {

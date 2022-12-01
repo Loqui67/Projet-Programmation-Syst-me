@@ -129,6 +129,9 @@
   <data name="ChangeLanguageSuccess" xml:space="preserve">
     <value>Language successfully changed</value>
   </data>
+  <data name="ChooseExtension" xml:space="preserve">
+    <value>Choose JSON (1) or XML (2)</value>
+  </data>
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Choose a language :</value>
   </data>
@@ -140,6 +143,9 @@
   </data>
   <data name="ChooseSlotToModify" xml:space="preserve">
     <value>Which backup job do you want to modify ?</value>
+  </data>
+  <data name="ChooseSlotToRestore" xml:space="preserve">
+    <value>Choose a backup job to restore</value>
   </data>
   <data name="ChooseSlotToSave" xml:space="preserve">
     <value>Choose a backup job to execute</value>
@@ -160,7 +166,7 @@
     <value>Choose a slot :</value>
   </data>
   <data name="InvalidInput" xml:space="preserve">
-    <value>Error : Invalid Input</value>
+    <value>Error : invalid input</value>
   </data>
   <data name="MainMenu" xml:space="preserve">
     <value>Choose an option :</value>
@@ -178,10 +184,16 @@
     <value>4 - Delete a backup job</value>
   </data>
   <data name="MainMenu5" xml:space="preserve">
-    <value>5 - Change language</value>
+    <value>5 - Restore backup job</value>
   </data>
   <data name="MainMenu6" xml:space="preserve">
-    <value>6 - Quit</value>
+    <value>6 - Change language</value>
+  </data>
+  <data name="MainMenu7" xml:space="preserve">
+    <value>7 - Change log extension type</value>
+  </data>
+  <data name="MainMenu8" xml:space="preserve">
+    <value>8 - Quit</value>
   </data>
   <data name="ModifyDestinationPath" xml:space="preserve">
     <value>Choose the new destination path for this job (empty if it is the same) :</value>
@@ -206,6 +218,9 @@
   </data>
   <data name="PathDoesntExist" xml:space="preserve">
     <value>No directory found</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Do you want to restore all your backups ? (y/n)</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Do you want to execute all your backup job ? (y/n)</value>

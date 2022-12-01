@@ -3,19 +3,19 @@ using Projet_Programmation_Système.developpement;
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
-using System.IO;
 using System;
 
-//Main.Run();
+Main.Run();
 
+//Création d'une class "Main" pour lancer le programme.
+//Creation of a "Main" class to launch the program.
 public static class Main {
 
     public static void Run()
     {
-        MainMenuManager mainMenu = new MainMenuManager();
         while (true)
         {
-            mainMenu.ChooseItem();
+            MainMenuManager.ChooseItem();
         }
     }
 

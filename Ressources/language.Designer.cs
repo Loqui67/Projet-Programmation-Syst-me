@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AppWPF.Ressources {
+namespace Projet_Programmation_Système.Ressources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace AppWPF.Ressources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AppWPF.Ressources.language", typeof(language).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Projet_Programmation_Système.Ressources.language", typeof(language).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -97,6 +97,15 @@ namespace AppWPF.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Choose JSON (1) or XML (2).
+        /// </summary>
+        internal static string ChooseExtension {
+            get {
+                return ResourceManager.GetString("ChooseExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Choose a language :.
         /// </summary>
         internal static string ChooseLanguage {
@@ -129,6 +138,15 @@ namespace AppWPF.Ressources {
         internal static string ChooseSlotToModify {
             get {
                 return ResourceManager.GetString("ChooseSlotToModify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Choose a backup job to restore.
+        /// </summary>
+        internal static string ChooseSlotToRestore {
+            get {
+                return ResourceManager.GetString("ChooseSlotToRestore", resourceCulture);
             }
         }
         
@@ -187,7 +205,7 @@ namespace AppWPF.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Error : Invalid Input.
+        ///   Recherche une chaîne localisée semblable à Error : invalid input.
         /// </summary>
         internal static string InvalidInput {
             get {
@@ -241,7 +259,7 @@ namespace AppWPF.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à 5 - Change language.
+        ///   Recherche une chaîne localisée semblable à 5 - Restore backup job.
         /// </summary>
         internal static string MainMenu5 {
             get {
@@ -250,11 +268,29 @@ namespace AppWPF.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à 6 - Quit.
+        ///   Recherche une chaîne localisée semblable à 6 - Change language.
         /// </summary>
         internal static string MainMenu6 {
             get {
                 return ResourceManager.GetString("MainMenu6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 7 - Change log extension type.
+        /// </summary>
+        internal static string MainMenu7 {
+            get {
+                return ResourceManager.GetString("MainMenu7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 8 - Quit.
+        /// </summary>
+        internal static string MainMenu8 {
+            get {
+                return ResourceManager.GetString("MainMenu8", resourceCulture);
             }
         }
         
@@ -327,6 +363,15 @@ namespace AppWPF.Ressources {
         internal static string PathDoesntExist {
             get {
                 return ResourceManager.GetString("PathDoesntExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Do you want to restore all your backups ? (y/n).
+        /// </summary>
+        internal static string Restore {
+            get {
+                return ResourceManager.GetString("Restore", resourceCulture);
             }
         }
         
