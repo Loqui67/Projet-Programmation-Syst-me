@@ -123,6 +123,9 @@
   <data name="AskQuit" xml:space="preserve">
     <value>Are you sure you want to quit ? (y/n)</value>
   </data>
+  <data name="BackupJob" xml:space="preserve">
+    <value>Backup Job</value>
+  </data>
   <data name="ChangeLanguageError" xml:space="preserve">
     <value>An error occured when trying to change language</value>
   </data>

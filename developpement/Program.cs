@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Resources;
 using System;
 
-Main.Run();
+//Main.Run();
 
 //Création d'une class "Main" pour lancer le programme.
 //Creation of a "Main" class to launch the program.

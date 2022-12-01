@@ -45,12 +45,12 @@ namespace AppWPF
 
         private void Button_Switch_FR(object sender, RoutedEventArgs e)
         {
-            languageControl.ChangeLanguageInterface("fr");
+           // languageControl.ChangeLanguageInterface("fr");
         }
 
         private void Button_Switch_EN(object sender, RoutedEventArgs e)
         {
-            languageControl.ChangeLanguageInterface("en");
+            //languageControl.ChangeLanguageInterface("en");
         }
 
         private void Button_Delete_All_Backup_Job(object sender, RoutedEventArgs e)
@@ -71,6 +71,11 @@ namespace AppWPF
         private void TextBox_Search_Backup_Job(object sender, TextChangedEventArgs e)
         {
 
+        }
+        
+        private void languageChange(object sender, RoutedEventArgs e, string language)
+        {
+            languageControl.GetLanguageString(language);
         }
     }
 }

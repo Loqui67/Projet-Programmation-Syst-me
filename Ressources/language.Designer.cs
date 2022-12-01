@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Projet_Programmation_Système.Ressources {
+namespace AppWPF.Ressources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Projet_Programmation_Système.Ressources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Projet_Programmation_Système.Ressources.language", typeof(language).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AppWPF.Ressources.language", typeof(language).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -75,6 +75,15 @@ namespace Projet_Programmation_Système.Ressources {
         internal static string AskQuit {
             get {
                 return ResourceManager.GetString("AskQuit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Backup Job.
+        /// </summary>
+        internal static string BackupJob {
+            get {
+                return ResourceManager.GetString("BackupJob", resourceCulture);
             }
         }
         

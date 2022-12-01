@@ -22,7 +22,7 @@ public class LanguageControl
     {
         //Recherche du fichier de langue dans le projet.
         //Search for the language file in the project.
-        _rm = new ResourceManager("Projet_Programmation_Système.Ressources.language", Assembly.GetExecutingAssembly());
+        _rm = new ResourceManager("AppWPF.Ressources.language", Assembly.GetExecutingAssembly());
     }
 
     // Recherche de la variable qui lui correspond en parametre en fonction de la langue.
