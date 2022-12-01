@@ -166,7 +166,7 @@
     <value>Choose a slot :</value>
   </data>
   <data name="InvalidInput" xml:space="preserve">
-    <value>Error : Invalid Input</value>
+    <value>Error : invalid input</value>
   </data>
   <data name="MainMenu" xml:space="preserve">
     <value>Choose an option :</value>

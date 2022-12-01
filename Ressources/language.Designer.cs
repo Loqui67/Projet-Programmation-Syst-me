@@ -205,7 +205,7 @@ namespace Projet_Programmation_Système.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Error : Invalid Input.
+        ///   Recherche une chaîne localisée semblable à Error : invalid input.
         /// </summary>
         internal static string InvalidInput {
             get {

@@ -55,19 +55,20 @@ namespace Projet_Programmation_Système.developpement
                     case "4":
                         Delete();
                         break;
-
+                    //Si l'utilisateur choisi l'item 1, il va être redirigé vers le menu de restauration des sauvegardes.
+                    //If the user chooses item 1, he will be redirected to the restoring management menu.
                     case "5":
                         Save(true);
                         break;
 
-                    //Si l'utilisateur choisi l'item 5, il va être redirigé vers le menu de gestion des languages.
-                    //If the user chooses item 5, he will be redirected to the language management menu.
+                    //Si l'utilisateur choisi l'item 6, il va être redirigé vers le menu de gestion des languages.
+                    //If the user chooses item 6, he will be redirected to the language management menu.
                     case "6":
                         languageControl.ChangeLanguage();
                         break;
 
-                    //Si l'utilisateur choisi l'item 6, l'application se ferme en demandant de confirmer son choix.
-                    //If the user chooses item 6, the application closes by asking to confirm his choice.
+                    //Si l'utilisateur choisi l'item 7, l'application se ferme en demandant de confirmer son choix.
+                    //If the user chooses item 7, the application closes by asking to confirm his choice.
                     case "7":
                         ChooseJsonOrXml();
                         break;
@@ -129,9 +130,7 @@ namespace Projet_Programmation_Système.developpement
         {
             DisplayLanguage("ChooseSlotToDelete");
             BackupJobsManager.DisplayBackupJobs();
-            var a = BackupJobsManager.DeleteBackupJob();
-            DisplayLanguage("AreYouSureDelete");
-            if (AskForConfirmation()) BackupJobsManager.WriteBackupJob(a);
+            BackupJobsManager.DeleteBackupJob();
         }
 
         private static void ChooseJsonOrXml()

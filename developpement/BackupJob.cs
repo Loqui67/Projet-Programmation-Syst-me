@@ -31,9 +31,6 @@ public class BackupJob
     private TimeSpan fileTransferTime;
 
 
-
-    //Création d'un constructeur pour les sauvegardes.
-    //Creation of a constructor for backups.
     public async void Save(bool restore)
     {
         //Vérification du chemin d'accès.
@@ -42,12 +39,15 @@ public class BackupJob
             DisplayLanguage("PathDoesntExist");
             return;
         }
-
+        //Calcule de la date dans une variable.
+        //Calculation of the date in a variable.
         DateTime date1 = DateTime.Now;
 
         fileSizeTotal = 0;
         fileNumberTotal = 0;
-        
+
+        //Création d'une méthode pour réstaurer un fichier.
+        //Creation of a method to restore a file.
         DisplayLanguage("CopyFiles");
         DirectoryInfo d;
         if (restore)
@@ -65,6 +65,8 @@ public class BackupJob
         fileSizeLeft = fileSizeTotal;
         fileNumberLeft = fileNumberTotal;
 
+        //Création d'une méthode pour copier les fichiers durant la restauration.
+        //Create a method to copy files during recovery.
         if (restore)
         {
             d = new DirectoryInfo(destinationPath);
@@ -80,6 +82,9 @@ public class BackupJob
 
         DisplayEmptyLine();
         DisplayLanguage("Done");
+
+        //Générer l'objet de log d'activité a écrire dans les fichiers
+        //Generate the activity Log object to write to the files
 
         Task writeStateLog = FileManager.WriteStateLog(new StateLog
         {
@@ -100,7 +105,8 @@ public class BackupJob
     }
 
 
-
+    //Création d'une méthode pour copier les fichiers
+    //Copy files from one directory to another.
     public async Task Copy(DirectoryInfo d, string sourcePath, string destinationPath)
     {
         FileInfo[] fis = d.GetFiles();
@@ -133,7 +139,9 @@ public class BackupJob
         foreach (DirectoryInfo di in dis)
         {
             string dirToCreate = di.FullName.Replace(sourcePath, destinationPath);
-            if (!File.Exists(dirToCreate) || type == "1") Directory.CreateDirectory(dirToCreate); //full save or differential save 
+            //On copie tout les sous dossiers, et on rappelle la méthode pour les sous dossiers.
+            //Copy all the subfolders, and call the method for the subfolders.
+            if (!File.Exists(dirToCreate) || type == "1") Directory.CreateDirectory(dirToCreate);  
             Task copy = Copy(di, sourcePath, destinationPath);
             await copy;
         }
@@ -159,7 +167,7 @@ public class BackupJob
         foreach (FileInfo fi in fis)
         {
             string fileToCopy = fi.FullName.Replace(sourcePath, destinationPath);
-            if (!File.Exists(fileToCopy) || type == "1") //full save or differential save 
+            if (!File.Exists(fileToCopy) || type == "1" || IsFileModified(fi, destinationPath))
             {
                 fileSizeTotal += fi.Length;
                 fileNumberTotal++;
@@ -172,6 +180,23 @@ public class BackupJob
             await directoryInfo;
         }
     }
+
+    public bool IsFileModified(FileInfo fileInfo, string destinationPath)
+    {
+        string fileToCopy = fileInfo.FullName.Replace(sourcePath, destinationPath);
+        try
+        {
+            FileInfo fileDest = new FileInfo(fileToCopy);
+            if (fileInfo.LastWriteTime > fileDest.LastWriteTime) return true;
+            else return false;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+
 
     //Création d'une méthode pour générer un log.
     //Creation of a method to generate a log.
