@@ -1,9 +1,7 @@
 ﻿using AppWPF.developpement;
-using AppWPF.developpement.View;
 using Projet_Programmation_Système.developpement;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,10 +23,8 @@ namespace AppWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static LanguageControl languageControl = new();
+        public static LanguageControl languageControl = new LanguageControl();
         private List<BackupJob>? backupJobs = new List<BackupJob>();
-        ModalWindowBackupJobInfos modalWindow = new ModalWindowBackupJobInfos();
-        
         public MainWindow()
         {
             InitializeComponent();
@@ -50,7 +46,7 @@ namespace AppWPF
 
         private void Button_Create_Backup_Job(object sender, RoutedEventArgs e)
         {
-            modalWindow.ShowDialog();
+
         }
 
         private void Button_Switch_FR(object sender, RoutedEventArgs e)
@@ -82,18 +78,15 @@ namespace AppWPF
         {
 
         }
+        
+        private void languageChange(object sender, RoutedEventArgs e, string language)
+        {
+            languageControl.GetLanguageString(language);
+        }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
-
-        private void Button_Delete_Backup_Job(object sender, EventArgs e)
-        {
-            MainMenuManager.Delete((sender as Button).DataContext.ToString());
-            RefreshList();
-        }
-
-
     }
 }

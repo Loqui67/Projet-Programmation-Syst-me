@@ -1,12 +1,10 @@
 ﻿using AppWPF.developpement;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Xml.Linq;
 using static Projet_Programmation_Système.developpement.ConsoleManager;
 
@@ -96,16 +94,9 @@ namespace Projet_Programmation_Système.developpement
         {
             //Cherche à avoir les informations sur les travaux de sauvegarde à supprimer.
             //Seeks information about the backup jobs to be deleted.
-
-            //DisplayLanguage("AreYouSureDelete");
-            //if (AskForConfirmation())
-            foreach (BackupJob backupJob in backupJobs.ToList())
-            {
-                if (backupJob.name == name)
-                {
-                    backupJobs.Remove(backupJob);
-                    break;
-                }
+            DisplayLanguage("AreYouSureDelete");
+            if (AskForConfirmation()) {
+                backupJobs.Remove(GetBackupJob(name));
             }
             WriteBackupJob();
         }

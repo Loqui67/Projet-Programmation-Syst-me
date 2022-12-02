@@ -43,6 +43,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="developpement\View\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Include="App.xaml" />
   </ItemGroup>
 

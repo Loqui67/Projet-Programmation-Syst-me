@@ -58,7 +58,7 @@
                                     <TextBlock Text="{Binding destinationPath}" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="2">
-                                    <Button  Content="Delete" DataContext="{Binding name}" HorizontalAlignment="Right" Click="Button_Delete_Backup_Job"/>
+                                    <Button Content="Delete" HorizontalAlignment="Right"/>
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
