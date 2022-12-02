@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="background pivot.jpg" />
+    <None Remove="create icon.png" />
+    <None Remove="delete icon.png" />
+    <None Remove="drapeau france.png" />
+    <None Remove="drapeau-anglais.png" />
+    <None Remove="icon recherche.png" />
+    <None Remove="play green.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="background pivot.jpg" />
+    <Resource Include="create icon.png" />
+    <Resource Include="delete icon.png" />
+    <Resource Include="drapeau france.png" />
+    <Resource Include="drapeau-anglais.png" />
+    <Resource Include="icon recherche.png" />
+    <Resource Include="play green.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Ressources\language.Designer.cs">
+      <DependentUpon>Language.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Ressources\language.resx">
+      <LastGenOutput>language.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="App.xaml" />
+  </ItemGroup>
+
+</Project>
