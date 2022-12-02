@@ -6,30 +6,31 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.IO;
+using AppWPF.developpement;
 
 namespace Projet_Programmation_Système.developpement
 {
     public static class FileManager
     {
-        private static string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        private static string appDataFolder = "Projet Programmation Système";
-        private static string appDataFolderPath = createFolderIfNotExistAndReturnString(Path.Combine(appData, appDataFolder));
-        private static string backupJobJsonFileName = Path.Combine(appDataFolderPath, "SaveBackupJob.json");
-        private static string activeStateFileName = Path.Combine(appDataFolderPath, "activeState.json");
-        private static JsonSerializerOptions optionsWriteIndented = new JsonSerializerOptions
+        private static readonly string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        private static readonly string appDataFolder = "Projet Programmation Système";
+        private static readonly string appDataFolderPath = CreateFolderIfNotExistAndReturnString(Path.Combine(appData, appDataFolder));
+        private static readonly string backupJobJsonFileName = Path.Combine(appDataFolderPath, "SaveBackupJob.json");
+        private static readonly string activeStateFileName = Path.Combine(appDataFolderPath, "activeState.json");
+        private static readonly JsonSerializerOptions optionsWriteIndented = new()
         {
             WriteIndented = true
         };
 
         //creer un dossier s'il n'existe pas
         //create a folder if it doesn't exist
-        private static string createFolderIfNotExistAndReturnString(string path)
+        private static string CreateFolderIfNotExistAndReturnString(string path)
         {
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
             return path;
         }
 
-        private static string createFileIfNotExist(string path)
+        private static string CreateFileIfNotExist(string path)
         {
             if (!File.Exists(path)) File.Create(path);
             return path;
@@ -41,12 +42,10 @@ namespace Projet_Programmation_Système.developpement
         {
             if (File.Exists(backupJobJsonFileName))
             {
-                using (FileStream fs = File.OpenWrite(backupJobJsonFileName))
-                {
-                    string jsonString = JsonSerializer.Serialize(backupJobs, optionsWriteIndented);
-                    byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
-                    fs.Write(jsonBytes, 0, jsonBytes.Length);
-                }
+                using FileStream fs = File.OpenWrite(backupJobJsonFileName);
+                string jsonString = JsonSerializer.Serialize(backupJobs, optionsWriteIndented);
+                byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+                fs.Write(jsonBytes, 0, jsonBytes.Length);
             }
         }
 
@@ -54,31 +53,27 @@ namespace Projet_Programmation_Système.developpement
         //read the file of the different backup jobs
         public static List<BackupJob>? ReadBackupJobFile()
         {
-            createFileIfNotExist(backupJobJsonFileName);
-            using (FileStream fs = File.OpenRead(backupJobJsonFileName))
-            {
-                byte[] jsonBytes = new byte[fs.Length];
-                fs.Read(jsonBytes, 0, jsonBytes.Length);
-                string jsonString = Encoding.UTF8.GetString(jsonBytes);
-                return JsonSerializer.Deserialize<List<BackupJob>>(jsonString);
-            }
+            CreateFileIfNotExist(backupJobJsonFileName);
+            using FileStream fs = File.OpenRead(backupJobJsonFileName);
+            byte[] jsonBytes = new byte[fs.Length];
+            fs.Read(jsonBytes, 0, jsonBytes.Length);
+            string jsonString = Encoding.UTF8.GetString(jsonBytes);
+            return JsonSerializer.Deserialize<List<BackupJob>>(jsonString);
         }
 
         //ecrit dans le fichier les logs journalières
         //write in the file the daily logs
         public static void WriteDailyLogToFile(Log dailyLog)
         {
-            string path = createFolderIfNotExistAndReturnString(Path.Combine(appDataFolderPath, "logs"));
+            string path = CreateFolderIfNotExistAndReturnString(Path.Combine(appDataFolderPath, "logs"));
             List<Log>? logs;
             logs = ReadDailyLogFile(path);
             logs.Add(dailyLog);
 
-            using (FileStream fs = File.Create(Path.Combine(path, GetDailyFileName() + ".json")))
-            {
-                string jsonString = JsonSerializer.Serialize(logs, optionsWriteIndented);
-                byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
-                fs.Write(jsonBytes, 0, jsonBytes.Length);
-            }
+            using FileStream fs = File.Create(Path.Combine(path, GetDailyFileName() + ".json"));
+            string jsonString = JsonSerializer.Serialize(logs, optionsWriteIndented);
+            byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+            fs.Write(jsonBytes, 0, jsonBytes.Length);
         }
 
         //lit le fichier des logs journalières
@@ -88,13 +83,11 @@ namespace Projet_Programmation_Système.developpement
             string filePath = Path.Combine(path, GetDailyFileName() + ".json");
             if (File.Exists(filePath))
             {
-                using (FileStream fs = File.OpenRead(filePath))
-                {
-                    byte[] jsonBytes = new byte[fs.Length];
-                    fs.Read(jsonBytes, 0, jsonBytes.Length);
-                    string jsonString = Encoding.UTF8.GetString(jsonBytes);
-                    return JsonSerializer.Deserialize<List<Log>>(jsonString);
-                }
+                using FileStream fs = File.OpenRead(filePath);
+                byte[] jsonBytes = new byte[fs.Length];
+                fs.Read(jsonBytes, 0, jsonBytes.Length);
+                string jsonString = Encoding.UTF8.GetString(jsonBytes);
+                return JsonSerializer.Deserialize<List<Log>>(jsonString);
             }
             return new List<Log>();
         }
@@ -102,7 +95,7 @@ namespace Projet_Programmation_Système.developpement
 
         public static void SerializeToXML(Log log)
         {
-            string path = createFolderIfNotExistAndReturnString(Path.Combine(appDataFolderPath, "logs"));
+            string path = CreateFolderIfNotExistAndReturnString(Path.Combine(appDataFolderPath, "logs"));
             List<Log> logs = DeserializeFromXML(path);
             logs.Add(log);
             XmlSerializer serializer = new XmlSerializer(typeof(List<Log>));
@@ -151,12 +144,10 @@ namespace Projet_Programmation_Système.developpement
 
 
 
-            using (FileStream fs = File.Create(activeStateFileName))
-            {
-                string jsonString = JsonSerializer.Serialize(logs, optionsWriteIndented);
-                byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
-                await fs.WriteAsync(jsonBytes, 0, jsonBytes.Length);
-            }
+            using FileStream fs = File.Create(activeStateFileName);
+            string jsonString = JsonSerializer.Serialize(logs, optionsWriteIndented);
+            byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+            await fs.WriteAsync(jsonBytes);
         }
 
         //lit le fichier des logs d'activités
@@ -165,19 +156,17 @@ namespace Projet_Programmation_Système.developpement
         {
             if (File.Exists(activeStateFileName))
             {
-                using (FileStream fs = File.OpenRead(activeStateFileName))
+                using FileStream fs = File.OpenRead(activeStateFileName);
+                try
                 {
-                    try
-                    {
-                        byte[] jsonBytes = new byte[fs.Length];
-                        fs.Read(jsonBytes, 0, jsonBytes.Length);
-                        string jsonString = Encoding.UTF8.GetString(jsonBytes);
-                        return JsonSerializer.Deserialize<List<StateLog>>(jsonString);
-                    }
-                    catch (Exception)
-                    {
-                        return new List<StateLog>();
-                    }
+                    byte[] jsonBytes = new byte[fs.Length];
+                    fs.Read(jsonBytes, 0, jsonBytes.Length);
+                    string jsonString = Encoding.UTF8.GetString(jsonBytes);
+                    return JsonSerializer.Deserialize<List<StateLog>>(jsonString);
+                }
+                catch (Exception)
+                {
+                    return new List<StateLog>();
                 }
             }
             return new List<StateLog>();
