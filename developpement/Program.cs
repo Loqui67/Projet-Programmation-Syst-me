@@ -12,10 +12,9 @@ public static class Main {
 
     public static void Run()
     {
-        MainMenuManager mainMenu = new MainMenuManager();
         while (true)
         {
-            mainMenu.ChooseItem();
+            MainMenuManager.ChooseItem();
         }
     }
 

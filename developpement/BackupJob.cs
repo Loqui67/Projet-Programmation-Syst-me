@@ -39,9 +39,6 @@ public class BackupJob
             DisplayLanguage("PathDoesntExist");
             return;
         }
-        //Calcule de la date dans une variable.
-        //Calculation of the date in a variable.
-        DateTime date1 = DateTime.Now;
 
         fileSizeTotal = 0;
         fileNumberTotal = 0;
@@ -65,6 +62,11 @@ public class BackupJob
         fileSizeLeft = fileSizeTotal;
         fileNumberLeft = fileNumberTotal;
 
+
+        //Calcule de la date dans une variable.
+        //Calculation of the date in a variable.
+        DateTime date1 = DateTime.Now;
+        
         //Création d'une méthode pour copier les fichiers durant la restauration.
         //Create a method to copy files during recovery.
         if (restore)
@@ -79,6 +81,8 @@ public class BackupJob
             Task copy = Copy(d, sourcePath, destinationPath);
             await copy;
         }
+        fileTransferTime = DateTime.Now - date1;
+
 
         DisplayEmptyLine();
         DisplayLanguage("Done");
@@ -98,9 +102,10 @@ public class BackupJob
 
         await writeStateLog;
 
-        fileTransferTime = DateTime.Now - date1;
+
         
-        FileManager.WriteDailyLogToFile(GenerateLog());
+        if (MainMenuManager.formatLogs == "json") FileManager.WriteDailyLogToFile(GenerateLog(restore));
+        else FileManager.SerializeToXML(GenerateLog(restore));
     }
 
 
@@ -112,6 +117,7 @@ public class BackupJob
         foreach (FileInfo fi in fis)
         {
             string fileToCopy = fi.FullName.Replace(sourcePath, destinationPath);
+
             if (!File.Exists(fileToCopy) || type == "1" || IsFileModified(fi, destinationPath)) //full save or differential save 
             {
                 Console.Write("\r{0}%   ", fi.Name);
@@ -145,6 +151,20 @@ public class BackupJob
         }
     }
 
+    public bool IsFileModified(FileInfo fileInfo, string destinationPath)
+    {
+        string fileToCopy = fileInfo.FullName.Replace(sourcePath, destinationPath);
+        try {
+            FileInfo fileDest = new FileInfo(fileToCopy);
+            if (fileInfo.LastWriteTime != fileDest.LastWriteTime) return true;
+            else return false;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
     public async Task GetDirectoryInfo(DirectoryInfo d, string sourcePath, string destinationPath)
     {
         FileInfo[] fis = d.GetFiles();
@@ -165,27 +185,25 @@ public class BackupJob
         }
     }
 
-    public bool IsFileModified(FileInfo fileInfo, string destinationPath)
-    {
-        string fileToCopy = fileInfo.FullName.Replace(sourcePath, destinationPath);
-        try
-        {
-            FileInfo fileDest = new FileInfo(fileToCopy);
-            if (fileInfo.LastWriteTime > fileDest.LastWriteTime) return true;
-            else return false;
-        }
-        catch (Exception)
-        {
-            return false;
-        }
-    }
-
 
 
     //Création d'une méthode pour générer un log.
     //Creation of a method to generate a log.
-    public Log GenerateLog()
+    public Log GenerateLog(bool restore)
     {
+        if (restore)
+        {
+            return new Log
+            {
+                name = name,
+                sourcePath = destinationPath,
+                destinationPath = sourcePath,
+                type = type,
+                fileSize = fileSizeTotal.ToString() + " B",
+                fileTransferTime = fileTransferTime.TotalMilliseconds.ToString() + " ms",
+                date = DateTime.Now.ToString("F")
+            };
+        }
         return new Log {
             name = name,
             sourcePath = sourcePath,

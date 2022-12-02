@@ -32,7 +32,7 @@ namespace Projet_Programmation_Système.developpement
         //create a file if it doesn't exist
         private static void CreateJsonBackupJobFileIfNotExist()
         {
-            if (!File.Exists(backupJobJsonFileName))
+            if (!File.Exists(backupJobJsonFileName)) 
             {
                 List<BackupJob> backupJobs = new List<BackupJob>();
                 using (FileStream fs = File.Create(backupJobJsonFileName))
@@ -108,6 +108,37 @@ namespace Projet_Programmation_Système.developpement
                 }
             }
             return new List<Log>();
+        }
+
+
+        public static void SerializeToXML(Log log)
+        {
+            string path = createFolderIfNotExistAndReturnString(Path.Combine(appDataFolderPath, "logs"));
+            List<Log> logs = DeserializeFromXML(path);
+            logs.Add(log);
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Log>));
+            TextWriter writer = new StreamWriter(Path.Combine(path, GetDailyFileName() + ".xml"));
+            serializer.Serialize(writer, logs);
+            writer.Close();
+        }
+
+        public static List<Log> DeserializeFromXML(string path)
+        {
+            if (File.Exists(GetDailyFileName() + ".xml"))
+            {
+                XmlSerializer deserializer = new XmlSerializer(typeof(List<Log>));
+                TextReader reader = new StreamReader(Path.Combine(path, GetDailyFileName() + ".xml"));
+                object? obj = deserializer.Deserialize(reader);
+                List<Log>? logs = (List<Log>?)obj;
+                reader.Close();
+                if (logs == null) return new List<Log>();
+                return logs;
+            }
+            else
+            {
+                File.Create(GetDailyFileName() + ".json");
+                return new List<Log>();
+            }
         }
 
         //ecrit le fichier des logs d'activités
