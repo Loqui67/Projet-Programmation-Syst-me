@@ -34,6 +34,10 @@ namespace Projet_Programmation_Système.developpement
         {
             if (!File.Exists(path)) File.Create(path);
             return path;
+                    }
+                }
+                WriteBackupJobToFile(backupJobs);
+            }
         }
 
         //ecrit dans le fichier les différents travaux de sauvegarde
@@ -43,9 +47,10 @@ namespace Projet_Programmation_Système.developpement
             if (File.Exists(backupJobJsonFileName))
             {
                 using FileStream fs = new(backupJobJsonFileName, FileMode.Truncate);
-                string jsonString = JsonSerializer.Serialize(backupJobs, optionsWriteIndented);
-                byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
-                fs.Write(jsonBytes, 0, jsonBytes.Length);
+                    string jsonString = JsonSerializer.Serialize(backupJobs, optionsWriteIndented);
+                    byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+                    fs.Write(jsonBytes, 0, jsonBytes.Length);
+                }
             }
         }
 
@@ -77,9 +82,10 @@ namespace Projet_Programmation_Système.developpement
             logs.Add(dailyLog);
 
             using FileStream fs = File.Create(Path.Combine(path, GetDailyFileName() + ".json"));
-            string jsonString = JsonSerializer.Serialize(logs, optionsWriteIndented);
-            byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
-            fs.Write(jsonBytes, 0, jsonBytes.Length);
+                string jsonString = JsonSerializer.Serialize(logs, optionsWriteIndented);
+                byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+                fs.Write(jsonBytes, 0, jsonBytes.Length);
+            }
         }
 
         //lit le fichier des logs journalières
@@ -90,10 +96,11 @@ namespace Projet_Programmation_Système.developpement
             if (File.Exists(filePath))
             {
                 using FileStream fs = File.OpenRead(filePath);
-                byte[] jsonBytes = new byte[fs.Length];
-                fs.Read(jsonBytes, 0, jsonBytes.Length);
-                string jsonString = Encoding.UTF8.GetString(jsonBytes);
-                return JsonSerializer.Deserialize<List<Log>>(jsonString);
+                    byte[] jsonBytes = new byte[fs.Length];
+                    fs.Read(jsonBytes, 0, jsonBytes.Length);
+                    string jsonString = Encoding.UTF8.GetString(jsonBytes);
+                    return JsonSerializer.Deserialize<List<Log>>(jsonString);
+                }
             }
             return new List<Log>();
         }
@@ -151,8 +158,8 @@ namespace Projet_Programmation_Système.developpement
 
 
             using FileStream fs = File.Create(activeStateFileName);
-            string jsonString = JsonSerializer.Serialize(logs, optionsWriteIndented);
-            byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+                string jsonString = JsonSerializer.Serialize(logs, optionsWriteIndented);
+                byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
             await fs.WriteAsync(jsonBytes);
         }
 
@@ -163,16 +170,17 @@ namespace Projet_Programmation_Système.developpement
             if (File.Exists(activeStateFileName))
             {
                 using FileStream fs = File.OpenRead(activeStateFileName);
-                try
-                {
-                    byte[] jsonBytes = new byte[fs.Length];
-                    fs.Read(jsonBytes, 0, jsonBytes.Length);
-                    string jsonString = Encoding.UTF8.GetString(jsonBytes);
-                    return JsonSerializer.Deserialize<List<StateLog>>(jsonString);
-                }
-                catch (Exception)
-                {
-                    return new List<StateLog>();
+                    try
+                    {
+                        byte[] jsonBytes = new byte[fs.Length];
+                        fs.Read(jsonBytes, 0, jsonBytes.Length);
+                        string jsonString = Encoding.UTF8.GetString(jsonBytes);
+                        return JsonSerializer.Deserialize<List<StateLog>>(jsonString);
+                    }
+                    catch (Exception)
+                    {
+                        return new List<StateLog>();
+                    }
                 }
             }
             return new List<StateLog>();
