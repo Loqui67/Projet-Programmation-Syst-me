@@ -1,0 +1,30 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="BackupJob">Travaux de sauvegarde</system:String>
+    <system:String x:Key="Search">Rechercher</system:String>
+    <system:String x:Key="ButtonExecAll">Execution de tous les travaux</system:String>
+    <system:String x:Key="ButtonDeleteAll">Suppression de tous les travaux</system:String>
+    <system:String x:Key="ButtonCreate">Création d'un travail de sauvegarde</system:String>
+    <system:String x:Key="French">Français</system:String>
+    <system:String x:Key="English">Anglais</system:String>
+    <system:String x:Key="AreYouSureDelete">Etes vous sûr de vouloir supprimer ce travail ?</system:String>
+    <system:String x:Key="AskQuit">Etes vous sûr de vouloir quitter ?</system:String>
+    <system:String x:Key="ChangeLanguageError">Une erreur est survenue lors du changement de la langue</system:String>
+    <system:String x:Key="CopyFiles">Les fichiers sont en cours de traitement...</system:String>
+    <system:String x:Key="CopyFilesError">Une erreur est survenue lors de la copie des fichiers</system:String>
+    <system:String x:Key="CopyFilesSuccess">La copie des fichiers a été effectuée avec succès</system:String>
+    <system:String x:Key="DestinationPath">Choississez l'emplacement du fichier de destination :</system:String>
+    <system:String x:Key="ModifyDestinationPath">Choisissez le nouveau répertoire de destination du travail (vide si identique) :</system:String>
+    <system:String x:Key="ModifySourcePath">Choisissez le nouveau répertoire source du travail (vide si identique) :</system:String>
+    <system:String x:Key="ModifyName">Choisissez le nouveau nom du travail</system:String>
+    <system:String x:Key="ModifyType">Choissisez le nouveau type de sauvegarde (complète ou différentiel) du travail</system:String>
+    <system:String x:Key="Name">Choisissez le nom du travail :</system:String>
+    <system:String x:Key="NoBackupJobError">Une erreur est survenue lors de la récupération des travaux de sauvegarde</system:String>
+    <system:String x:Key="NoBackupJobFound">Aucun travail de sauvegarde n'a été trouvé</system:String>
+    <system:String x:Key="Restore">Voulez vous restorer toutes vos sauvegardes ?</system:String>
+    <system:String x:Key="Save">Voulez vous executer tous vos travaux de sauvegarde ?</system:String>
+    <system:String x:Key="SourcePath">Choississez l'emplacement du fichier source :</system:String>
+    <system:String x:Key="Type">Choissisez le type de sauvegarde (complète ou différentiel) :</system:String>
+
+</ResourceDictionary>

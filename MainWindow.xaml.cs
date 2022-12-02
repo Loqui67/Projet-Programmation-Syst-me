@@ -26,6 +26,7 @@ namespace AppWPF
         public MainWindow()
         {
             InitializeComponent();
+            SwitchLanguage("en");
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -45,12 +46,30 @@ namespace AppWPF
 
         private void Button_Switch_FR(object sender, RoutedEventArgs e)
         {
-           // languageControl.ChangeLanguageInterface("fr");
+            SwitchLanguage("fr");
         }
 
         private void Button_Switch_EN(object sender, RoutedEventArgs e)
         {
-            //languageControl.ChangeLanguageInterface("en");
+            SwitchLanguage("en");
+        }
+
+        private void SwitchLanguage(string languageCode)
+        {
+            ResourceDictionary dictionary = new ResourceDictionary();
+            switch (languageCode)
+            {
+                case "en":
+                    dictionary.Source = new Uri("..\\StringRessources.en.xaml", UriKind.Relative);
+                    break;
+                case "fr":
+                    dictionary.Source = new Uri("..\\StringRessources.fr.xaml", UriKind.Relative);
+                    break;
+                default:
+                    dictionary.Source = new Uri("..\\StringRessources.en.xaml", UriKind.Relative);
+                    break;
+            }
+            this.Resources.MergedDictionaries.Add(dictionary);
         }
 
         private void Button_Delete_All_Backup_Job(object sender, RoutedEventArgs e)
