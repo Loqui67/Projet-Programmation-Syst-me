@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projet_Programmation_Système.developpement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
 namespace AppWPF
 {
     /// <summary>
@@ -23,22 +23,27 @@ namespace AppWPF
     public partial class MainWindow : Window
     {
         public static LanguageControl languageControl = new LanguageControl();
+        private List<BackupJob>? backupJobs = new List<BackupJob>();
         public MainWindow()
         {
             InitializeComponent();
+            RefreshList();
         }
 
+        private void RefreshList()
+        {
+            {
+                backupJobs = BackupJobsManager.GetBackupJobs();
+                BackupJobList.ItemsSource = backupJobs;
+            }
+        }
+        
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
         private void Button_Create_Backup_Job(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
@@ -76,6 +81,11 @@ namespace AppWPF
         private void languageChange(object sender, RoutedEventArgs e, string language)
         {
             languageControl.GetLanguageString(language);
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

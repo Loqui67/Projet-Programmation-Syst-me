@@ -8,7 +8,6 @@ using System.IO;
 using System.Text.Json;
 using Projet_Programmation_Système.developpement;
 using static Projet_Programmation_Système.developpement.ConsoleManager;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 
@@ -18,7 +17,6 @@ public class BackupJob
 {
     //Création des variables paramétriques des sauvegardes.
     //Creation of parametric variables for backups.
-    public string id { set; get; }
     public string name { set; get; }
     public string sourcePath { set; get; }
     public string destinationPath { set; get; }

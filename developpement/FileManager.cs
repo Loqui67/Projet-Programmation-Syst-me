@@ -29,22 +29,10 @@ namespace Projet_Programmation_Système.developpement
             return path;
         }
 
-        //creer un fichier s'il n'existe pas
-        //create a file if it doesn't exist
-        private static void CreateJsonBackupJobFileIfNotExist()
+        private static string createFileIfNotExist(string path)
         {
-            if (!File.Exists(backupJobJsonFileName)) 
-            {
-                List<BackupJob> backupJobs = new List<BackupJob>();
-                using (FileStream fs = File.Create(backupJobJsonFileName))
-                {
-                    for (int i = 1; i < 6; i++)
-                    {
-                        backupJobs.Add(new BackupJob { id = i.ToString(), name = "", destinationPath = "", sourcePath = "", type = "" });
-                    }
-                }
-                WriteBackupJobToFile(backupJobs);
-            }
+            if (!File.Exists(path)) File.Create(path);
+            return path;
         }
 
         //ecrit dans le fichier les différents travaux de sauvegarde
@@ -66,7 +54,7 @@ namespace Projet_Programmation_Système.developpement
         //read the file of the different backup jobs
         public static List<BackupJob>? ReadBackupJobFile()
         {
-            CreateJsonBackupJobFileIfNotExist();
+            createFileIfNotExist(backupJobJsonFileName);
             using (FileStream fs = File.OpenRead(backupJobJsonFileName))
             {
                 byte[] jsonBytes = new byte[fs.Length];
@@ -152,7 +140,7 @@ namespace Projet_Programmation_Système.developpement
             {
                 foreach (StateLog log in logs.ToList())
                 {
-                    if (log.backupJob.id == stateLog.backupJob.id)
+                    if (log.backupJob.name == stateLog.backupJob.name)
                     {
                         logs.Remove(log);
                     }

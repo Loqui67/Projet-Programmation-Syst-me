@@ -8,6 +8,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="background pivot.jpg" />
+    <None Remove="create icon.png" />
+    <None Remove="delete icon.png" />
+    <None Remove="drapeau france.png" />
+    <None Remove="drapeau-anglais.png" />
+    <None Remove="icon recherche.png" />
+    <None Remove="play green.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="background pivot.jpg" />
+    <Resource Include="create icon.png" />
+    <Resource Include="delete icon.png" />
+    <Resource Include="drapeau france.png" />
+    <Resource Include="drapeau-anglais.png" />
+    <Resource Include="icon recherche.png" />
+    <Resource Include="play green.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Ressources\language.Designer.cs">
       <DependentUpon>Language.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -20,6 +40,14 @@
       <LastGenOutput>language.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="developpement\View\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="App.xaml" />
   </ItemGroup>
 
 </Project>

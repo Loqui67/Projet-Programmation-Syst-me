@@ -1,0 +1,97 @@
+﻿<Window x:Class="AppWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppWPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="27*"/>
+            <RowDefinition Height="407*"/>
+        </Grid.RowDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="/background pivot.jpg"/>
+        </Grid.Background>
+        <Button Name="fr" Margin="0,10,60,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Height="34" Click="Button_Switch_FR" Grid.RowSpan="2" HorizontalAlignment="Right" Width="34">
+            <Button.Background>
+                <ImageBrush ImageSource="/drapeau france.png"/>
+            </Button.Background>
+        </Button>
+        <Button Name="en" Margin="0,11,20,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Height="33" Click="Button_Switch_EN" Grid.RowSpan="2" HorizontalAlignment="Right" Width="33">
+            <Button.Background>
+                <ImageBrush ImageSource="/drapeau-anglais.png"/>
+            </Button.Background>
+        </Button>
+        <Button Content="" HorizontalAlignment="Left" Margin="612,10,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="33" Height="33" Click="Button_Delete_All_Backup_Job" Grid.RowSpan="2">
+            <Button.Background>
+                <ImageBrush ImageSource="/delete icon.png"/>
+            </Button.Background>
+        </Button>
+        <GroupBox Header="Backup Job" Margin="10,24,10,10" BorderBrush="{x:Null}" Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <ListBox Name="BackupJobList" Margin="10,10,10,10" Background="#FFF4F4F4" SelectionChanged="ListBox_SelectionChanged">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="BorderThickness" Value="1" />
+                            <Setter Property="BorderBrush" Value="Black" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding name}" />
+                                    <TextBlock Text="{Binding type}" />
+                                    <TextBlock Text="{Binding sourcePath}" />
+                                    <TextBlock Text="{Binding destinationPath}" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <Button Content="Delete" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </GroupBox>
+        <Button Content="" HorizontalAlignment="Left" Margin="575,11,0,0" VerticalAlignment="Top" Click="Button_Create_Backup_Job" Width="33" Height="33" BorderBrush="{x:Null}" Grid.RowSpan="2">
+            <Button.Background>
+                <ImageBrush ImageSource="/create icon.png"/>
+            </Button.Background>
+        </Button>
+        <Button Content="" HorizontalAlignment="Left" Margin="537,9,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.192,-0.279" Height="34" Width="33" Foreground="Black" Click="Button_Execute_All_Backup_Job" Grid.RowSpan="2">
+            <Button.Background>
+                <ImageBrush ImageSource="/play green.png"/>
+            </Button.Background>
+            <Button.BorderBrush>
+                <ImageBrush/>
+            </Button.BorderBrush>
+
+        </Button>
+        <TextBox HorizontalAlignment="Left" Margin="22,17,0,0" TextWrapping="Wrap" Text="  Research" VerticalAlignment="Top" Width="494" Height="20" TextChanged="TextBox_Search_Backup_Job" Grid.RowSpan="2">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <Button Content="" HorizontalAlignment="Left" Margin="494,18,0,0" VerticalAlignment="Top" Height="17" Width="17" BorderBrush="{x:Null}" Click="Button_Search_Backup_Job" Grid.RowSpan="2">
+            <Button.Background>
+                <ImageBrush ImageSource="/icon recherche.png"/>
+            </Button.Background>
+        </Button>
+
+    </Grid>
+</Window>

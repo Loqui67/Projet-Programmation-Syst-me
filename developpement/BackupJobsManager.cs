@@ -18,19 +18,8 @@ namespace Projet_Programmation_Système.developpement
         public static List<BackupJob>? backupJobs = GetBackupJobs();
         //Création d'une méthode qui permet d'écrire ce que font les travaux de sauvegardes dans le fichier json.
         //Created a method that writes what the backup jobs do in the json file.
-        public static void WriteBackupJob(BackupJob backupJob)
+        public static void WriteBackupJob()
         {
-            foreach (BackupJob job in backupJobs)
-            {
-                if (job.id == backupJob.id)
-                {
-                    job.name = backupJob.name;
-                    job.sourcePath = backupJob.sourcePath;
-                    job.destinationPath = backupJob.destinationPath;
-                    job.type = backupJob.type;
-                    break;
-                }
-            }
             FileManager.WriteBackupJobToFile(backupJobs);
         }
 
@@ -42,97 +31,80 @@ namespace Projet_Programmation_Système.developpement
 
         //Création d'une méthode qui permet de récupérer un travail de sauvegarde.
         //Created a method to recover a backup job.
-        public static BackupJob GetBackupJob(string id)
+        public static BackupJob? GetBackupJob(string name)
         {
             foreach (BackupJob backupJob in backupJobs)
             {
-                if (backupJob.id == id)
+                if (backupJob.name == name)
                 {
                     return backupJob;
                 }
             }
-            return new BackupJob();
-        }
-
-        //Création d'une méthode qui permet d'afficher les travaux de sauvegarde.
-        //Created a method to display backup jobs.
-        public static void DisplayBackupJobs()
-        {
-            foreach (BackupJob backupJob in backupJobs)
-            {
-                if (backupJob.name == "")
-                {
-                    DisplayArrayInLine(new string[] { backupJob.id, " - " });
-                    DisplayLanguage("Empty");
-                } else {
-                    DisplayArrayInLine(new string[] { backupJob.id, " - ", backupJob.name, " / ", backupJob.type });
-                    DisplayEmptyLine();
-                }
-            }
-            DisplayEmptyLine();
+            return null;
         }
 
         //Création d'une méthode qui permet de créer un nouveau travail de sauvegarde.
         //Created a method to create a new backup job.
-        public static BackupJob CreateBackupJob()
+        public static void CreateBackupJob()
         {
             //Création de plusiurs variables qui permettent de récupérer les informations sur les travaux de sauvegardes.
             //Creation of several variables that allow to retrieve information on backup jobs.
-            BackupJob? backupJob = GetBackupJob(AskForId());
-            backupJob.name = AskForNameNotEmpty();
-            backupJob.sourcePath = AskForSourcePathNotEmpty();
-            backupJob.destinationPath = AskForDestinationPathNotEmpty();
-            backupJob.type = AskForTypeNotEmpty();
-            return backupJob;
+            backupJobs.Add(new BackupJob { 
+                name = AskForNameNotEmpty(),
+                sourcePath = AskForSourcePathNotEmpty(),
+                destinationPath = AskForDestinationPathNotEmpty(),
+                type = AskForTypeNotEmpty()
+            });
+            WriteBackupJob();
         }
 
         //Création d'une méthode qui permet de modifier un travail de sauvegarde.
         //Created a method to modify a backup job.
-        public static BackupJob ModifyBackupJob()
+        public static void ModifyBackupJob(string name)
         {
             //Cherche à avoir les informations sur les travaux de sauvegarde.
             //Seeks information about backup jobs.
-            BackupJob? backupJob = GetBackupJob(AskForId());
 
-            string name = AskForNameModification();
-            if (name != "") backupJob.name = name;
             
-            string sourcePath = AskForSourcePathModification();
-            if (sourcePath != "") backupJob.sourcePath = sourcePath;
-            
-            string destinationPath = AskForDestinationPathModification();
-            if (destinationPath != "") backupJob.destinationPath = destinationPath;
-            
-            string type = AskForTypeModification();
-            if (type != "") backupJob.type = type;
+            foreach (BackupJob backupJob in backupJobs)
+            {
+                if (backupJob.name == name)
+                {
+                    string nameChange = AskForNameModification();
+                    if (nameChange != "") backupJob.name = nameChange;
 
-            return backupJob;
+                    string sourcePath = AskForSourcePathModification();
+                    if (sourcePath != "") backupJob.sourcePath = sourcePath;
+
+                    string destinationPath = AskForDestinationPathModification();
+                    if (destinationPath != "") backupJob.destinationPath = destinationPath;
+
+                    string type = AskForTypeModification();
+                    if (type != "") backupJob.type = type;
+                    break;
+                }
+            }
+            WriteBackupJob();
         }
 
         //Création d'une méthode qui permet de supprimer un travail de sauvegarde.
         //Created a method to delete a backup job.
-        public static void DeleteBackupJob()
+        public static void DeleteBackupJob(string name)
         {
             //Cherche à avoir les informations sur les travaux de sauvegarde à supprimer.
             //Seeks information about the backup jobs to be deleted.
-            string id = AskForId();
             DisplayLanguage("AreYouSureDelete");
             if (AskForConfirmation()) {
-                BackupJob? backupJob = GetBackupJob(id);
-                backupJob.name = "";
-                backupJob.sourcePath = "";
-                backupJob.destinationPath = "";
-                backupJob.type = "";
-                WriteBackupJob(backupJob);
+                backupJobs.Remove(GetBackupJob(name));
             }
+            WriteBackupJob();
         }
 
         //Méthode qui permet de lancer une sauvegarde.
         //Method that allows to launch a backup.
-        public static void LaunchSave(bool restore)
+        public static void LaunchSave(bool restore, string name)
         {
-            string id = AskForId();
-            BackupJob? backupJob = GetBackupJob(id);
+            BackupJob? backupJob = GetBackupJob(name);
             backupJob.Save(restore);
         }
 
@@ -142,10 +114,7 @@ namespace Projet_Programmation_Système.developpement
         {
             foreach (BackupJob backupJob in backupJobs)
             {
-                if (backupJob.name != "")
-                {
-                    backupJob.Save(restore);
-                }
+                backupJob.Save(restore);
             }
         }
 
@@ -157,34 +126,13 @@ namespace Projet_Programmation_Système.developpement
         }
 
 
-        //Méthode qui demande à l'utilisateur un ID.
-        //Method that asks the user for an ID.
-        public static string AskForId()
-        {
-            ConsoleManager.DisplayLanguage("Id");
-            //On demande à l'utilisateur de rentrer un ID.
-            //The user is asked to enter an ID.
-            string input = ConsoleManager.GetInputNotEmpty();
-            //On vérifie si l'ID est écrit selon le bon formalisme.
-            //We check if the ID is written according to the correct formalism.
-            if (int.TryParse(input, out int x) && x < 6 && x > 0)
-            {
-                return input;
-            }
-            //Si l'input ne conviens pas, le programme renvoie une erreur.
-            ConsoleManager.DisplayLanguage("InvalidInput");
-            return AskForId();
-        }
-
-
-
         //probablement beaucoup d'améliorations contre la redondance de code possibles
 
         //Création d'une méthode qui demande à l'utilisateur le chemin du fichier et vérifie si il existe.
         //Created a method that asks the user for the file path and checks if it exists.
         public static string AskPathAndCheckIfExist(Func<string> MethodName, bool emptyAccepted)
         {
-            string input = ConsoleManager.GetInput();
+            string input = GetInput();
             //Vérifie si le chemin existe.
             //Checks if the path exists.
             if (AssertThatPathExist(input) || (input == "" && emptyAccepted)) return input;
