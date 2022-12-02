@@ -42,7 +42,7 @@ namespace Projet_Programmation_Système.developpement
         {
             if (File.Exists(backupJobJsonFileName))
             {
-                using FileStream fs = File.OpenWrite(backupJobJsonFileName);
+                using FileStream fs = new(backupJobJsonFileName, FileMode.Truncate);
                 string jsonString = JsonSerializer.Serialize(backupJobs, optionsWriteIndented);
                 byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
                 fs.Write(jsonBytes, 0, jsonBytes.Length);
@@ -54,11 +54,17 @@ namespace Projet_Programmation_Système.developpement
         public static List<BackupJob>? ReadBackupJobFile()
         {
             CreateFileIfNotExist(backupJobJsonFileName);
-            using FileStream fs = File.OpenRead(backupJobJsonFileName);
-            byte[] jsonBytes = new byte[fs.Length];
-            fs.Read(jsonBytes, 0, jsonBytes.Length);
-            string jsonString = Encoding.UTF8.GetString(jsonBytes);
-            return JsonSerializer.Deserialize<List<BackupJob>>(jsonString);
+            try
+            {
+                using FileStream fs = File.OpenRead(backupJobJsonFileName);
+                byte[] jsonBytes = new byte[fs.Length];
+                fs.Read(jsonBytes, 0, jsonBytes.Length);
+                string jsonString = Encoding.UTF8.GetString(jsonBytes);
+                return JsonSerializer.Deserialize<List<BackupJob>>(jsonString);
+            } catch (Exception)
+            {
+                return new List<BackupJob>();
+            }
         }
 
         //ecrit dans le fichier les logs journalières
