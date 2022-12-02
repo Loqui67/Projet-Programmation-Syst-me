@@ -30,23 +30,20 @@ namespace Projet_Programmation_Système.developpement
             return path;
         }
 
-        private static string CreateFileIfNotExist(string path)
+        private static void CreateFileIfNotExist(string path)
         {
             if (!File.Exists(path)) File.Create(path);
-            return path;
         }
 
         //ecrit dans le fichier les différents travaux de sauvegarde
         //write in the file the different backup jobs
         public static void WriteBackupJobToFile(List<BackupJob> backupJobs)
         {
-            if (File.Exists(backupJobJsonFileName))
-            {
-                using FileStream fs = File.OpenWrite(backupJobJsonFileName);
-                string jsonString = JsonSerializer.Serialize(backupJobs, optionsWriteIndented);
-                byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
-                fs.Write(jsonBytes, 0, jsonBytes.Length);
-            }
+            CreateFileIfNotExist(backupJobJsonFileName);
+            using FileStream fs = new(backupJobJsonFileName, FileMode.Truncate);
+            string jsonString = JsonSerializer.Serialize(backupJobs, optionsWriteIndented);
+            byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+            fs.Write(jsonBytes, 0, jsonBytes.Length);
         }
 
         //lit le fichier des différents travaux de sauvegarde
@@ -54,11 +51,18 @@ namespace Projet_Programmation_Système.developpement
         public static List<BackupJob>? ReadBackupJobFile()
         {
             CreateFileIfNotExist(backupJobJsonFileName);
-            using FileStream fs = File.OpenRead(backupJobJsonFileName);
-            byte[] jsonBytes = new byte[fs.Length];
-            fs.Read(jsonBytes, 0, jsonBytes.Length);
-            string jsonString = Encoding.UTF8.GetString(jsonBytes);
-            return JsonSerializer.Deserialize<List<BackupJob>>(jsonString);
+            //try
+            //{
+                using FileStream fs = File.OpenRead(backupJobJsonFileName);
+                byte[] jsonBytes = new byte[fs.Length];
+                fs.Read(jsonBytes, 0, jsonBytes.Length);
+                string jsonString = Encoding.UTF8.GetString(jsonBytes);
+                return JsonSerializer.Deserialize<List<BackupJob>>(jsonString);
+            //}
+            //catch (Exception)
+            //{
+            //    return new List<BackupJob>();
+            //}
         }
 
         //ecrit dans le fichier les logs journalières

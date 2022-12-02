@@ -49,9 +49,9 @@ namespace Projet_Programmation_Système.developpement
 
         //Création d'une méthode qui permet de gérer l'affichage du menu de suppression des sauvegardes.
         //Creation of a method that manages the display of the backup deletion menu.
-        private static void Delete(string name)
+        public static void Delete(string name)
         {
-            DisplayLanguage("ChooseSlotToDelete");
+            //DisplayLanguage("ChooseSlotToDelete");
             BackupJobsManager.DeleteBackupJob(name);
         }
 

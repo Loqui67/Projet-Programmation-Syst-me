@@ -94,9 +94,13 @@ namespace Projet_Programmation_Système.developpement
         {
             //Cherche à avoir les informations sur les travaux de sauvegarde à supprimer.
             //Seeks information about the backup jobs to be deleted.
-            DisplayLanguage("AreYouSureDelete");
-            if (AskForConfirmation()) {
-                backupJobs.Remove(GetBackupJob(name));
+            foreach (BackupJob backupJob in backupJobs.ToList())
+            {
+                if (backupJob.name == name)
+                {
+                    backupJobs.Remove(backupJob);
+                    break;
+                }
             }
             WriteBackupJob();
         }

@@ -1,0 +1,23 @@
+﻿<Window x:Class="AppWPF.developpement.View.ModalWindowBackupJobInfos"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppWPF.developpement.View"
+        mc:Ignorable="d"
+        Title="ModalWindowBackupJobInfos" Height="375" Width="400">
+    <Grid>
+        <Label Content="Name :" HorizontalAlignment="Left" Height="30" Margin="75,13,0,0" VerticalAlignment="Top" Width="110"/>
+        <TextBox HorizontalAlignment="Center" Height="25" Margin="0,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250"/>
+        <Label Content="Source path :" HorizontalAlignment="Left" Height="30" Margin="75,83,0,0" VerticalAlignment="Top" Width="110"/>
+        <TextBox HorizontalAlignment="Center" Height="25" Margin="0,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Name="SourcePath"/>
+        <Label Content="Destination path :" HorizontalAlignment="Left" Height="30" Margin="75,153,0,0" VerticalAlignment="Top" Width="110"/>
+        <TextBox HorizontalAlignment="Center" Height="25" Margin="0,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" x:Name="DestinationPath"/>
+        <Label Content="Type :" HorizontalAlignment="Left" Height="30" Margin="75,223,0,0" VerticalAlignment="Top" Width="110"/>
+        <ComboBox HorizontalAlignment="Center" Margin="0,253,0,0" VerticalAlignment="Top" Width="250">
+            <ComboBoxItem>differential save</ComboBoxItem>
+            <ComboBoxItem>Full save</ComboBoxItem>
+        </ComboBox>
+
+    </Grid>
+</Window>
