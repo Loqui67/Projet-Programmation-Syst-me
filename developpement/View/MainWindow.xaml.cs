@@ -93,7 +93,5 @@ namespace AppWPF
             MainMenuManager.Delete((sender as Button).DataContext.ToString());
             RefreshList();
         }
-
-
     }
 }
