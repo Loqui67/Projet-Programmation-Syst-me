@@ -9,20 +9,21 @@ namespace AppWPF.developpement.ViewModels
 {
     public class BackupJobsListingItemViewModel : ViewModelBase
     {
-        public string Name { get; }
-        public string SourcePath { get; }
-        public string DestinationPath { get; }
-        public string Type { get; }
+        public BackupJob BackupJob { get; }
+        public string Name => BackupJob.Name;
+        public string SourcePath => BackupJob.SourcePath;
+        public string DestinationPath => BackupJob.DestinationPath;
+        public string Type => BackupJob.Type;
 
         public ICommand EditBackupJobCommand { get; }
         public ICommand DeleteBackupJobCommand { get; }
 
-        public BackupJobsListingItemViewModel(BackupJob backupJob)
+        public BackupJobsListingItemViewModel(BackupJob backupJob, ICommand editCommand)
         {
-            Name = backupJob.Name;
-            SourcePath = backupJob.SourcePath;
-            DestinationPath = backupJob.DestinationPath;
-            Type = backupJob.Type.ToString();
+            BackupJob = backupJob;
+            EditBackupJobCommand = editCommand;
+
+
         }
     }
 }

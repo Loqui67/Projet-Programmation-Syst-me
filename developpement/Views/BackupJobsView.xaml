@@ -39,7 +39,7 @@
                 <components:BackupJobsListing DataContext="{Binding BackupJobsListingViewModel}"/>
             </Grid>
         </GroupBox>
-        <Button Content="" HorizontalAlignment="Left" Margin="575,11,0,0" VerticalAlignment="Top" Width="33" Height="33" BorderBrush="{x:Null}" Grid.RowSpan="2" Command="{Binding CreateBackupJobCommand}">
+        <Button Content="" HorizontalAlignment="Left" Margin="575,11,0,0" VerticalAlignment="Top" Width="33" Height="33" BorderBrush="{x:Null}" Grid.RowSpan="2" Command="{Binding AddBackupJobCommand}">
             <Button.Background>
                 <ImageBrush ImageSource="/developpement/Views/create icon.png"/>
             </Button.Background>

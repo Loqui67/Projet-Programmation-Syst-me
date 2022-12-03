@@ -20,6 +20,12 @@ namespace AppWPF.developpement.Stores
                 CurrentViewModelChanged?.Invoke();
             }
         }
+
+        public void Close()
+        {
+            CurrentViewModel = null;
+        }
+
         public bool IsOpen => CurrentViewModel != null;
         public event Action CurrentViewModelChanged;
     }

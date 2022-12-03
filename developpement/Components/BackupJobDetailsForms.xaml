@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppWPF.developpement.Components"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="250" d:DesignWidth="400">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -23,41 +23,41 @@
             <Grid Margin="0 20 0 0" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*" MaxWidth="250"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0" Text="Name"/>
-                <TextBox Grid.Column="1" Text="{Binding Name}"/>
+                <TextBox Grid.Column="1" Margin="20 0 0 0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
 
             <Grid Margin="0 20 0 0" Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*" MaxWidth="250"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0" Text="Source path"/>
-                <TextBox Grid.Column="1" Text="{Binding SourcePath}"/>
+                <TextBox Grid.Column="1" Margin="20 0 0 0" Text="{Binding SourcePath, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
 
             <Grid Margin="0 20 0 0" Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*" MaxWidth="250"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0" Text="Destination path"/>
-                <TextBox Grid.Column="1" Text="{Binding DestinationPath}"/>
+                <TextBox Grid.Column="1" Margin="20 0 0 0" Text="{Binding DestinationPath, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
 
             <Grid Margin="0 20 0 0" Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*" MaxWidth="250"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0" Text="Type"/>
-                <ComboBox  x:Name="Type" HorizontalAlignment="Center" Margin="0,253,0,0" VerticalAlignment="Top" Width="250" SelectedIndex="{Binding Type}">
+                <ComboBox  Grid.Column="1" x:Name="Type" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250" SelectedIndex="{Binding Type}">
                     <ComboBoxItem Tag="1" Content="Full save"/>
                     <ComboBoxItem Tag="2" Content="differential save"/>
                 </ComboBox>

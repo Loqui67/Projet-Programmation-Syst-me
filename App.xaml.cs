@@ -28,7 +28,7 @@ namespace AppWPF
         {
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_modalNavigationStore, new BackupJobsViewModel())
+                DataContext = new MainViewModel(_modalNavigationStore, new BackupJobsViewModel(_modalNavigationStore))
             };
             MainWindow.Show();
 

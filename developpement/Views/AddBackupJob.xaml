@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Text="Add Backup Job" FontSize="20" FontWeight="Bold" Margin="10,10,10,10"/>
-        <components:BackupJobDetailsForms Margin="0 20 0 0" Grid.Row="1"/>
+        <components:BackupJobDetailsForms Margin="0 20 0 0" Grid.Row="1" DataContext="{Binding BackupJobDetailsFormViewModel}"/>
 
     </Grid>
 </UserControl>

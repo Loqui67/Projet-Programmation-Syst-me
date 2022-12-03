@@ -11,7 +11,7 @@ namespace AppWPF.developpement.ViewModels
     {
         private readonly ModalNavigationStore _modalNavigationStore;
 
-        public ViewModelBase CurrentViewModel => _modalNavigationStore.CurrentViewModel;
+        public ViewModelBase CurrentModalViewModel => _modalNavigationStore.CurrentViewModel;
         public bool IsModalOpen => _modalNavigationStore.IsOpen;
 
         public BackupJobsViewModel BackupJobsViewModel { get; }
@@ -22,8 +22,6 @@ namespace AppWPF.developpement.ViewModels
             BackupJobsViewModel = backupJobsViewModel;
 
             _modalNavigationStore.CurrentViewModelChanged += ModalNavigationStore_CurrentViewModelChanged;
-
-            _modalNavigationStore.CurrentViewModel = new AddBackupJobViewModel();
         }
 
         protected override void Dispose()
@@ -33,7 +31,7 @@ namespace AppWPF.developpement.ViewModels
         }
         private void ModalNavigationStore_CurrentViewModelChanged()
         {
-            OnPropertyChanged(nameof(CurrentViewModel));
+            OnPropertyChanged(nameof(CurrentModalViewModel));
             OnPropertyChanged(nameof(IsModalOpen));
         }
     }

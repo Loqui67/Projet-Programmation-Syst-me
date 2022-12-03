@@ -65,5 +65,11 @@ namespace AppWPF.developpement.ViewModels
         
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
+
+        public BackupJobDetailsFormViewModel(ICommand submitCommand, ICommand cancelCommand)
+        {
+            SubmitCommand = submitCommand;
+            CancelCommand = cancelCommand;
+        }
     }
 }
