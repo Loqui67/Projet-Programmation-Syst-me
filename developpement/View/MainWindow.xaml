@@ -14,22 +14,22 @@
         <Grid.Background>
             <ImageBrush ImageSource="/background pivot.jpg"/>
         </Grid.Background>
-        <Button Name="fr" Margin="0,10,60,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Height="34" Click="Button_Switch_FR" Grid.RowSpan="2" HorizontalAlignment="Right" Width="34">
+        <Button Name="fr" Margin="0,10,60,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Height="34" Click="Button_Switch_FR" Grid.RowSpan="2" HorizontalAlignment="Right" Width="34" ToolTip="{DynamicResource French}">
             <Button.Background>
                 <ImageBrush ImageSource="/drapeau france.png"/>
             </Button.Background>
         </Button>
-        <Button Name="en" Margin="0,11,20,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Height="33" Click="Button_Switch_EN" Grid.RowSpan="2" HorizontalAlignment="Right" Width="33">
+        <Button Name="en" Margin="0,11,20,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Height="33" Click="Button_Switch_EN" Grid.RowSpan="2" HorizontalAlignment="Right" Width="33" ToolTip="{DynamicResource English}">
             <Button.Background>
                 <ImageBrush ImageSource="/drapeau-anglais.png"/>
             </Button.Background>
         </Button>
-        <Button Content="" HorizontalAlignment="Left" Margin="612,10,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="33" Height="33" Click="Button_Delete_All_Backup_Job" Grid.RowSpan="2">
+        <Button Content="" HorizontalAlignment="Left" Margin="612,10,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="33" Height="33" Click="Button_Delete_All_Backup_Job" Grid.RowSpan="2" ToolTip="{DynamicResource ButtonDeleteAll}">
             <Button.Background>
                 <ImageBrush ImageSource="/delete icon.png"/>
             </Button.Background>
         </Button>
-        <GroupBox Header="Backup Job" Margin="10,24,10,10" BorderBrush="{x:Null}" Grid.Row="1">
+        <GroupBox Header="{DynamicResource BackupJob}" Margin="10,24,10,10" BorderBrush="{x:Null}" Grid.Row="1">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -66,12 +66,12 @@
                 </ListBox>
             </Grid>
         </GroupBox>
-        <Button Content="" HorizontalAlignment="Left" Margin="575,11,0,0" VerticalAlignment="Top" Click="Button_Create_Backup_Job" Width="33" Height="33" BorderBrush="{x:Null}" Grid.RowSpan="2">
+        <Button Content="" HorizontalAlignment="Left" Margin="575,11,0,0" VerticalAlignment="Top" Click="Button_Create_Backup_Job" Width="33" Height="33" BorderBrush="{x:Null}" Grid.RowSpan="2" ToolTip="{DynamicResource ButtonCreate}">
             <Button.Background>
                 <ImageBrush ImageSource="/create icon.png"/>
             </Button.Background>
         </Button>
-        <Button Content="" HorizontalAlignment="Left" Margin="537,9,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.192,-0.279" Height="34" Width="33" Foreground="Black" Click="Button_Execute_All_Backup_Job" Grid.RowSpan="2">
+        <Button Content="" HorizontalAlignment="Left" Margin="537,9,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.192,-0.279" Height="34" Width="33" Foreground="Black" Click="Button_Execute_All_Backup_Job" Grid.RowSpan="2" ToolTip="{DynamicResource ButtonExecAll}">
             <Button.Background>
                 <ImageBrush ImageSource="/play green.png"/>
             </Button.Background>
@@ -80,7 +80,7 @@
             </Button.BorderBrush>
 
         </Button>
-        <TextBox HorizontalAlignment="Left" Margin="22,17,0,0" TextWrapping="Wrap" Text="  Research" VerticalAlignment="Top" Width="494" Height="20" TextChanged="TextBox_Search_Backup_Job" Grid.RowSpan="2">
+        <TextBox HorizontalAlignment="Left" Margin="22,17,0,0" TextWrapping="Wrap" Text="{DynamicResource Search}" VerticalAlignment="Top" Width="494" Height="20" TextChanged="TextBox_Search_Backup_Job" Grid.RowSpan="2">
             <TextBox.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>
