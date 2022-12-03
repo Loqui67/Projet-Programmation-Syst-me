@@ -20,10 +20,10 @@ namespace AppWPF.developpement
     {
         //Création des variables paramétriques des sauvegardes.
         //Creation of parametric variables for backups.
-        public string name { set; get; }
-        public string sourcePath { set; get; }
-        public string destinationPath { set; get; }
-        public string type { set; get; }
+        public string Name { set; get; }
+        public string SourcePath { set; get; }
+        public string DestinationPath { set; get; }
+        public string Type { set; get; }
 
         public long fileSizeTotal = 0;
         public long fileNumberTotal = 0;
@@ -36,7 +36,7 @@ namespace AppWPF.developpement
         {
             //Vérification du chemin d'accès.
             //Verification of the access path.
-            if (!BackupJobsManager.AssertThatPathExist(sourcePath) || !BackupJobsManager.AssertThatPathExist(destinationPath))
+            if (!BackupJobsManager.AssertThatPathExist(SourcePath) || !BackupJobsManager.AssertThatPathExist(DestinationPath))
             {
                 DisplayLanguage("PathDoesntExist");
                 return;
@@ -51,14 +51,14 @@ namespace AppWPF.developpement
             DirectoryInfo d;
             if (restore)
             {
-                d = new DirectoryInfo(destinationPath);
-                Task directoryInfo = GetDirectoryInfo(d, destinationPath, sourcePath);
+                d = new DirectoryInfo(DestinationPath);
+                Task directoryInfo = GetDirectoryInfo(d, DestinationPath, SourcePath);
                 await directoryInfo;
             }
             else
             {
-                d = new DirectoryInfo(sourcePath);
-                Task directoryInfo = GetDirectoryInfo(d, sourcePath, destinationPath);
+                d = new DirectoryInfo(SourcePath);
+                Task directoryInfo = GetDirectoryInfo(d, SourcePath, DestinationPath);
                 await directoryInfo;
             }
 
@@ -74,14 +74,14 @@ namespace AppWPF.developpement
             //Create a method to copy files during recovery.
             if (restore)
             {
-                d = new DirectoryInfo(destinationPath);
-                Task copy = Copy(d, destinationPath, sourcePath);
+                d = new DirectoryInfo(DestinationPath);
+                Task copy = Copy(d, DestinationPath, SourcePath);
                 await copy;
             }
             else
             {
-                d = new DirectoryInfo(sourcePath);
-                Task copy = Copy(d, sourcePath, destinationPath);
+                d = new DirectoryInfo(SourcePath);
+                Task copy = Copy(d, SourcePath, DestinationPath);
                 await copy;
             }
             fileTransferTime = DateTime.Now - date1;
@@ -121,7 +121,7 @@ namespace AppWPF.developpement
             {
                 string fileToCopy = fi.FullName.Replace(sourcePath, destinationPath);
 
-                if (!File.Exists(fileToCopy) || type == "1" || IsFileModified(fi, destinationPath)) //full save or differential save 
+                if (!File.Exists(fileToCopy) || Type == "1" || IsFileModified(fi, destinationPath)) //full save or differential save 
                 {
                     Console.Write("\r{0}%   ", fi.Name);
                     ClearCurrentConsoleLine();
@@ -149,7 +149,7 @@ namespace AppWPF.developpement
                 string dirToCreate = di.FullName.Replace(sourcePath, destinationPath);
                 //On copie tout les sous dossiers, et on rappelle la méthode pour les sous dossiers.
                 //Copy all the subfolders, and call the method for the subfolders.
-                if (!File.Exists(dirToCreate) || type == "1") Directory.CreateDirectory(dirToCreate);
+                if (!File.Exists(dirToCreate) || Type == "1") Directory.CreateDirectory(dirToCreate);
                 Task copy = Copy(di, sourcePath, destinationPath);
                 await copy;
             }
@@ -157,7 +157,7 @@ namespace AppWPF.developpement
 
         public bool IsFileModified(FileInfo fileInfo, string destinationPath)
         {
-            string fileToCopy = fileInfo.FullName.Replace(sourcePath, destinationPath);
+            string fileToCopy = fileInfo.FullName.Replace(SourcePath, destinationPath);
             try
             {
                 FileInfo fileDest = new(fileToCopy);
@@ -176,7 +176,7 @@ namespace AppWPF.developpement
             foreach (FileInfo fi in fis)
             {
                 string fileToCopy = fi.FullName.Replace(sourcePath, destinationPath);
-                if (!File.Exists(fileToCopy) || type == "1" || IsFileModified(fi, destinationPath))
+                if (!File.Exists(fileToCopy) || Type == "1" || IsFileModified(fi, destinationPath))
                 {
                     fileSizeTotal += fi.Length;
                     fileNumberTotal++;
@@ -200,10 +200,10 @@ namespace AppWPF.developpement
             {
                 return new Log
                 {
-                    name = name,
-                    sourcePath = destinationPath,
-                    destinationPath = sourcePath,
-                    type = type,
+                    name = Name,
+                    sourcePath = DestinationPath,
+                    destinationPath = SourcePath,
+                    type = Type,
                     fileSize = fileSizeTotal.ToString() + " B",
                     fileTransferTime = fileTransferTime.TotalMilliseconds.ToString() + " ms",
                     date = DateTime.Now.ToString("F")
@@ -211,10 +211,10 @@ namespace AppWPF.developpement
             }
             return new Log
             {
-                name = name,
-                sourcePath = sourcePath,
-                destinationPath = destinationPath,
-                type = type,
+                name = Name,
+                sourcePath = SourcePath,
+                destinationPath = DestinationPath,
+                type = Type,
                 fileSize = fileSizeTotal.ToString() + " B",
                 fileTransferTime = fileTransferTime.TotalMilliseconds.ToString() + " ms",
                 date = DateTime.Now.ToString("F")

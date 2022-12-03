@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="AppWPF.developpement.Components.BackupJobDetailsForms"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppWPF.developpement.Components"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.IsSharedSizeScope="True" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Margin="0 20 0 0" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Name"/>
+                <TextBox Grid.Column="1" Text="{Binding Name}"/>
+            </Grid>
+
+            <Grid Margin="0 20 0 0" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Source path"/>
+                <TextBox Grid.Column="1" Text="{Binding SourcePath}"/>
+            </Grid>
+
+            <Grid Margin="0 20 0 0" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Destination path"/>
+                <TextBox Grid.Column="1" Text="{Binding DestinationPath}"/>
+            </Grid>
+
+            <Grid Margin="0 20 0 0" Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Type"/>
+                <ComboBox  x:Name="Type" HorizontalAlignment="Center" Margin="0,253,0,0" VerticalAlignment="Top" Width="250" SelectedIndex="{Binding Type}">
+                    <ComboBoxItem Tag="1" Content="Full save"/>
+                    <ComboBoxItem Tag="2" Content="differential save"/>
+                </ComboBox>
+            </Grid>
+
+        </Grid>
+
+        <WrapPanel Grid.Row="1" Margin="0 20 0 0">
+            <Button Content="Submit" Command="{Binding SubmitCommand}" Margin="0 0 10 0" IsEnabled="{Binding CanSubmit}"/>
+            <Button Content="Cancel" Command="{Binding CancelCommand}"/>
+        </WrapPanel>
+    </Grid>
+</UserControl>

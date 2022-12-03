@@ -137,7 +137,7 @@ namespace Projet_Programmation_Système.developpement
             {
                 foreach (StateLog log in logs.ToList())
                 {
-                    if (log.backupJob.name == stateLog.backupJob.name)
+                    if (log.backupJob.Name == stateLog.backupJob.Name)
                     {
                         logs.Remove(log);
                     }

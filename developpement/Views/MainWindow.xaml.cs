@@ -1,8 +1,9 @@
 ﻿using AppWPF.developpement;
-using AppWPF.developpement.View;
+using AppWPF.developpement.Views;
 using Projet_Programmation_Système.developpement;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -25,21 +26,22 @@ namespace AppWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static LanguageControl languageControl = new();
-        private List<BackupJob>? backupJobs = new List<BackupJob>();
-        ModalWindowBackupJobInfos modalWindow = new ModalWindowBackupJobInfos();
+        //public static LanguageControl languageControl = new();
+        //private List<BackupJob>? BackupJobsList { get; set; }
+        //public List<BackupJob> BackupJobs { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            RefreshList();
+             
+
         }
 
         private void RefreshList()
         {
             {
-                backupJobs = BackupJobsManager.GetBackupJobs();
-                BackupJobList.ItemsSource = backupJobs;
+                //BackupJobsList = BackupJobsManager.GetBackupJobs();
+                //BackupJobList.ItemsSource = BackupJobsList;
             }
         }
 
@@ -50,8 +52,10 @@ namespace AppWPF
 
         private void Button_Create_Backup_Job(object sender, RoutedEventArgs e)
         {
-            modalWindow.ShowDialog();
+            
         }
+
+
 
         private void Button_Switch_FR(object sender, RoutedEventArgs e)
         {
@@ -83,15 +87,22 @@ namespace AppWPF
 
         }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void Button_Delete_Backup_Job(object sender, EventArgs e)
         {
             MainMenuManager.Delete((sender as Button).DataContext.ToString());
             RefreshList();
+        }
+        
+        private void Button_Modify_Backup_Job(object sender, RoutedEventArgs e)
+        {
+            //foreach (BackupJob backupJob in backupJobs)
+            //{
+            //    if (backupJob.Name == (sender as Button).DataContext.ToString())
+            //    {
+            //       ModalWindowBackupJobInfos modalWindow = new(backupJob);
+            //        modalWindow.ShowDialog();
+            //    }
+            //}
         }
     }
 }

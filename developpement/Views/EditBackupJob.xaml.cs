@@ -1,7 +1,5 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,20 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.IO;
 
-
-namespace AppWPF.developpement.View
+namespace AppWPF.developpement.Views
 {
     /// <summary>
-    /// Logique d'interaction pour ModalWindowBackupJobInfos.xaml
+    /// Logique d'interaction pour AddBackupJob.xaml
     /// </summary>
-    /// 
-
-    public partial class ModalWindowBackupJobInfos : Window
+    public partial class EditBackupJob : UserControl
     {
-        public ModalWindowBackupJobInfos()
+        public EditBackupJob()
         {
             InitializeComponent();
         }

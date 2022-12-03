@@ -5,12 +5,20 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="background pivot.jpg" />
     <None Remove="create icon.png" />
     <None Remove="delete icon.png" />
+    <None Remove="developpement\Views\background pivot.jpg" />
+    <None Remove="developpement\Views\create icon.png" />
+    <None Remove="developpement\Views\delete icon.png" />
+    <None Remove="developpement\Views\drapeau france.png" />
+    <None Remove="developpement\Views\drapeau-anglais.png" />
+    <None Remove="developpement\Views\icon recherche.png" />
+    <None Remove="developpement\Views\play green.png" />
     <None Remove="drapeau france.png" />
     <None Remove="drapeau-anglais.png" />
     <None Remove="icon recherche.png" />
@@ -18,9 +26,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="SimpleModal.WPF" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="background pivot.jpg" />
     <Resource Include="create icon.png" />
     <Resource Include="delete icon.png" />
+    <Resource Include="developpement\Views\background pivot.jpg" />
+    <Resource Include="developpement\Views\create icon.png" />
+    <Resource Include="developpement\Views\delete icon.png" />
+    <Resource Include="developpement\Views\drapeau france.png" />
+    <Resource Include="developpement\Views\drapeau-anglais.png" />
+    <Resource Include="developpement\Views\icon recherche.png" />
+    <Resource Include="developpement\Views\play green.png" />
     <Resource Include="drapeau france.png" />
     <Resource Include="drapeau-anglais.png" />
     <Resource Include="icon recherche.png" />
@@ -28,6 +47,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="developpement\Views\EditBackupJob.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Ressources\language.Designer.cs">
       <DependentUpon>Language.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -36,7 +58,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Ressources\language.resx">
+    <EmbeddedResource Update="Ressources\Language.resx">
       <LastGenOutput>language.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>

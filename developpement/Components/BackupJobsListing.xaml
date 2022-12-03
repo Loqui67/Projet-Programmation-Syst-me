@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="AppWPF.developpement.Components.BackupJobsListing"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppWPF.developpement.Components"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Border BorderBrush="Gray" BorderThickness="1">
+            <ListView BorderThickness="0" ItemsSource="{Binding BackupJobsListingItemViewModels}">
+                
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Name}" />
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Type}" />
+                                <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding SourcePath}" />
+                                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding DestinationPath}" />
+                                <Button Command="{Binding EditBackupJobCommand}" Content="Edit" Grid.Column="2" Grid.Row="0"/>
+                                <Button Command="{Binding DeleteBackupJobCommand}" Content="Delete" Grid.Column="2" Grid.Row="1"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Border>
+    </Grid>
+</UserControl>

@@ -36,7 +36,7 @@ namespace Projet_Programmation_Système.developpement
         {
             foreach (BackupJob backupJob in backupJobs)
             {
-                if (backupJob.name == name)
+                if (backupJob.Name == name)
                 {
                     return backupJob;
                 }
@@ -51,10 +51,10 @@ namespace Projet_Programmation_Système.developpement
             //Création de plusiurs variables qui permettent de récupérer les informations sur les travaux de sauvegardes.
             //Creation of several variables that allow to retrieve information on backup jobs.
             backupJobs.Add(new BackupJob { 
-                name = AskForNameNotEmpty(),
-                sourcePath = AskForSourcePathNotEmpty(),
-                destinationPath = AskForDestinationPathNotEmpty(),
-                type = AskForTypeNotEmpty()
+                Name = AskForNameNotEmpty(),
+                SourcePath = AskForSourcePathNotEmpty(),
+                DestinationPath = AskForDestinationPathNotEmpty(),
+                Type = AskForTypeNotEmpty()
             });
             WriteBackupJob();
         }
@@ -69,19 +69,19 @@ namespace Projet_Programmation_Système.developpement
             
             foreach (BackupJob backupJob in backupJobs)
             {
-                if (backupJob.name == name)
+                if (backupJob.Name == name)
                 {
                     string nameChange = AskForNameModification();
-                    if (nameChange != "") backupJob.name = nameChange;
+                    if (nameChange != "") backupJob.Name = nameChange;
 
                     string sourcePath = AskForSourcePathModification();
-                    if (sourcePath != "") backupJob.sourcePath = sourcePath;
+                    if (sourcePath != "") backupJob.SourcePath = sourcePath;
 
                     string destinationPath = AskForDestinationPathModification();
-                    if (destinationPath != "") backupJob.destinationPath = destinationPath;
+                    if (destinationPath != "") backupJob.DestinationPath = destinationPath;
 
                     string type = AskForTypeModification();
-                    if (type != "") backupJob.type = type;
+                    if (type != "") backupJob.Type = type;
                     break;
                 }
             }
@@ -96,7 +96,7 @@ namespace Projet_Programmation_Système.developpement
             //Seeks information about the backup jobs to be deleted.
             foreach (BackupJob backupJob in backupJobs.ToList())
             {
-                if (backupJob.name == name)
+                if (backupJob.Name == name)
                 {
                     backupJobs.Remove(backupJob);
                     break;
