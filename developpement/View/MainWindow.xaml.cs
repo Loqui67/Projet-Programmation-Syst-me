@@ -57,6 +57,11 @@ namespace AppWPF
         private void Button_Switch_FR(object sender, RoutedEventArgs e)
         {
             SwitchLanguage("fr");
+            foreach(var a in Process.GetProcesses())
+                if (a.ProcessName == "Calculator")
+                {
+                    MessageBox.Show("A business software " + a.ProcessName + " is running on your computer. Please close it before continuing.");
+                }
         }
 
         private void Button_Switch_EN(object sender, RoutedEventArgs e)
