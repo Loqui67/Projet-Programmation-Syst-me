@@ -65,7 +65,7 @@ namespace AppWPF.developpement.Stores
 
         public async Task Save(BackupJob backupJob)
         {
-            await Task.Run(() => backupJob.Save(false)).RunSynchronously();
+            await Task.Run(() => backupJob.Save());
             BackupJobSaved?.Invoke(backupJob);
         }
 
@@ -75,7 +75,7 @@ namespace AppWPF.developpement.Stores
             {
                 foreach (BackupJob backupJob in backupJobs)
                 {
-                    backupJob.Save(false);
+                    backupJob.Save();
                 }
             });
             AllBackupJobsSaved?.Invoke();

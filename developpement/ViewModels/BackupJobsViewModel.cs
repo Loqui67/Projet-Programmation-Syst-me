@@ -30,6 +30,10 @@ namespace AppWPF.developpement.ViewModels
         public ICommand SaveAllBackupJobsCommand { get; }
         
         public ICommand LoadBackupJobsCommand { get; }
+
+        public ICommand SwitchLanguageFr { get; }
+        public ICommand SwitchLanguageEn { get; }
+
         public BackupJobsViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
         {
             BackupJobsListingViewModel = new BackupJobsListingViewModel(modalNavigationStore, backupJobsStore);
@@ -37,12 +41,15 @@ namespace AppWPF.developpement.ViewModels
             AddBackupJobCommand = new OpenAddBackupJobCommand(modalNavigationStore, backupJobsStore);
             DeleteAllBackupJobsCommand = new DeleteAllBackupJobsCommand(backupJobsStore);
             SaveAllBackupJobsCommand = new SaveAllBackupJobsCommand(backupJobsStore);
+            SwitchLanguageFr = new SwitchLanguageCommand("fr");
+            SwitchLanguageEn = new SwitchLanguageCommand("en");
         }
 
         public static BackupJobsViewModel LoadViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
         {
             BackupJobsViewModel viewModel = new BackupJobsViewModel(modalNavigationStore, backupJobsStore);
             viewModel.LoadBackupJobsCommand.Execute(null);
+            viewModel.SwitchLanguageEn.Execute(null);
 
             return viewModel;
         }
