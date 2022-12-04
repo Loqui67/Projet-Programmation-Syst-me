@@ -20,10 +20,11 @@ namespace AppWPF.developpement
     {
         //Création des variables paramétriques des sauvegardes.
         //Creation of parametric variables for backups.
-        public string Name { set; get; }
-        public string SourcePath { set; get; }
-        public string DestinationPath { set; get; }
-        public string Type { set; get; }
+        public Guid Id { get; }
+        public string Name { get; }
+        public string SourcePath { get; }
+        public string DestinationPath { get; }
+        public string Type { get; }
 
         public long fileSizeTotal = 0;
         public long fileNumberTotal = 0;
@@ -31,6 +32,14 @@ namespace AppWPF.developpement
         public long fileNumberLeft = 0;
         private TimeSpan fileTransferTime;
 
+        public BackupJob(Guid id, string name, string sourcePath, string destinationPath, string type)
+        {
+            Id = id;
+            Name = name;
+            SourcePath = sourcePath;
+            DestinationPath = destinationPath;
+            Type = type;
+        }
 
         public async void Save(bool restore)
         {

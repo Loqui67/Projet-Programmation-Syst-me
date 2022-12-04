@@ -18,17 +18,20 @@ namespace AppWPF
     public partial class App : Application
     {
         private readonly ModalNavigationStore _modalNavigationStore;
+        private readonly BackupJobsStore _backupJobStore;
 
         public App()
         {
             _modalNavigationStore = new ModalNavigationStore();
+            _backupJobStore = new BackupJobsStore();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            BackupJobsViewModel backupJobsViewModel = new BackupJobsViewModel(_modalNavigationStore, _backupJobStore);
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_modalNavigationStore, new BackupJobsViewModel(_modalNavigationStore))
+                DataContext = new MainViewModel(_modalNavigationStore, backupJobsViewModel)
             };
             MainWindow.Show();
 

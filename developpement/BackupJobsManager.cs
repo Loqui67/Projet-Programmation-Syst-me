@@ -50,12 +50,13 @@ namespace Projet_Programmation_Système.developpement
         {
             //Création de plusiurs variables qui permettent de récupérer les informations sur les travaux de sauvegardes.
             //Creation of several variables that allow to retrieve information on backup jobs.
-            backupJobs.Add(new BackupJob { 
-                Name = AskForNameNotEmpty(),
-                SourcePath = AskForSourcePathNotEmpty(),
-                DestinationPath = AskForDestinationPathNotEmpty(),
-                Type = AskForTypeNotEmpty()
-            });
+            backupJobs.Add(new BackupJob (
+                Guid.NewGuid(),
+                AskForNameNotEmpty(),
+                AskForSourcePathNotEmpty(),
+                AskForDestinationPathNotEmpty(),
+                AskForTypeNotEmpty()
+            ));
             WriteBackupJob();
         }
 
@@ -67,7 +68,7 @@ namespace Projet_Programmation_Système.developpement
             //Seeks information about backup jobs.
 
             
-            foreach (BackupJob backupJob in backupJobs)
+            /*foreach (BackupJob backupJob in backupJobs)
             {
                 if (backupJob.Name == name)
                 {
@@ -84,7 +85,7 @@ namespace Projet_Programmation_Système.developpement
                     if (type != "") backupJob.Type = type;
                     break;
                 }
-            }
+            }*/
             WriteBackupJob();
         }
 

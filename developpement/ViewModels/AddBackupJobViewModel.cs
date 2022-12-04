@@ -13,10 +13,12 @@ namespace AppWPF.developpement.ViewModels
     {
         public BackupJobDetailsFormViewModel BackupJobDetailsFormViewModel { get; }
 
-        public AddBackupJobViewModel(ModalNavigationStore modalNavigationStore)
+        public AddBackupJobViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
         {
+            ICommand submitCommand = new AddBackupJobCommand(this, modalNavigationStore, backupJobsStore);
             ICommand cancelCommand = new CloseModalCommand(modalNavigationStore);
-            BackupJobDetailsFormViewModel = new BackupJobDetailsFormViewModel(null, cancelCommand);
+
+            BackupJobDetailsFormViewModel = new BackupJobDetailsFormViewModel(submitCommand, cancelCommand);
         }
     }
 }

@@ -18,25 +18,7 @@
                 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Border Padding="10">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Name}" />
-                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Type}" />
-                                <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding SourcePath}" />
-                                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding DestinationPath}" />
-                                <Button Command="{Binding EditBackupJobCommand}" Content="Edit" Grid.Column="2" Grid.Row="0"/>
-                                <Button Command="{Binding DeleteBackupJobCommand}" Content="Delete" Grid.Column="2" Grid.Row="1"/>
-                            </Grid>
-                        </Border>
+                        <local:BackupJobsListingItem/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

@@ -10,20 +10,22 @@ namespace AppWPF.developpement.Commands
 {
     public class OpenEditBackupJobCommand : CommandBase
     {
-        private readonly BackupJob backupJob;
+        private readonly BackupJobsListingItemViewModel _backupJobsListingItemViewModel;
+        private readonly BackupJobsStore _backupJobsStore;
         private readonly ModalNavigationStore _modalNavigationStore;
 
-        public OpenEditBackupJobCommand(BackupJob backupJob, ModalNavigationStore modalNavigationStore)
+        public OpenEditBackupJobCommand(BackupJobsListingItemViewModel backupJobsListingItemViewModel, BackupJobsStore backupJobsStore, ModalNavigationStore modalNavigationStore)
         {
-            this.backupJob = backupJob;
+            _backupJobsListingItemViewModel = backupJobsListingItemViewModel;
+            _backupJobsStore = backupJobsStore;
             _modalNavigationStore = modalNavigationStore;
         }
 
         public override void Execute(object parameter)
         {
-            EditBackupJobViewModel editBackupJobViewModel = new EditBackupJobViewModel(backupJob, _modalNavigationStore);
+            BackupJob backupJob = _backupJobsListingItemViewModel.BackupJob;
+            EditBackupJobViewModel editBackupJobViewModel = new EditBackupJobViewModel(backupJob, _backupJobsStore, _modalNavigationStore);
             _modalNavigationStore.CurrentViewModel = editBackupJobViewModel;
         }
-
     }
 }

@@ -13,25 +13,47 @@ namespace AppWPF.developpement.ViewModels
     public class BackupJobsListingViewModel : ViewModelBase
     {
         private readonly ObservableCollection<BackupJobsListingItemViewModel> _backupJobsListingItemViewModels;
+        private readonly ModalNavigationStore _modalNavigationStore;
+        private readonly BackupJobsStore _backupJobsStore;
+
         public IEnumerable<BackupJobsListingItemViewModel> BackupJobsListingItemViewModels 
             => _backupJobsListingItemViewModels;
 
-        public BackupJobsListingViewModel(ModalNavigationStore modalNavigationStore)
+        public BackupJobsListingViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
         {
             _backupJobsListingItemViewModels = new ObservableCollection<BackupJobsListingItemViewModel>();
+            _modalNavigationStore = modalNavigationStore;
+            _backupJobsStore = backupJobsStore;
 
-            AddBackupJob(new BackupJob {
-                Name = "BackupJob1",
-                SourcePath = "C:\\",
-                DestinationPath = "D:\\",
-                Type = "0" 
-            }, modalNavigationStore);
+            _backupJobsStore.BackupJobAdded += BackupJobsStore_BackupJobAdded;
+            _backupJobsStore.BackupJobUpdated += BackupJobsStore_BackupJobUpdated;
         }
 
-        private void AddBackupJob(BackupJob backupJob, ModalNavigationStore modalNavigationStore)
+        protected override void Dispose()
         {
-            ICommand editCommand = new OpenEditBackupJobCommand(backupJob, modalNavigationStore);
-            _backupJobsListingItemViewModels.Add(new BackupJobsListingItemViewModel(backupJob, editCommand));
+            _backupJobsStore.BackupJobAdded -= BackupJobsStore_BackupJobAdded;
+            _backupJobsStore.BackupJobUpdated -= BackupJobsStore_BackupJobUpdated;
+            base.Dispose();
+        }
+        
+        private void BackupJobsStore_BackupJobUpdated(BackupJob backupJob)
+        {
+            BackupJobsListingItemViewModel backupJobViewModel = _backupJobsListingItemViewModels.FirstOrDefault(vm => vm.BackupJob.Id == backupJob.Id);
+            if (backupJobViewModel != null)
+            {
+                backupJobViewModel.Update(backupJob);
+            }
+        }
+
+        private void BackupJobsStore_BackupJobAdded(BackupJob backupJob)
+        {
+            AddBackupJob(backupJob);
+        }
+
+        private void AddBackupJob(BackupJob backupJob)
+        {
+            BackupJobsListingItemViewModel itemViewModel = new BackupJobsListingItemViewModel(backupJob, _backupJobsStore, _modalNavigationStore);
+            _backupJobsListingItemViewModels.Add(itemViewModel);
         }
     }
 }

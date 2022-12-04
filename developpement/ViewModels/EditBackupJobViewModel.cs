@@ -12,12 +12,17 @@ namespace AppWPF.developpement.ViewModels
 {
     public class EditBackupJobViewModel : ViewModelBase
     {
+        public Guid BackupJobId { get; }
+
         public BackupJobDetailsFormViewModel BackupJobDetailsFormViewModel { get; }
 
-        public EditBackupJobViewModel(BackupJob backupJob, ModalNavigationStore modalNavigationStore)
+        public EditBackupJobViewModel(BackupJob backupJob, BackupJobsStore backupJobsStore, ModalNavigationStore modalNavigationStore)
         {
+            BackupJobId = backupJob.Id;
+
+            ICommand submitCommand = new EditBackupJobCommand(this, backupJobsStore, modalNavigationStore);
             ICommand cancelCommand = new CloseModalCommand(modalNavigationStore);
-            BackupJobDetailsFormViewModel = new BackupJobDetailsFormViewModel(null, cancelCommand)
+            BackupJobDetailsFormViewModel = new BackupJobDetailsFormViewModel(submitCommand, cancelCommand)
             {
                 Name = backupJob.Name,
                 SourcePath = backupJob.SourcePath,
