@@ -35,6 +35,24 @@ namespace Projet_Programmation_Système.developpement
             if (!File.Exists(path)) File.Create(path);
         }
 
+        public static Config LoadConfig()
+        {
+            string path = Path.Combine(appDataFolderPath, "config.xml");
+            CreateFileIfNotExist(path);
+            XmlSerializer serializer = new(typeof(Config));
+            using FileStream stream = new(path, FileMode.Open);
+            return (Config)serializer.Deserialize(stream);
+        }
+
+        public static void SaveConfig(Config config)
+        {
+            string path = Path.Combine(appDataFolderPath, "config.xml");
+            CreateFileIfNotExist(path);
+            XmlSerializer serializer = new(typeof(Config));
+            using FileStream stream = new(path, FileMode.Create);
+            serializer.Serialize(stream, config);
+        }
+
         //ecrit dans le fichier les différents travaux de sauvegarde
         //write in the file the different backup jobs
         public static async Task WriteBackupJobToFile(List<BackupJob> backupJobs)

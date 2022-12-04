@@ -1,5 +1,6 @@
 ﻿using AppWPF.developpement.Commands;
 using AppWPF.developpement.Stores;
+using Projet_Programmation_Système.developpement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,18 +12,9 @@ namespace AppWPF.developpement.ViewModels
 {
     public class BackupJobsViewModel : ViewModelBase
     {
+        public static readonly Config config = FileManager.LoadConfig();
         public BackupJobsListingViewModel BackupJobsListingViewModel { get; }
 
-        private bool _isLoading;
-        public bool IsLoading
-        {
-            get => _isLoading;
-            set
-            {
-                _isLoading = value;
-                OnPropertyChanged(nameof(IsLoading));
-            }
-        }
 
         public ICommand AddBackupJobCommand { get; }
 
@@ -47,9 +39,10 @@ namespace AppWPF.developpement.ViewModels
 
         public static BackupJobsViewModel LoadViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
         {
-            BackupJobsViewModel viewModel = new BackupJobsViewModel(modalNavigationStore, backupJobsStore);
+            BackupJobsViewModel viewModel = new BackupJobsViewModel(modalNavigationStore, backupJobsStore); 
             viewModel.LoadBackupJobsCommand.Execute(null);
-            viewModel.SwitchLanguageEn.Execute(null);
+            if (config.DefaultLanguage == "fr") viewModel.SwitchLanguageFr.Execute(null);
+            else viewModel.SwitchLanguageEn.Execute(null);
 
             return viewModel;
         }

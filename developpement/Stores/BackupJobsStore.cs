@@ -1,4 +1,5 @@
-﻿using Projet_Programmation_Système.developpement;
+﻿using AppWPF.developpement.ViewModels;
+using Projet_Programmation_Système.developpement;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -65,7 +66,7 @@ namespace AppWPF.developpement.Stores
 
         public async Task Save(BackupJob backupJob)
         {
-            await Task.Run(() => backupJob.Save());
+            await Task.Run(() => backupJob.Save(BackupJobsViewModel.config.LogExtension));
             BackupJobSaved?.Invoke(backupJob);
         }
 
@@ -75,7 +76,7 @@ namespace AppWPF.developpement.Stores
             {
                 foreach (BackupJob backupJob in backupJobs)
                 {
-                    backupJob.Save();
+                    backupJob.Save(BackupJobsViewModel.config.LogExtension);
                 }
             });
             AllBackupJobsSaved?.Invoke();

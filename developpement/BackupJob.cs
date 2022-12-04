@@ -42,8 +42,10 @@ namespace AppWPF.developpement
             Type = type;
         }
 
-        public async void Save()
+        public async void Save(string extension)
         {
+            formatLogs = extension;
+            
             //Vérification du chemin d'accès.
             //Verification of the access path.
             if (!Directory.Exists(SourcePath) || !Directory.Exists(DestinationPath))
