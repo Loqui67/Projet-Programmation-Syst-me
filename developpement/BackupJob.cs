@@ -75,9 +75,6 @@ namespace AppWPF.developpement
             fileTransferTime = DateTime.Now - date1;
 
 
-            //DisplayEmptyLine();
-            //DisplayLanguage("Done");
-
             //Générer l'objet de log d'activité a écrire dans les fichiers
             //Generate the activity Log object to write to the files
 
