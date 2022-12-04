@@ -22,6 +22,7 @@ namespace AppWPF.developpement.Commands
         public override async Task ExecuteAsync(object parameter)
         {
             {
+                await Task.Delay(10000);
                 try
                 {
                     await _backupJobsStore.Save(new BackupJob(

@@ -22,12 +22,16 @@ namespace AppWPF.developpement.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
+            _backupJobsListingItemViewModel.IsDeleting = true;
+            await Task.Delay(5000);
+            try
             {
-                try
-                {
-                    await _backupJobsStore.Delete(_backupJobsListingItemViewModel.BackupJobId);
-                }
-                catch (Exception) { }
+                await _backupJobsStore.Delete(_backupJobsListingItemViewModel.BackupJobId);
+            }
+            catch (Exception) { }
+            finally
+            {
+                _backupJobsListingItemViewModel.IsDeleting = false;
             }
         }
 

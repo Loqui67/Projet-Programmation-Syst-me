@@ -57,6 +57,18 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
+        private bool _isSubmitting;
+        public bool IsSubmitting
+        {
+            get { return _isSubmitting; }
+            set
+            {
+                _isSubmitting = value;
+                OnPropertyChanged(nameof(IsSubmitting));
+                OnPropertyChanged(nameof(CanSubmit));
+            }
+        }
+
         public bool CanSubmit => 
             !string.IsNullOrWhiteSpace(Name) && 
             Directory.Exists(SourcePath) &&

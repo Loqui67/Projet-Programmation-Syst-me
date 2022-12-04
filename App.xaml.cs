@@ -28,7 +28,7 @@ namespace AppWPF
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            BackupJobsViewModel backupJobsViewModel = new BackupJobsViewModel(_modalNavigationStore, _backupJobStore);
+            BackupJobsViewModel backupJobsViewModel = BackupJobsViewModel.LoadViewModel(_modalNavigationStore, _backupJobStore);
             MainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_modalNavigationStore, backupJobsViewModel)

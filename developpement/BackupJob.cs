@@ -29,6 +29,7 @@ namespace AppWPF.developpement
         public long fileNumberTotal = 0;
         public long fileSizeLeft = 0;
         public long fileNumberLeft = 0;
+        public string fileInTransfer = "";
         private TimeSpan fileTransferTime;
         private string formatLogs = "json";
 
@@ -41,35 +42,23 @@ namespace AppWPF.developpement
             Type = type;
         }
 
-        public async void Save(bool restore)
+        public async void Save()
         {
             //Vérification du chemin d'accès.
             //Verification of the access path.
-            if (!System.IO.Directory.Exists(SourcePath) || !System.IO.Directory.Exists(DestinationPath))
+            if (!Directory.Exists(SourcePath) || !Directory.Exists(DestinationPath))
             {
-                //DisplayLanguage("PathDoesntExist");
                 return;
             }
 
             fileSizeTotal = 0;
             fileNumberTotal = 0;
+            fileSizeLeft = 0;
+            fileNumberLeft = 0;
 
-            //Création d'une méthode pour réstaurer un fichier.
-            //Creation of a method to restore a file.
-            //DisplayLanguage("CopyFiles");
-            DirectoryInfo d;
-            if (restore)
-            {
-                d = new DirectoryInfo(DestinationPath);
-                Task directoryInfo = GetDirectoryInfo(d, DestinationPath, SourcePath);
-                await directoryInfo;
-            }
-            else
-            {
-                d = new DirectoryInfo(SourcePath);
-                Task directoryInfo = GetDirectoryInfo(d, SourcePath, DestinationPath);
-                await directoryInfo;
-            }
+            DirectoryInfo d = new DirectoryInfo(SourcePath);
+            Task directoryInfo = GetDirectoryInfo(d, SourcePath, DestinationPath);
+            await directoryInfo;
 
             fileSizeLeft = fileSizeTotal;
             fileNumberLeft = fileNumberTotal;
@@ -77,22 +66,12 @@ namespace AppWPF.developpement
 
             //Calcule de la date dans une variable.
             //Calculation of the date in a variable.
+            
             DateTime date1 = DateTime.Now;
 
-            //Création d'une méthode pour copier les fichiers durant la restauration.
-            //Create a method to copy files during recovery.
-            if (restore)
-            {
-                d = new DirectoryInfo(DestinationPath);
-                Task copy = Copy(d, DestinationPath, SourcePath);
-                await copy;
-            }
-            else
-            {
-                d = new DirectoryInfo(SourcePath);
-                Task copy = Copy(d, SourcePath, DestinationPath);
-                await copy;
-            }
+            d = new DirectoryInfo(SourcePath);
+            Task copy = Copy(d, SourcePath, DestinationPath);
+            await copy;
             fileTransferTime = DateTime.Now - date1;
 
 
@@ -116,8 +95,8 @@ namespace AppWPF.developpement
 
 
 
-            if (formatLogs == "json") FileManager.WriteDailyLogToFile(GenerateLog(restore));
-            else FileManager.SerializeToXML(GenerateLog(restore));
+            if (formatLogs == "json") FileManager.WriteDailyLogToFile(GenerateLog());
+            else FileManager.SerializeToXML(GenerateLog());
         }
 
 
@@ -132,8 +111,7 @@ namespace AppWPF.developpement
 
                 if (!File.Exists(fileToCopy) || Type == "0" || IsFileModified(fi, destinationPath)) //full save or differential save 
                 {
-                    //Console.Write("\r{0}%   ", fi.Name);
-                    //ClearCurrentConsoleLine();
+                    fileInTransfer = fi.Name;
 
                     File.Copy(fi.FullName, fileToCopy, true);
 
@@ -164,21 +142,6 @@ namespace AppWPF.developpement
             }
         }
 
-        public bool IsFileModified(FileInfo fileInfo, string destinationPath)
-        {
-            string fileToCopy = fileInfo.FullName.Replace(SourcePath, destinationPath);
-            try
-            {
-                FileInfo fileDest = new(fileToCopy);
-                if (fileInfo.LastWriteTime != fileDest.LastWriteTime) return true;
-                else return false;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
         public async Task GetDirectoryInfo(DirectoryInfo d, string sourcePath, string destinationPath)
         {
             FileInfo[] fis = d.GetFiles();
@@ -200,24 +163,29 @@ namespace AppWPF.developpement
         }
 
 
+        public bool IsFileModified(FileInfo fileInfo, string destinationPath)
+        {
+            string fileToCopy = fileInfo.FullName.Replace(SourcePath, destinationPath);
+            try
+            {
+                FileInfo fileDest = new(fileToCopy);
+                if (fileInfo.LastWriteTime != fileDest.LastWriteTime) return true;
+                else return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+
+
+
 
         //Création d'une méthode pour générer un log.
         //Creation of a method to generate a log.
-        public Log GenerateLog(bool restore)
+        public Log GenerateLog()
         {
-            if (restore)
-            {
-                return new Log
-                {
-                    name = Name,
-                    sourcePath = DestinationPath,
-                    destinationPath = SourcePath,
-                    type = Type,
-                    fileSize = fileSizeTotal.ToString() + " B",
-                    fileTransferTime = fileTransferTime.TotalMilliseconds.ToString() + " ms",
-                    date = DateTime.Now.ToString("F")
-                };
-            }
             return new Log
             {
                 name = Name,

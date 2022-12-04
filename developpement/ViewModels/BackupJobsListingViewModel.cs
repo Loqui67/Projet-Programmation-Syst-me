@@ -20,7 +20,7 @@ namespace AppWPF.developpement.ViewModels
             => _backupJobsListingItemViewModels;
 
 
-        public ICommand LoadBackupJobsCommand { get; }
+
 
         public BackupJobsListingViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
         {
@@ -28,7 +28,7 @@ namespace AppWPF.developpement.ViewModels
             _modalNavigationStore = modalNavigationStore;
             _backupJobsStore = backupJobsStore;
 
-            LoadBackupJobsCommand = new LoadBackupJobsCommand(_backupJobsStore);
+            
 
             _backupJobsStore.BackupJobAdded += BackupJobsStore_BackupJobAdded;
             _backupJobsStore.BackupJobUpdated += BackupJobsStore_BackupJobUpdated;
@@ -38,13 +38,7 @@ namespace AppWPF.developpement.ViewModels
 
         }
 
-        public static BackupJobsListingViewModel LoadViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
-        {
-            BackupJobsListingViewModel viewModel = new BackupJobsListingViewModel(modalNavigationStore, backupJobsStore);
-            viewModel.LoadBackupJobsCommand.Execute(null);
 
-            return viewModel;
-        }
 
         protected override void Dispose()
         {

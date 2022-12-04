@@ -65,7 +65,7 @@ namespace AppWPF.developpement.Stores
 
         public async Task Save(BackupJob backupJob)
         {
-            await Task.Run(() => backupJob.Save(false));
+            await Task.Run(() => backupJob.Save(false)).RunSynchronously();
             BackupJobSaved?.Invoke(backupJob);
         }
 

@@ -24,6 +24,7 @@ namespace AppWPF.developpement.Commands
         public override async Task ExecuteAsync(object parameter)
         {
             BackupJobDetailsFormViewModel formViewModel = _addBackupJobViewModel.BackupJobDetailsFormViewModel;
+            formViewModel.IsSubmitting = true;
             BackupJob backupJob = new BackupJob (
                 Guid.NewGuid(),
                 formViewModel.Name,
@@ -38,6 +39,10 @@ namespace AppWPF.developpement.Commands
                 _modalNavigationStore.Close();
             }
             catch (Exception) { }
+            finally
+            {
+                formViewModel.IsSubmitting = false;
+            }
         }
     }
 }

@@ -12,17 +12,39 @@ namespace AppWPF.developpement.ViewModels
     public class BackupJobsViewModel : ViewModelBase
     {
         public BackupJobsListingViewModel BackupJobsListingViewModel { get; }
+
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                OnPropertyChanged(nameof(IsLoading));
+            }
+        }
+
         public ICommand AddBackupJobCommand { get; }
 
         public ICommand DeleteAllBackupJobsCommand { get; }
         public ICommand SaveAllBackupJobsCommand { get; }
-
+        
+        public ICommand LoadBackupJobsCommand { get; }
         public BackupJobsViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
         {
-            BackupJobsListingViewModel = BackupJobsListingViewModel.LoadViewModel(modalNavigationStore, backupJobsStore);
+            BackupJobsListingViewModel = new BackupJobsListingViewModel(modalNavigationStore, backupJobsStore);
+            LoadBackupJobsCommand = new LoadBackupJobsCommand(this, backupJobsStore);
             AddBackupJobCommand = new OpenAddBackupJobCommand(modalNavigationStore, backupJobsStore);
             DeleteAllBackupJobsCommand = new DeleteAllBackupJobsCommand(backupJobsStore);
             SaveAllBackupJobsCommand = new SaveAllBackupJobsCommand(backupJobsStore);
+        }
+
+        public static BackupJobsViewModel LoadViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
+        {
+            BackupJobsViewModel viewModel = new BackupJobsViewModel(modalNavigationStore, backupJobsStore);
+            viewModel.LoadBackupJobsCommand.Execute(null);
+
+            return viewModel;
         }
     }
 }
