@@ -11,6 +11,7 @@
     <None Remove="background pivot.jpg" />
     <None Remove="create icon.png" />
     <None Remove="delete icon.png" />
+    <None Remove="developpement\View\roue dentée icon.png" />
     <None Remove="drapeau france.png" />
     <None Remove="drapeau-anglais.png" />
     <None Remove="icon recherche.png" />
@@ -21,6 +22,7 @@
     <Resource Include="background pivot.jpg" />
     <Resource Include="create icon.png" />
     <Resource Include="delete icon.png" />
+    <Resource Include="developpement\View\roue dentée icon.png" />
     <Resource Include="drapeau france.png" />
     <Resource Include="drapeau-anglais.png" />
     <Resource Include="icon recherche.png" />

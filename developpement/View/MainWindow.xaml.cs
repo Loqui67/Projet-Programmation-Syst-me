@@ -28,6 +28,7 @@ namespace AppWPF
         public static LanguageControl languageControl = new();
         private List<BackupJob>? backupJobs = new List<BackupJob>();
         ModalWindowBackupJobInfos modalWindow = new ModalWindowBackupJobInfos();
+        SoftwarePackageWindow softwarePackage = new SoftwarePackageWindow();
 
         public MainWindow()
         {
@@ -57,10 +58,17 @@ namespace AppWPF
         private void Button_Switch_FR(object sender, RoutedEventArgs e)
         {
             SwitchLanguage("fr");
-            foreach(var a in Process.GetProcesses())
-                if (a.ProcessName == "Calculator")
+            //Process currentProcess = Process.GetCurrentProcess();
+            /*Process[] localByName = Process.GetProcessesByName("Calculator");
+            foreach (var a in Process.GetProcessesByName("Calculator")) Trace.WriteLine(a);*/
+            foreach (var a in Process.GetProcesses())
+                switch (a.ProcessName)
                 {
-                    MessageBox.Show("A business software " + a.ProcessName + " is running on your computer. Please close it before continuing.");
+                    case ("Calculator"):
+                        MessageBox.Show("A business software " + a.ProcessName + " is running on your computer. Please close it before continuing.", "Save error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+                    default:
+                        break;
                 }
         }
 
@@ -116,6 +124,16 @@ namespace AppWPF
         {
             MainMenuManager.Delete((sender as Button).DataContext.ToString());
             RefreshList();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Choose_Software_package(object sender, RoutedEventArgs e)
+        {
+            softwarePackage.ShowDialog();
         }
     }
 }

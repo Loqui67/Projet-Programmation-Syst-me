@@ -92,6 +92,11 @@
                 <ImageBrush ImageSource="/icon recherche.png"/>
             </Button.Background>
         </Button>
+        <Button Content="" HorizontalAlignment="Left" Margin="650,10,0,0" VerticalAlignment="Top" Grid.RowSpan="2" BorderBrush="{x:Null}" Width="35" Height="34" Click="Button_Choose_Software_package">
+            <Button.Background>
+                <ImageBrush ImageSource="/developpement/View/roue dentée icon.png"/>
+            </Button.Background>
+        </Button>
 
     </Grid>
 </Window>
