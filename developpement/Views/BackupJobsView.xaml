@@ -25,7 +25,7 @@
                 <ImageBrush ImageSource="/developpement/Views/drapeau-anglais.png"/>
             </Button.Background>
         </Button>
-        <Button Content="" HorizontalAlignment="Left" Margin="612,10,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="33" Height="33" Grid.RowSpan="2">
+        <Button Content="" HorizontalAlignment="Left" Margin="612,10,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="33" Height="33" Grid.RowSpan="2"  Command="{Binding DeleteAllBackupJobsCommand}">
             <Button.Background>
                 <ImageBrush ImageSource="/developpement/Views/delete icon.png"/>
             </Button.Background>
@@ -44,7 +44,7 @@
                 <ImageBrush ImageSource="/developpement/Views/create icon.png"/>
             </Button.Background>
         </Button>
-        <Button Content="" HorizontalAlignment="Left" Margin="537,9,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.192,-0.279" Height="34" Width="33" Foreground="Black" Grid.RowSpan="2">
+        <Button Content="" HorizontalAlignment="Left" Margin="537,9,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.192,-0.279" Height="34" Width="33" Foreground="Black" Grid.RowSpan="2"  Command="{Binding SaveAllBackupJobsCommand}">
             <Button.Background>
                 <ImageBrush ImageSource="/developpement/Views/play green.png"/>
             </Button.Background>

@@ -63,6 +63,11 @@ namespace Projet_Programmation_Système.developpement
             await WriteBackupJobToFile(backupJobs);
         }
 
+        public static async Task RemoveAllBackupJobFromFile()
+        {
+            await WriteBackupJobToFile(new List<BackupJob>());
+        }
+
         public static async Task UpdateBackupJobInFile(BackupJob backupJob)
         {
             List<BackupJob>? backupJobs = ReadBackupJobFile();

@@ -14,8 +14,13 @@ namespace AppWPF.developpement.Stores
 
         public event Action<BackupJob> BackupJobAdded;
         public event Action<BackupJob> BackupJobUpdated;
-        public event Action<Guid> BackupJobDeleted;
+        public event Action<Guid> BackupJobDeleted;        
+        public event Action AllBackupJobsDeleted;
         public event Action BackupJobsLoaded;
+
+        public event Action<BackupJob> BackupJobSaved;
+        public event Action AllBackupJobsSaved;
+
 
         public BackupJobsStore()
         {
@@ -43,16 +48,37 @@ namespace AppWPF.developpement.Stores
             BackupJobDeleted?.Invoke(backupJobId);
         }
 
+        public async Task DeleteAll()
+        {
+            await Task.Run(() => FileManager.RemoveAllBackupJobFromFile());
+            backupJobs.Clear();
+            AllBackupJobsDeleted?.Invoke();
+        }
+
         public async Task Load()
         {
             backupJobs = FileManager.ReadBackupJobFile();
-            foreach (BackupJob backupJob in backupJobs)
-            {
-                Trace.WriteLine(backupJob.Id);
-            }
-            //backupJobs ??= new List<BackupJob>();
+            backupJobs ??= new List<BackupJob>();
 
             BackupJobsLoaded?.Invoke();
+        }
+
+        public async Task Save(BackupJob backupJob)
+        {
+            await Task.Run(() => backupJob.Save(false));
+            BackupJobSaved?.Invoke(backupJob);
+        }
+
+        public async Task SaveAll()
+        {
+            await Task.Run(() =>
+            {
+                foreach (BackupJob backupJob in backupJobs)
+                {
+                    backupJob.Save(false);
+                }
+            });
+            AllBackupJobsSaved?.Invoke();
         }
     }
 }

@@ -20,12 +20,14 @@ namespace AppWPF.developpement.ViewModels
 
         public ICommand EditCommand { get; }
         public ICommand DeleteCommand { get; }
+        public ICommand SaveCommand { get; }
 
         public BackupJobsListingItemViewModel(BackupJob backupJob, BackupJobsStore backupJobsStore, ModalNavigationStore modalNavigationStore)
         {
             BackupJob = backupJob;
             EditCommand = new OpenEditBackupJobCommand(this, backupJobsStore, modalNavigationStore);
             DeleteCommand = new DeleteBackupJobCommand(this, backupJobsStore);
+            SaveCommand = new SaveBackupJobCommand(this, backupJobsStore);
         }
 
 

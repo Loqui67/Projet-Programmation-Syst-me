@@ -10,9 +10,10 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -23,6 +24,7 @@
                 <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding DestinationPath}" />
                 <Button Command="{Binding EditCommand}" Content="Edit" Grid.Column="2" Grid.Row="0"/>
                 <Button Command="{Binding DeleteCommand}" Content="Delete" Grid.Column="2" Grid.Row="1"/>
-            </Grid>
+                <Button Command="{Binding SaveCommand}" Content="Save" Grid.Column="3"/>
+        </Grid>
         </Border>
 </UserControl>

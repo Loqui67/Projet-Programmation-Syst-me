@@ -33,6 +33,7 @@ namespace AppWPF.developpement.ViewModels
             _backupJobsStore.BackupJobAdded += BackupJobsStore_BackupJobAdded;
             _backupJobsStore.BackupJobUpdated += BackupJobsStore_BackupJobUpdated;
             _backupJobsStore.BackupJobDeleted += BackupJobsStore_BackupJobDeleted;
+            _backupJobsStore.AllBackupJobsDeleted += BackupJobsStore_AllBackupJobsDeleted;
             _backupJobsStore.BackupJobsLoaded += BackupJobsStore_BackupJobsLoaded;
 
         }
@@ -50,6 +51,7 @@ namespace AppWPF.developpement.ViewModels
             _backupJobsStore.BackupJobAdded -= BackupJobsStore_BackupJobAdded;
             _backupJobsStore.BackupJobUpdated -= BackupJobsStore_BackupJobUpdated;
             _backupJobsStore.BackupJobDeleted -= BackupJobsStore_BackupJobDeleted;
+            _backupJobsStore.AllBackupJobsDeleted -= BackupJobsStore_AllBackupJobsDeleted;
             _backupJobsStore.BackupJobsLoaded -= BackupJobsStore_BackupJobsLoaded;
             base.Dispose();
         }
@@ -82,6 +84,11 @@ namespace AppWPF.developpement.ViewModels
             {
                 _backupJobsListingItemViewModels.Remove(itemViewModel);
             }
+        }
+
+        private void BackupJobsStore_AllBackupJobsDeleted()
+        {
+            _backupJobsListingItemViewModels.Clear();
         }
 
 

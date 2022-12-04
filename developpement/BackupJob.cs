@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
 using Projet_Programmation_Système.developpement;
-using static Projet_Programmation_Système.developpement.ConsoleManager;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 
@@ -31,6 +30,7 @@ namespace AppWPF.developpement
         public long fileSizeLeft = 0;
         public long fileNumberLeft = 0;
         private TimeSpan fileTransferTime;
+        private string formatLogs = "json";
 
         public BackupJob(Guid id, string name, string sourcePath, string destinationPath, string type)
         {
@@ -45,9 +45,9 @@ namespace AppWPF.developpement
         {
             //Vérification du chemin d'accès.
             //Verification of the access path.
-            if (!BackupJobsManager.AssertThatPathExist(SourcePath) || !BackupJobsManager.AssertThatPathExist(DestinationPath))
+            if (!System.IO.Directory.Exists(SourcePath) || !System.IO.Directory.Exists(DestinationPath))
             {
-                DisplayLanguage("PathDoesntExist");
+                //DisplayLanguage("PathDoesntExist");
                 return;
             }
 
@@ -56,7 +56,7 @@ namespace AppWPF.developpement
 
             //Création d'une méthode pour réstaurer un fichier.
             //Creation of a method to restore a file.
-            DisplayLanguage("CopyFiles");
+            //DisplayLanguage("CopyFiles");
             DirectoryInfo d;
             if (restore)
             {
@@ -96,8 +96,8 @@ namespace AppWPF.developpement
             fileTransferTime = DateTime.Now - date1;
 
 
-            DisplayEmptyLine();
-            DisplayLanguage("Done");
+            //DisplayEmptyLine();
+            //DisplayLanguage("Done");
 
             //Générer l'objet de log d'activité a écrire dans les fichiers
             //Generate the activity Log object to write to the files
@@ -116,7 +116,7 @@ namespace AppWPF.developpement
 
 
 
-            if (MainMenuManager.formatLogs == "json") FileManager.WriteDailyLogToFile(GenerateLog(restore));
+            if (formatLogs == "json") FileManager.WriteDailyLogToFile(GenerateLog(restore));
             else FileManager.SerializeToXML(GenerateLog(restore));
         }
 
@@ -130,10 +130,10 @@ namespace AppWPF.developpement
             {
                 string fileToCopy = fi.FullName.Replace(sourcePath, destinationPath);
 
-                if (!File.Exists(fileToCopy) || Type == "1" || IsFileModified(fi, destinationPath)) //full save or differential save 
+                if (!File.Exists(fileToCopy) || Type == "0" || IsFileModified(fi, destinationPath)) //full save or differential save 
                 {
-                    Console.Write("\r{0}%   ", fi.Name);
-                    ClearCurrentConsoleLine();
+                    //Console.Write("\r{0}%   ", fi.Name);
+                    //ClearCurrentConsoleLine();
 
                     File.Copy(fi.FullName, fileToCopy, true);
 
@@ -158,7 +158,7 @@ namespace AppWPF.developpement
                 string dirToCreate = di.FullName.Replace(sourcePath, destinationPath);
                 //On copie tout les sous dossiers, et on rappelle la méthode pour les sous dossiers.
                 //Copy all the subfolders, and call the method for the subfolders.
-                if (!File.Exists(dirToCreate) || Type == "1") Directory.CreateDirectory(dirToCreate);
+                if (!File.Exists(dirToCreate) || Type == "0") Directory.CreateDirectory(dirToCreate);
                 Task copy = Copy(di, sourcePath, destinationPath);
                 await copy;
             }
@@ -185,7 +185,7 @@ namespace AppWPF.developpement
             foreach (FileInfo fi in fis)
             {
                 string fileToCopy = fi.FullName.Replace(sourcePath, destinationPath);
-                if (!File.Exists(fileToCopy) || Type == "1" || IsFileModified(fi, destinationPath))
+                if (!File.Exists(fileToCopy) || Type == "0" || IsFileModified(fi, destinationPath))
                 {
                     fileSizeTotal += fi.Length;
                     fileNumberTotal++;
