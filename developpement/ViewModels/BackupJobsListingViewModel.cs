@@ -19,20 +19,38 @@ namespace AppWPF.developpement.ViewModels
         public IEnumerable<BackupJobsListingItemViewModel> BackupJobsListingItemViewModels 
             => _backupJobsListingItemViewModels;
 
+
+        public ICommand LoadBackupJobsCommand { get; }
+
         public BackupJobsListingViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
         {
             _backupJobsListingItemViewModels = new ObservableCollection<BackupJobsListingItemViewModel>();
             _modalNavigationStore = modalNavigationStore;
             _backupJobsStore = backupJobsStore;
 
+            LoadBackupJobsCommand = new LoadBackupJobsCommand(_backupJobsStore);
+
             _backupJobsStore.BackupJobAdded += BackupJobsStore_BackupJobAdded;
             _backupJobsStore.BackupJobUpdated += BackupJobsStore_BackupJobUpdated;
+            _backupJobsStore.BackupJobDeleted += BackupJobsStore_BackupJobDeleted;
+            _backupJobsStore.BackupJobsLoaded += BackupJobsStore_BackupJobsLoaded;
+
+        }
+
+        public static BackupJobsListingViewModel LoadViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
+        {
+            BackupJobsListingViewModel viewModel = new BackupJobsListingViewModel(modalNavigationStore, backupJobsStore);
+            viewModel.LoadBackupJobsCommand.Execute(null);
+
+            return viewModel;
         }
 
         protected override void Dispose()
         {
             _backupJobsStore.BackupJobAdded -= BackupJobsStore_BackupJobAdded;
             _backupJobsStore.BackupJobUpdated -= BackupJobsStore_BackupJobUpdated;
+            _backupJobsStore.BackupJobDeleted -= BackupJobsStore_BackupJobDeleted;
+            _backupJobsStore.BackupJobsLoaded -= BackupJobsStore_BackupJobsLoaded;
             base.Dispose();
         }
         
@@ -44,6 +62,28 @@ namespace AppWPF.developpement.ViewModels
                 backupJobViewModel.Update(backupJob);
             }
         }
+
+
+        private void BackupJobsStore_BackupJobsLoaded()
+        {
+            _backupJobsListingItemViewModels.Clear();
+
+            foreach (BackupJob backupJob in _backupJobsStore.backupJobs)
+            {
+                AddBackupJob(backupJob);
+            }
+        }
+
+        private void BackupJobsStore_BackupJobDeleted(Guid id)
+        {
+            BackupJobsListingItemViewModel itemViewModel = _backupJobsListingItemViewModels.FirstOrDefault(y => y.BackupJob?.Id == id);
+
+            if (itemViewModel != null)
+            {
+                _backupJobsListingItemViewModels.Remove(itemViewModel);
+            }
+        }
+
 
         private void BackupJobsStore_BackupJobAdded(BackupJob backupJob)
         {

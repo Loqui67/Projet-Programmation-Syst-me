@@ -37,13 +37,38 @@ namespace Projet_Programmation_Système.developpement
 
         //ecrit dans le fichier les différents travaux de sauvegarde
         //write in the file the different backup jobs
-        public static void WriteBackupJobToFile(List<BackupJob> backupJobs)
+        public static async Task WriteBackupJobToFile(List<BackupJob> backupJobs)
         {
             CreateFileIfNotExist(backupJobJsonFileName);
             using FileStream fs = new(backupJobJsonFileName, FileMode.Truncate);
             string jsonString = JsonSerializer.Serialize(backupJobs, optionsWriteIndented);
             byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
-            fs.Write(jsonBytes, 0, jsonBytes.Length);
+            await fs.WriteAsync(jsonBytes);
+        }
+
+
+        public static async Task AddBackupJobToFile(BackupJob backupJob)
+        {
+            List<BackupJob>? backupJobs = ReadBackupJobFile();
+            if (backupJobs == null) backupJobs = new List<BackupJob>();
+            backupJobs.Add(backupJob);
+            await WriteBackupJobToFile(backupJobs);
+        }
+
+        public static async Task RemoveBackupJobFromFile(Guid backupJobId)
+        {
+            List<BackupJob>? backupJobs = ReadBackupJobFile();
+            if (backupJobs == null) return;
+            backupJobs.Remove(backupJobs.Find(x => x.Id == backupJobId));
+            await WriteBackupJobToFile(backupJobs);
+        }
+
+        public static async Task UpdateBackupJobInFile(BackupJob backupJob)
+        {
+            List<BackupJob>? backupJobs = ReadBackupJobFile();
+            if (backupJobs == null) return;
+            backupJobs[backupJobs.FindIndex(x => x.Id == backupJob.Id)] = backupJob;
+            await WriteBackupJobToFile(backupJobs);
         }
 
         //lit le fichier des différents travaux de sauvegarde

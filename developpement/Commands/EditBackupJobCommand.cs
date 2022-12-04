@@ -31,7 +31,6 @@ namespace AppWPF.developpement.Commands
                 formViewModel.DestinationPath,
                 formViewModel.Type
             );
-
             try
             {
                 await _backupJobsStore.Update(backupJob);

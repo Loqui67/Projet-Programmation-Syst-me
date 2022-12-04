@@ -12,6 +12,7 @@ namespace AppWPF.developpement.ViewModels
     public class BackupJobsListingItemViewModel : ViewModelBase
     {
         public BackupJob BackupJob { get; private set; }
+        public Guid BackupJobId => BackupJob.Id;
         public string Name => BackupJob.Name;
         public string SourcePath => BackupJob.SourcePath;
         public string DestinationPath => BackupJob.DestinationPath;
@@ -24,6 +25,7 @@ namespace AppWPF.developpement.ViewModels
         {
             BackupJob = backupJob;
             EditCommand = new OpenEditBackupJobCommand(this, backupJobsStore, modalNavigationStore);
+            DeleteCommand = new DeleteBackupJobCommand(this, backupJobsStore);
         }
 
 

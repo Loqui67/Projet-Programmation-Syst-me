@@ -16,7 +16,7 @@ namespace AppWPF.developpement.ViewModels
 
         public BackupJobsViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
         {
-            BackupJobsListingViewModel = new BackupJobsListingViewModel(modalNavigationStore, backupJobsStore);
+            BackupJobsListingViewModel = BackupJobsListingViewModel.LoadViewModel(modalNavigationStore, backupJobsStore);
             AddBackupJobCommand = new OpenAddBackupJobCommand(modalNavigationStore, backupJobsStore);
         }
     }
