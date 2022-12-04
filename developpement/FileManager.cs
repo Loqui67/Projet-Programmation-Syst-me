@@ -37,11 +37,17 @@ namespace Projet_Programmation_Système.developpement
 
         public static Config LoadConfig()
         {
-            string path = Path.Combine(appDataFolderPath, "config.xml");
-            CreateFileIfNotExist(path);
-            XmlSerializer serializer = new(typeof(Config));
-            using FileStream stream = new(path, FileMode.Open);
-            return (Config)serializer.Deserialize(stream);
+            try
+            {
+                string path = Path.Combine(appDataFolderPath, "config.xml");
+                CreateFileIfNotExist(path);
+                XmlSerializer serializer = new(typeof(Config));
+                using FileStream stream = new(path, FileMode.Open);
+                return (Config)serializer.Deserialize(stream);
+            } catch
+            {
+                return new Config();
+            }
         }
 
         public static void SaveConfig(Config config)

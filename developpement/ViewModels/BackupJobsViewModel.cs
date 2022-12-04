@@ -15,6 +15,16 @@ namespace AppWPF.developpement.ViewModels
         public static readonly Config config = FileManager.LoadConfig();
         public BackupJobsListingViewModel BackupJobsListingViewModel { get; }
 
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand AddBackupJobCommand { get; }
 
