@@ -5,6 +5,8 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>True</UseWindowsForms>
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -47,6 +49,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="developpement\Views\EditBackupJob.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Ressources\language.Designer.cs">
       <DependentUpon>Language.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -55,7 +60,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Ressources\language.resx">
+    <EmbeddedResource Update="Ressources\Language.resx">
       <LastGenOutput>language.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
