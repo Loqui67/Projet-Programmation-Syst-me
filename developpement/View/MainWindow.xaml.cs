@@ -62,6 +62,7 @@ namespace AppWPF
             /*Process[] localByName = Process.GetProcessesByName("Calculator");
             foreach (var a in Process.GetProcessesByName("Calculator")) Trace.WriteLine(a);*/
             foreach (var a in Process.GetProcesses())
+            {
                 switch (a.ProcessName)
                 {
                     case ("Calculator"):
@@ -70,6 +71,7 @@ namespace AppWPF
                     default:
                         break;
                 }
+            }
         }
 
         private void Button_Switch_EN(object sender, RoutedEventArgs e)

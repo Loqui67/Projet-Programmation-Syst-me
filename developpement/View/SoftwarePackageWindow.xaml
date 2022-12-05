@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:AppWPF.developpement.View"
         mc:Ignorable="d"
         Title="softwarePackage" Height="450" Width="800">
-    <Grid>
-        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,126,0,10"/>
-        <TextBox HorizontalAlignment="Left" Margin="34,80,0,0" TextWrapping="Wrap" Text="Name of process" VerticalAlignment="Top" Width="145" Height="18"/>
-        <Label Content="Add the name of the process you consider to be business software:" HorizontalAlignment="Left" Margin="34,32,0,0" VerticalAlignment="Top" Height="27" Width="366"/>
-        <Button Content="Submit" HorizontalAlignment="Left" Margin="297,78,0,0" VerticalAlignment="Top"/>
+    <Grid Background="#FFC6EFFF">
+        <ListBox x:Name="listViewProcess" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="258,10,0,10" SelectionChanged="ListBox_SelectionChanged"/>
+        <TextBox HorizontalAlignment="Left" Margin="34,145,0,0" TextWrapping="Wrap" Text="Name of process" VerticalAlignment="Top" Width="187" Height="23"/>
+        <Label Content="Add the name of the process&#xD;&#xA;you consider to be business&#xD;&#xA;software" HorizontalAlignment="Left" Margin="34,35,0,0" VerticalAlignment="Top" Height="70" Width="187"/>
+        <Button Content="Submit" HorizontalAlignment="Left" Margin="34,202,0,0" VerticalAlignment="Top" Width="187"/>
 
     </Grid>
 </Window>

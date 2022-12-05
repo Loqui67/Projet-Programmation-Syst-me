@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,16 @@ namespace AppWPF.developpement.View
         public SoftwarePackageWindow()
         {
             InitializeComponent();
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Process[] processList = Process.GetProcesses();
+            ListViewItem item = new ListViewItem();
+            foreach (var process in processList)
+            {
+                listViewProcess.Items.Add(process);
+            }
         }
     }
 }
