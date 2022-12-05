@@ -5,9 +5,9 @@ using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using AppWPF.developpement.Models;
 using AppWPF.developpement.ViewModels;
 using AppWPF.developpement.Views;
-using Projet_Programmation_Système.developpement;
 
 namespace AppWPF.developpement.Commands
 {

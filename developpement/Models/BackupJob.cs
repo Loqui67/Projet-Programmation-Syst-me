@@ -6,11 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
-using Projet_Programmation_Système.developpement;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 
-namespace AppWPF.developpement
+namespace AppWPF.developpement.Models
 {
 
     //Création d'une classe pour les sauvegardes.
@@ -45,7 +44,7 @@ namespace AppWPF.developpement
         public async void Save(string extension)
         {
             formatLogs = extension;
-            
+
             //Vérification du chemin d'accès.
             //Verification of the access path.
             if (!Directory.Exists(SourcePath) || !Directory.Exists(DestinationPath))
@@ -68,7 +67,7 @@ namespace AppWPF.developpement
 
             //Calcule de la date dans une variable.
             //Calculation of the date in a variable.
-            
+
             DateTime date1 = DateTime.Now;
 
             d = new DirectoryInfo(SourcePath);

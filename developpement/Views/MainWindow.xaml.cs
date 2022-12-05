@@ -1,6 +1,5 @@
 ﻿using AppWPF.developpement;
 using AppWPF.developpement.Views;
-using Projet_Programmation_Système.developpement;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

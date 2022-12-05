@@ -6,9 +6,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.IO;
-using AppWPF.developpement;
 
-namespace Projet_Programmation_Système.developpement
+namespace AppWPF.developpement.Models
 {
     public static class FileManager
     {
@@ -44,7 +43,8 @@ namespace Projet_Programmation_Système.developpement
                 XmlSerializer serializer = new(typeof(Config));
                 using FileStream stream = new(path, FileMode.Open);
                 return (Config)serializer.Deserialize(stream);
-            } catch
+            }
+            catch
             {
                 return new Config();
             }

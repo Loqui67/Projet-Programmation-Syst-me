@@ -1,4 +1,5 @@
 ﻿using AppWPF.developpement.Commands;
+using AppWPF.developpement.Models;
 using AppWPF.developpement.Stores;
 using System;
 using System.Collections.Generic;

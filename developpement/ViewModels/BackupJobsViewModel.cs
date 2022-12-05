@@ -1,6 +1,6 @@
 ﻿using AppWPF.developpement.Commands;
+using AppWPF.developpement.Models;
 using AppWPF.developpement.Stores;
-using Projet_Programmation_Système.developpement;
 using System;
 using System.Collections.Generic;
 using System.Linq;

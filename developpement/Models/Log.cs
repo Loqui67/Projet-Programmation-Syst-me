@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 //Fichier servant à la sauvegarde des logs(BakcupJob).
 //File used to save logs(BakcupJob).
-namespace Projet_Programmation_Système.developpement
+namespace AppWPF.developpement.Models
 {
     public class Log
     {

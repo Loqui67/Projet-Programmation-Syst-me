@@ -1,5 +1,5 @@
-﻿using AppWPF.developpement.ViewModels;
-using Projet_Programmation_Système.developpement;
+﻿using AppWPF.developpement.Models;
+using AppWPF.developpement.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
