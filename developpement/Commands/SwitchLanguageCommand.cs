@@ -5,7 +5,9 @@ using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using AppWPF.developpement.ViewModels;
 using AppWPF.developpement.Views;
+using Projet_Programmation_Système.developpement;
 
 namespace AppWPF.developpement.Commands
 {
@@ -20,18 +22,23 @@ namespace AppWPF.developpement.Commands
 
         public override void Execute(object parameter)
         {
-                
             ResourceDictionary dictionary = new ResourceDictionary();
             switch (_language)
             {
                 case "en":
                     dictionary.Source = new Uri("../../Ressources/Language/DictionaryResources.en.xaml", UriKind.Relative);
+                    BackupJobsViewModel.config.DefaultLanguage = "en";
+                    FileManager.SaveConfig(BackupJobsViewModel.config);
                     break;
                 case "fr":
                     dictionary.Source = new Uri("../../Ressources/Language/DictionaryResources.fr.xaml", UriKind.Relative);
+                    BackupJobsViewModel.config.DefaultLanguage = "fr";
+                    FileManager.SaveConfig(BackupJobsViewModel.config);
                     break;
                 default:
                     dictionary.Source = new Uri("../../Ressources/Language/DictionaryResources.en.xaml", UriKind.Relative);
+                    BackupJobsViewModel.config.DefaultLanguage = "en";
+                    FileManager.SaveConfig(BackupJobsViewModel.config);
                     break;
             }
             Application.Current.Resources.MergedDictionaries.Add(dictionary);

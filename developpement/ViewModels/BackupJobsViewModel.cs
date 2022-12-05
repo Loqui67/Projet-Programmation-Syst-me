@@ -12,7 +12,7 @@ namespace AppWPF.developpement.ViewModels
 {
     public class BackupJobsViewModel : ViewModelBase
     {
-        public static readonly Config config = FileManager.LoadConfig();
+        public static Config config = FileManager.LoadConfig();
         public BackupJobsListingViewModel BackupJobsListingViewModel { get; }
 
         private bool _isLoading;
