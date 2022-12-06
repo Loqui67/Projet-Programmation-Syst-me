@@ -18,6 +18,9 @@
         <DataTemplate DataType="{x:Type vms:EditBackupJobViewModel}">
             <views:EditBackupJob/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:SaveBackupJobViewModel}">
+            <views:SaveBackupJob/>
+        </DataTemplate>
     </Window.Resources>
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">

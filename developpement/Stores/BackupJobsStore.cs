@@ -64,9 +64,9 @@ namespace AppWPF.developpement.Stores
             BackupJobsLoaded?.Invoke();
         }
 
-        public async Task Save(BackupJob backupJob)
+        public async Task Save(BackupJob backupJob, SaveBackupJobViewModel saveBackupJobViewModel)
         {
-            await Task.Run(() => backupJob.Save(BackupJobsViewModel.config.LogExtension));
+            await Task.Run(() => backupJob.Save(saveBackupJobViewModel));
             BackupJobSaved?.Invoke(backupJob);
         }
 
@@ -76,7 +76,7 @@ namespace AppWPF.developpement.Stores
             {
                 foreach (BackupJob backupJob in backupJobs)
                 {
-                    backupJob.Save(BackupJobsViewModel.config.LogExtension);
+                    backupJob.Save(null);
                 }
             });
             AllBackupJobsSaved?.Invoke();

@@ -8,6 +8,7 @@ using System.IO;
 using System.Text.Json;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
+using AppWPF.developpement.ViewModels;
 
 namespace AppWPF.developpement.Models
 {
@@ -28,9 +29,12 @@ namespace AppWPF.developpement.Models
         public long fileNumberTotal = 0;
         public long fileSizeLeft = 0;
         public long fileNumberLeft = 0;
-        public string fileInTransfer = "";
         private TimeSpan fileTransferTime;
-        private string formatLogs = "json";
+        public static string LogExtension = "json";
+        private List<string> files;
+        private List<string> directories;
+
+        private SaveBackupJobViewModel? _saveBackupJobViewModel;
 
         public BackupJob(Guid id, string name, string sourcePath, string destinationPath, string type)
         {
@@ -41,122 +45,84 @@ namespace AppWPF.developpement.Models
             Type = type;
         }
 
-        public async void Save(string extension)
+        public async Task Save(SaveBackupJobViewModel saveBackupJobViewModel)
         {
-            formatLogs = extension;
-
-            //Vérification du chemin d'accès.
-            //Verification of the access path.
-            if (!Directory.Exists(SourcePath) || !Directory.Exists(DestinationPath))
-            {
-                return;
-            }
-
+            files = new List<string>();
+            directories = new List<string>();
             fileSizeTotal = 0;
             fileNumberTotal = 0;
-            fileSizeLeft = 0;
-            fileNumberLeft = 0;
-
-            DirectoryInfo d = new DirectoryInfo(SourcePath);
-            Task directoryInfo = GetDirectoryInfo(d, SourcePath, DestinationPath);
-            await directoryInfo;
-
+            _saveBackupJobViewModel = saveBackupJobViewModel;
+            _saveBackupJobViewModel.IsLoadingStats = "Visible";
+            await Task.Run(GetStats);
             fileSizeLeft = fileSizeTotal;
             fileNumberLeft = fileNumberTotal;
-
-
-            //Calcule de la date dans une variable.
-            //Calculation of the date in a variable.
-
-            DateTime date1 = DateTime.Now;
-
-            d = new DirectoryInfo(SourcePath);
-            Task copy = Copy(d, SourcePath, DestinationPath);
-            await copy;
-            fileTransferTime = DateTime.Now - date1;
-
-
-            //Générer l'objet de log d'activité a écrire dans les fichiers
-            //Generate the activity Log object to write to the files
-
-            Task writeStateLog = FileManager.WriteStateLog(new StateLog
-            {
-                backupJob = this,
-                fileNumber = 0,
-                fileSize = 0,
-                active = false,
-                fileNumberLeft = 0,
-                fileSizeLeft = 0
-            });
-
-            await writeStateLog;
-
-
-
-            if (formatLogs == "json") FileManager.WriteDailyLogToFile(GenerateLog());
+            await Task.Run(SaveBackup);
+            if (LogExtension == "json") FileManager.WriteDailyLogToFile(GenerateLog());
             else FileManager.SerializeToXML(GenerateLog());
+            _saveBackupJobViewModel.IsLoadingStats = "Collapsed";
         }
 
 
-        //Création d'une méthode pour copier les fichiers
-        //Copy files from one directory to another.
-        public async Task Copy(DirectoryInfo d, string sourcePath, string destinationPath)
+        private void GetStats()
         {
-            FileInfo[] fis = d.GetFiles();
-            foreach (FileInfo fi in fis)
+            //Déclaration des variables.
+            //Declaration of variables.
+            List<string> allFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories).ToList();
+            List<string> allDirectories = Directory.GetDirectories(SourcePath, "*", SearchOption.AllDirectories).ToList();
+
+            //Calcul du nombre de fichiers et de dossiers.
+            //Calculation of the number of files and folders.
+            foreach (string file in allFiles)
             {
-                string fileToCopy = fi.FullName.Replace(sourcePath, destinationPath);
-
-                if (!File.Exists(fileToCopy) || Type == "0" || IsFileModified(fi, destinationPath)) //full save or differential save 
-                {
-                    fileInTransfer = fi.Name;
-
-                    File.Copy(fi.FullName, fileToCopy, true);
-
-                    fileNumberLeft--;
-                    fileSizeLeft -= fi.Length;
-
-                    Task writeStateLog = FileManager.WriteStateLog(new StateLog
-                    {
-                        backupJob = this,
-                        fileNumber = fileNumberTotal,
-                        fileSize = fileSizeTotal,
-                        active = true,
-                        fileNumberLeft = fileNumberLeft,
-                        fileSizeLeft = fileSizeLeft
-                    });
-                    await writeStateLog;
-                }
-            }
-            DirectoryInfo[] dis = d.GetDirectories();
-            foreach (DirectoryInfo di in dis)
-            {
-                string dirToCreate = di.FullName.Replace(sourcePath, destinationPath);
-                //On copie tout les sous dossiers, et on rappelle la méthode pour les sous dossiers.
-                //Copy all the subfolders, and call the method for the subfolders.
-                if (!File.Exists(dirToCreate) || Type == "0") Directory.CreateDirectory(dirToCreate);
-                Task copy = Copy(di, sourcePath, destinationPath);
-                await copy;
-            }
-        }
-
-        public async Task GetDirectoryInfo(DirectoryInfo d, string sourcePath, string destinationPath)
-        {
-            FileInfo[] fis = d.GetFiles();
-            foreach (FileInfo fi in fis)
-            {
-                string fileToCopy = fi.FullName.Replace(sourcePath, destinationPath);
-                if (!File.Exists(fileToCopy) || Type == "0" || IsFileModified(fi, destinationPath))
-                {
-                    fileSizeTotal += fi.Length;
+                string fileToCopy = file.Replace(SourcePath, DestinationPath);
+                FileInfo fileInfo = new(file);
+                if (!File.Exists(fileToCopy) || Type == "0" || IsFileModified(fileInfo, fileToCopy)) {
+                    files.Add(file);
+                    fileSizeTotal += fileInfo.Length;
                     fileNumberTotal++;
                 }
             }
-            DirectoryInfo[] dis = d.GetDirectories();
-            foreach (DirectoryInfo di in dis)
+            foreach (string directory in allDirectories)
             {
-                Task directoryInfo = GetDirectoryInfo(di, sourcePath, destinationPath);
-                await directoryInfo;
+                string folderToCopy = directory.Replace(SourcePath, DestinationPath);
+                if (!Directory.Exists(folderToCopy) || Type == "0")
+                {
+                    directories.Add(directory);
+                }
+            }
+
+            foreach (string file in files)
+            {
+                FileInfo fileInfo = new FileInfo(file);
+                if (!File.Exists(file.Replace(SourcePath, DestinationPath)))
+                {
+                    fileSizeLeft += fileInfo.Length;
+                    fileNumberLeft++;
+                }
+            }
+        }
+        
+        public async Task SaveBackup()
+        {
+            if (Type == "0") Directory.Delete(DestinationPath, true);
+            foreach (string directory in directories)
+            {
+                string folderToCopy = directory.Replace(SourcePath, DestinationPath);
+                await Task.Run(() => Directory.CreateDirectory(folderToCopy));
+            }
+
+            foreach (string file in files)
+            {
+                string fileToCopy = file.Replace(SourcePath, DestinationPath);
+                await Task.Run(() => {
+                    FileInfo fileInfo = new FileInfo(file);
+                    _saveBackupJobViewModel.BackupJobFileTransfering = fileInfo.Name;
+                    _saveBackupJobViewModel.BackupJobFileTransferingCount = FileLeftSlashFileTotal();
+                    _saveBackupJobViewModel.BackupJobProgressBarValue = ProgressBarValue();
+                    File.Copy(file, fileToCopy, true);
+                    fileSizeLeft -= fileInfo.Length;
+                    fileNumberLeft--;
+                });
             }
         }
 
@@ -176,7 +142,15 @@ namespace AppWPF.developpement.Models
             }
         }
 
+        public float ProgressBarValue()
+        {
+             return (100 - (fileSizeLeft * 100 / fileSizeTotal));
+        }
 
+        public string FileLeftSlashFileTotal()
+        {
+            return (fileNumberTotal - fileNumberLeft + 1) + "/" + fileNumberTotal;
+        }
 
 
 
