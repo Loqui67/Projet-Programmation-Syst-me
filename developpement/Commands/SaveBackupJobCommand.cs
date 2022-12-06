@@ -11,30 +11,32 @@ namespace AppWPF.developpement.Commands
 {
     public class SaveBackupJobCommand : AsyncCommandBase
     {
-        private readonly BackupJobsListingItemViewModel _backupJobsListingItemViewModel;
+        private readonly SaveBackupJobViewModel _saveBackupJobViewModel;
+        private readonly BackupJob _backupJob;
         private readonly BackupJobsStore _backupJobsStore;
+        private readonly ModalNavigationStore _modalNavigationStore;
 
-        public SaveBackupJobCommand(BackupJobsListingItemViewModel backupJobsListingItemViewModel, BackupJobsStore backupJobsStore)
+        public SaveBackupJobCommand(SaveBackupJobViewModel saveBackupJobViewModel, BackupJob backupJob, BackupJobsStore backupJobsStore, ModalNavigationStore modalNavigationStore)
         {
-            _backupJobsListingItemViewModel = backupJobsListingItemViewModel;
+            _saveBackupJobViewModel = saveBackupJobViewModel;
+            _backupJob = backupJob;
             _backupJobsStore = backupJobsStore;
+            _modalNavigationStore = modalNavigationStore;
         }
 
         public override async Task ExecuteAsync(object parameter)
         {
+            _saveBackupJobViewModel.BackupJobProgressBarValue = 0;
+            _saveBackupJobViewModel.BackupJobFileTransfering = "";
+            _saveBackupJobViewModel.BackupJobFileTransferingCount = "";
+            try
             {
-                await Task.Delay(10000);
-                try
-                {
-                    await _backupJobsStore.Save(new BackupJob(
-                        _backupJobsListingItemViewModel.BackupJobId,
-                        _backupJobsListingItemViewModel.Name,
-                        _backupJobsListingItemViewModel.SourcePath,
-                        _backupJobsListingItemViewModel.DestinationPath,
-                        _backupJobsListingItemViewModel.Type
-                    ));
-                }
-                catch (Exception) { }
+                await _backupJobsStore.Save(_backupJob, _saveBackupJobViewModel);
+            }
+            catch (Exception) { }
+            finally
+            {
+                _modalNavigationStore.Close();
             }
         }
     }

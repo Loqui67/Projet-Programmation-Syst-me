@@ -53,7 +53,7 @@ namespace AppWPF.developpement.ViewModels
             viewModel.LoadBackupJobsCommand.Execute(null);
             if (config.DefaultLanguage == "fr") viewModel.SwitchLanguageFr.Execute(null);
             else viewModel.SwitchLanguageEn.Execute(null);
-
+            BackupJob.LogExtension = config.LogExtension;
             return viewModel;
         }
     }

@@ -51,7 +51,8 @@ namespace AppWPF.developpement.ViewModels
             BackupJob = backupJob;
             EditCommand = new OpenEditBackupJobCommand(this, backupJobsStore, modalNavigationStore);
             DeleteCommand = new DeleteBackupJobCommand(this, backupJobsStore);
-            SaveCommand = new SaveBackupJobCommand(this, backupJobsStore);
+            SaveCommand = new OpenSaveBackupJobCommand(this, backupJobsStore, modalNavigationStore);
+            //SaveCommand = new SaveBackupJobCommand(this, backupJobsStore);
         }
 
 
