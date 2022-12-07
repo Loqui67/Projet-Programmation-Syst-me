@@ -5,10 +5,16 @@ using System.Windows;
 
 namespace AppWPF.developpement.Commands
 {
+    ///Classe qui permet de changer la langue
+    ///Class that allows you to change the language
     public class SwitchLanguageCommand : CommandBase
     {
+        ///Variable qui permet de contenir la langue
+        ///Variable that allows to contain the language
         private string _language;
 
+        ///Méthode qui permet de changer la langue
+        ///Method to change the language
         public SwitchLanguageCommand(string language)
         {
             _language = language;

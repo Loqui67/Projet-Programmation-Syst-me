@@ -4,12 +4,18 @@ using AppWPF.developpement.ViewModels;
 
 namespace AppWPF.developpement.Commands
 {
+    ///Classe qui permet d'ouvrir la modification d'un travail de sauvegarde 
+    ///Class that allows to open the modification of a backup job
     public class OpenEditBackupJobCommand : CommandBase
     {
+        ///Variables qui permettent d'instancier plusieurs classes
+        ///Variables that allow to instantiate several classes
         private readonly BackupJobsListingItemViewModel _backupJobsListingItemViewModel;
         private readonly BackupJobsStore _backupJobsStore;
         private readonly ModalNavigationStore _modalNavigationStore;
 
+        ///Méthode qui permet d'ouvrir la modification d'un travail de sauvegarde
+        ///Method to open a backup job edit
         public OpenEditBackupJobCommand(BackupJobsListingItemViewModel backupJobsListingItemViewModel, BackupJobsStore backupJobsStore, ModalNavigationStore modalNavigationStore)
         {
             _backupJobsListingItemViewModel = backupJobsListingItemViewModel;

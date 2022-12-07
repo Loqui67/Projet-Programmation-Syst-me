@@ -5,11 +5,17 @@ using System.Threading.Tasks;
 
 namespace AppWPF.developpement.Commands
 {
+    ///Classe qui permet de supprimer un processus
+    ///Class which allows to delete a process
     public class DeleteProcessusCommand : AsyncCommandBase
     {
+        ///Variable qui instancie plusieurs class comme par exemple ici processusListingItemViewModel
+        ///Variable that instantiates several classes such as here processListingItemViewModel
         private ProcessusListingItemViewModel _processusListingItemViewModel;
         private ProcessusStore _processusStore;
 
+        ///Méthode qui permet de supprimer un processus
+        ///Method to kill a process
         public DeleteProcessusCommand(ProcessusListingItemViewModel processusListingItemViewModel, ProcessusStore processusStore)
         {
             _processusListingItemViewModel = processusListingItemViewModel;

@@ -6,12 +6,18 @@ using System.Threading.Tasks;
 
 namespace AppWPF.developpement.Commands
 {
+    ///Class qui permet de modifier le travail de sauvegarde
+    ///Class that allows modifying the backup job
     public class EditBackupJobCommand : AsyncCommandBase
     {
+        ///Variable qui d'instancier plusieurs classes comme par exemple ici EditBackupViewModel
+        ///Variable which to instantiate several classes as for example here EditBackupViewModel
         private readonly EditBackupJobViewModel _editBackupJobViewModel;
         private readonly BackupJobsStore _backupJobsStore;
         private readonly ModalNavigationStore _modalNavigationStore;
 
+        ///Méthode qui permet de modifier un travail de sauvegarde
+        ///Method for modifying a backup job
         public EditBackupJobCommand(EditBackupJobViewModel editBackupJobViewModel, BackupJobsStore backupJobsStore, ModalNavigationStore modalNavigationStore)
         {
             _editBackupJobViewModel = editBackupJobViewModel;

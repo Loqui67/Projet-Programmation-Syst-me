@@ -8,11 +8,17 @@ using System.Threading.Tasks;
 
 namespace AppWPF.developpement.Commands
 {
+    ///Classes qui permet d'ouvrir la sauvegarde de tous les travails de sauvegarde
+    ///Classes that allows to open the backup of all backup jobs
     public class OpenSaveAllBackupJobsCommand : CommandBase
     {
+        ///Variable qui permet d'instancier plusieurs classes
+        ///Variable that allows to instantiate several classes
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly BackupJobsStore _backupJobsStore;
 
+        ///Méthode qui permet d'ouvrir la sauvegarde de tous les travails de sauvegarde
+        ///Method to open backup of all backup jobs
         public OpenSaveAllBackupJobsCommand(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
         {
             _modalNavigationStore = modalNavigationStore;

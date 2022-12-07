@@ -3,11 +3,17 @@ using AppWPF.developpement.ViewModels;
 
 namespace AppWPF.developpement.Commands
 {
+    ///Classe qui permet d'ouvrir les parametres 
+    ///Class that opens the parameters
     public class OpenSettingsCommand : CommandBase
     {
+        ///Variables qui permettent d'instancier plusieurs classes
+        ///Variables that allow to instantiate several classes
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly ProcessusStore _processusStore;
 
+        ///méthode qui permet d'ouvrir les parametres
+        ///method to open settings
         public OpenSettingsCommand(ModalNavigationStore modalNavigationStore, ProcessusStore processusStore)
         {
             _modalNavigationStore = modalNavigationStore;
