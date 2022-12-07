@@ -1,4 +1,5 @@
 ﻿using AppWPF.developpement.Stores;
+using AppWPF.developpement.ViewModels;
 using System;
 using System.Threading.Tasks;
 

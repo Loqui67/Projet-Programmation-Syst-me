@@ -14,8 +14,6 @@ namespace AppWPF
         public MainWindow()
         {
             InitializeComponent();
-
-
         }
     }
 }

@@ -62,7 +62,7 @@ namespace AppWPF.developpement.ViewModels
             LoadBackupJobsCommand = new LoadBackupJobsCommand(this, backupJobsStore);
             AddBackupJobCommand = new OpenAddBackupJobCommand(modalNavigationStore, backupJobsStore);
             DeleteAllBackupJobsCommand = new DeleteAllBackupJobsCommand(backupJobsStore);
-            SaveAllBackupJobsCommand = new SaveAllBackupJobsCommand(backupJobsStore);
+            SaveAllBackupJobsCommand = new OpenSaveAllBackupJobsCommand(modalNavigationStore, backupJobsStore);
             SwitchLanguageFrCommand = new SwitchLanguageCommand("fr");
             SwitchLanguageEnCommand = new SwitchLanguageCommand("en");
             OpenSettingsCommand = new OpenSettingsCommand(modalNavigationStore, processusStore);
