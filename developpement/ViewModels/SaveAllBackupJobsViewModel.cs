@@ -25,8 +25,8 @@ namespace AppWPF.developpement.ViewModels
         ///Method for saving all backup jobs in the ViewModel
         public SaveAllBackupJobsViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
         {
-            SaveAllBackupJobsCommand = new SaveAllBackupJobsCommand(backupJobsStore);
-            CancelSaveAllBackupJobsCommand = new CloseModalCommand(modalNavigationStore);
+            SaveBackupJobCommand = new SaveAllBackupJobsCommand(backupJobsStore);
+            CancelSaveBackupJobCommand = new CloseModalCommand(modalNavigationStore);
         }
     }
 }

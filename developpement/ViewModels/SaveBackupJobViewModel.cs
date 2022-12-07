@@ -63,7 +63,7 @@ namespace AppWPF.developpement.ViewModels
 
         ///Variable privée utilisé pour savoir l'état de chargement
         ///Private variable used to know the loading state
-        private string _isLoadingStats;
+        private string _isLoadingStats = "Visible";
         ///Variable publique utilisé pour savoir l'état de chargement
         ///Public variable used to know the loading state
         public string IsLoadingStats

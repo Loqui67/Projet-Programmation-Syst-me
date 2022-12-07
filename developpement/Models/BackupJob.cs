@@ -1,6 +1,7 @@
 ﻿using AppWPF.developpement.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,6 +28,7 @@ namespace AppWPF.developpement.Models
         private TimeSpan fileTransferTime;
         public static string LogExtension = "0"; //0 : json, 1 : xml
         private List<string> files;
+        private List<string> filesToEncrypt;
         private List<string> directories;
 
         private SaveBackupJobViewModel? _saveBackupJobViewModel;
@@ -44,18 +46,20 @@ namespace AppWPF.developpement.Models
         ///Creating a method to save backup jobs in the ViewModel
         public async Task Save(SaveBackupJobViewModel saveBackupJobViewModel)
         {
+            if (!IsProcessusNotRunning()) return;
             files = new List<string>();
+            filesToEncrypt = new List<string>();
             directories = new List<string>();
-            fileSizeTotal = 0;
-            fileNumberTotal = 0;
             _saveBackupJobViewModel = saveBackupJobViewModel;
+
             _saveBackupJobViewModel.IsLoadingStats = "Visible";
             await Task.Run(GetStats);
-            fileSizeLeft = fileSizeTotal;
-            fileNumberLeft = fileNumberTotal;
             await Task.Run(SaveBackup);
+
             if (LogExtension == "0") FileManager.WriteDailyLogToFile(GenerateLog());
             else FileManager.SerializeToXML(GenerateLog());
+
+
             _saveBackupJobViewModel.IsLoadingStats = "Collapsed";
         }
 
@@ -66,6 +70,8 @@ namespace AppWPF.developpement.Models
         {
             //Déclaration des variables.
             //Declaration of variables.
+            fileSizeTotal = 0;
+            fileNumberTotal = 0;
             List<string> allFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories).ToList();
             List<string> allDirectories = Directory.GetDirectories(SourcePath, "*", SearchOption.AllDirectories).ToList();
 
@@ -77,12 +83,18 @@ namespace AppWPF.developpement.Models
                 FileInfo fileInfo = new(file);
                 if (!File.Exists(fileToCopy) || Type == "0" || IsFileModified(fileInfo, fileToCopy))
                 {
-                    files.Add(file);
                     fileSizeTotal += fileInfo.Length;
                     fileNumberTotal++;
+                    if (BackupJobsViewModel.config.AllExtensionCryptage.Exists(extensionCryptage => extensionCryptage.Name == fileInfo.Extension))
+                    {
+                        filesToEncrypt.Add(file);
+                    } 
+                    else
+                    {
+                        files.Add(file);
+                    }
                 }
             }
-            
             foreach (string directory in allDirectories)
             {
                 string folderToCopy = directory.Replace(SourcePath, DestinationPath);
@@ -101,6 +113,8 @@ namespace AppWPF.developpement.Models
                     fileNumberLeft++;
                 }
             }
+            fileSizeLeft = fileSizeTotal;
+            fileNumberLeft = fileNumberTotal;
         }
 
         ///Création d'une méthode pour sauvegarder les fichiers et dossiers
@@ -112,6 +126,23 @@ namespace AppWPF.developpement.Models
             {
                 string folderToCopy = directory.Replace(SourcePath, DestinationPath);
                 await Task.Run(() => Directory.CreateDirectory(folderToCopy));
+            }
+            Trace.WriteLine(filesToEncrypt.Count);
+            foreach (string fileToEncrypt in filesToEncrypt)
+            {
+                string fileToCopy = fileToEncrypt.Replace(SourcePath, DestinationPath);
+                await Task.Run(() => 
+                {
+                    string path = "\"" + fileToEncrypt + "\"" + " " + "\"" + fileToCopy + "\"";
+
+                    ProcessStartInfo process = new ProcessStartInfo("..\\..\\..\\CryptoSoft\\CryptoSoft.exe");
+                    process.Arguments = path;
+                    Process.Start(process);
+
+                    FileInfo fileInfo = new FileInfo(fileToEncrypt);
+                    fileSizeLeft -= fileInfo.Length;
+                    fileNumberLeft--;
+                });
             }
 
             foreach (string file in files)
@@ -128,6 +159,11 @@ namespace AppWPF.developpement.Models
                     fileNumberLeft--;
                 });
             }
+        }
+
+        public bool IsProcessusNotRunning()
+        {
+            return BackupJobsListingViewModel._isProcessusNotDetected;
         }
 
         ///Création d'une méthode pour vérifier si un fichier a été modifié

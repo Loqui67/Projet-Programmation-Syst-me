@@ -18,7 +18,6 @@ namespace AppWPF.developpement.Commands
         ///Method to load a process
         public LoadProcessusCommand(SettingsViewModel settingsViewModel, ProcessusStore processusStore)
         {
-            _settingsViewModel = settingsViewModel;
             _processusStore = processusStore;
         }
 

@@ -2,6 +2,7 @@
 using AppWPF.developpement.Stores;
 using AppWPF.developpement.ViewModels;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace AppWPF.developpement.Commands

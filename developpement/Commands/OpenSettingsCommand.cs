@@ -11,6 +11,7 @@ namespace AppWPF.developpement.Commands
         ///Variables that allow to instantiate several classes
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly ProcessusStore _processusStore;
+        private readonly ExtensionCryptageStore _extensionCryptageStore;
 
         ///méthode qui permet d'ouvrir les parametres
         ///method to open settings
@@ -18,11 +19,12 @@ namespace AppWPF.developpement.Commands
         {
             _modalNavigationStore = modalNavigationStore;
             _processusStore = processusStore;
+            _extensionCryptageStore = extensionCryptageStore;
         }
 
         public override void Execute(object parameter)
         {
-            _modalNavigationStore.CurrentViewModel = SettingsViewModel.LoadViewModel(_modalNavigationStore, _processusStore);
+            _modalNavigationStore.CurrentViewModel = SettingsViewModel.LoadViewModel(_modalNavigationStore, _processusStore, _extensionCryptageStore);
         }
     }
 }

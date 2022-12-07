@@ -25,11 +25,11 @@ namespace AppWPF.developpement.ViewModels
         private bool _isProcessusDetected;
         public bool IsProcessusDetected
         {
-            get => _isProcessusDetected;
+            get => _isProcessusNotDetected;
             set
             {
-                _isProcessusDetected = value;
-                OnPropertyChanged(nameof(IsProcessusDetected));
+                _isProcessusNotDetected = value;
+                OnPropertyChanged(nameof(IsProcessusNotDetected));
             }
         }
 

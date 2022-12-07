@@ -63,17 +63,16 @@ namespace AppWPF.developpement.ViewModels
         {
             while (true)
             {
-                Trace.WriteLine("a");
                 Thread.Sleep(1000);
                 Process? processus = Process.GetProcesses().FirstOrDefault(p => config.AllProcessus.Select(x => x.Name).Contains(p.ProcessName), null);
-                if (processus != null) { Trace.WriteLine(processus.ProcessName); BackupJobsListingViewModel.IsProcessusDetected = false; }
-                else BackupJobsListingViewModel.IsProcessusDetected = true;
+                if (processus != null) { BackupJobsListingViewModel.IsProcessusNotDetected = false; }
+                else BackupJobsListingViewModel.IsProcessusNotDetected = true;
             }
         }
 
         ///Méthode permettant de changer de langue
         ///Method to change language
-        public BackupJobsViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore, ProcessusStore processusStore)
+        public BackupJobsViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore, ProcessusStore processusStore, ExtensionCryptageStore extensionCryptageStore)
         {
             _thread = new Thread(CheckForProcessus);
             _thread.Start();
@@ -84,12 +83,12 @@ namespace AppWPF.developpement.ViewModels
             SaveAllBackupJobsCommand = new OpenSaveAllBackupJobsCommand(modalNavigationStore, backupJobsStore);
             SwitchLanguageFrCommand = new SwitchLanguageCommand("fr");
             SwitchLanguageEnCommand = new SwitchLanguageCommand("en");
-            OpenSettingsCommand = new OpenSettingsCommand(modalNavigationStore, processusStore);
+            OpenSettingsCommand = new OpenSettingsCommand(modalNavigationStore, processusStore, extensionCryptageStore);
         }
 
-        public static BackupJobsViewModel LoadViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore, ProcessusStore processusStore)
+        public static BackupJobsViewModel LoadViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore, ProcessusStore processusStore, ExtensionCryptageStore extensionCryptageStore)
         {
-            BackupJobsViewModel viewModel = new BackupJobsViewModel(modalNavigationStore, backupJobsStore, processusStore);
+            BackupJobsViewModel viewModel = new BackupJobsViewModel(modalNavigationStore, backupJobsStore, processusStore, extensionCryptageStore);
             config = FileManager.LoadConfig();
             viewModel.LoadBackupJobsCommand.Execute(null);
             if (config.DefaultLanguage == "fr") viewModel.SwitchLanguageFrCommand.Execute(null);

@@ -10,7 +10,7 @@ namespace AppWPF.developpement.Models
 
         public Processus(string name)
         {
-            this.Name = name;
+            Name = name;
             Id = Guid.NewGuid();
         }
     }
