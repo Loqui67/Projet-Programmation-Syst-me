@@ -49,8 +49,8 @@ namespace AppWPF.developpement.ViewModels
             {
                 Thread.Sleep(1000);
                 Process? processus = Process.GetProcesses().FirstOrDefault(p => config.AllProcessus.Select(x => x.Name).Contains(p.ProcessName), null);
-                if (processus != null) { BackupJobsListingViewModel.IsProcessusDetected = false; }
-                else BackupJobsListingViewModel.IsProcessusDetected = true;
+                if (processus != null) { BackupJobsListingViewModel.IsProcessusNotDetected = false; }
+                else BackupJobsListingViewModel.IsProcessusNotDetected = true;
             }
         }
 

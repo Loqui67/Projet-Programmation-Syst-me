@@ -12,13 +12,13 @@ namespace AppWPF.developpement.ViewModels
 {
     public class SaveAllBackupJobsViewModel : ViewModelBase
     {
-        public ICommand SaveAllBackupJobsCommand { get; }
-        public ICommand CancelSaveAllBackupJobsCommand { get; }
+        public ICommand SaveBackupJobCommand { get; }
+        public ICommand CancelSaveBackupJobCommand { get; }
 
         public SaveAllBackupJobsViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
         {
-            SaveAllBackupJobsCommand = new SaveAllBackupJobsCommand(backupJobsStore);
-            CancelSaveAllBackupJobsCommand = new CloseModalCommand(modalNavigationStore);
+            SaveBackupJobCommand = new SaveAllBackupJobsCommand(backupJobsStore);
+            CancelSaveBackupJobCommand = new CloseModalCommand(modalNavigationStore);
         }
     }
 }

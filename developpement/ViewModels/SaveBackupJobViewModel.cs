@@ -43,7 +43,7 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
-        private string _isLoadingStats;
+        private string _isLoadingStats = "Visible";
         public string IsLoadingStats
         {
             get { return _isLoadingStats; }

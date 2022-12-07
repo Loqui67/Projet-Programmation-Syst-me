@@ -1,6 +1,7 @@
 ﻿using AppWPF.developpement.Stores;
 using AppWPF.developpement.ViewModels;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace AppWPF.developpement.Commands
@@ -16,13 +17,12 @@ namespace AppWPF.developpement.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
+            try
             {
-                try
-                {
-                    await _backupJobsStore.SaveAll();
-                }
-                catch (Exception) { }
+                Trace.WriteLine("SaveAllBackupJobsCommand.ExecuteAsync");
+                //await _backupJobsStore.SaveAll();
             }
+            catch (Exception) { }
         }
     }
 }

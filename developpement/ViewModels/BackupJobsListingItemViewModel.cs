@@ -31,7 +31,7 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
-        private bool _isSaving;
+        public static bool _isSaving;
         public bool IsSaving
         {
             get => _isSaving;

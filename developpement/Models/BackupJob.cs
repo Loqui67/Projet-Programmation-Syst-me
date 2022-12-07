@@ -1,6 +1,7 @@
 ﻿using AppWPF.developpement.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -43,21 +44,20 @@ namespace AppWPF.developpement.Models
 
         public async Task Save(SaveBackupJobViewModel saveBackupJobViewModel)
         {
-            if (IsProcessusRunning()) return;
-            
+            if (!IsProcessusNotRunning()) return;
             files = new List<string>();
             filesToEncrypt = new List<string>();
             directories = new List<string>();
             _saveBackupJobViewModel = saveBackupJobViewModel;
 
             _saveBackupJobViewModel.IsLoadingStats = "Visible";
-            
             await Task.Run(GetStats);
             await Task.Run(SaveBackup);
-            
+
             if (LogExtension == "0") FileManager.WriteDailyLogToFile(GenerateLog());
             else FileManager.SerializeToXML(GenerateLog());
-            
+
+
             _saveBackupJobViewModel.IsLoadingStats = "Collapsed";
         }
 
@@ -121,15 +121,18 @@ namespace AppWPF.developpement.Models
                 string folderToCopy = directory.Replace(SourcePath, DestinationPath);
                 await Task.Run(() => Directory.CreateDirectory(folderToCopy));
             }
-            //Do two things at the same time.
-
-            //Création des tâches.
-
+            Trace.WriteLine(filesToEncrypt.Count);
             foreach (string fileToEncrypt in filesToEncrypt)
             {
                 string fileToCopy = fileToEncrypt.Replace(SourcePath, DestinationPath);
                 await Task.Run(() => 
                 {
+                    string path = "\"" + fileToEncrypt + "\"" + " " + "\"" + fileToCopy + "\"";
+
+                    ProcessStartInfo process = new ProcessStartInfo("..\\..\\..\\CryptoSoft\\CryptoSoft.exe");
+                    process.Arguments = path;
+                    Process.Start(process);
+
                     FileInfo fileInfo = new FileInfo(fileToEncrypt);
                     fileSizeLeft -= fileInfo.Length;
                     fileNumberLeft--;
@@ -152,9 +155,9 @@ namespace AppWPF.developpement.Models
             }
         }
 
-        public bool IsProcessusRunning()
+        public bool IsProcessusNotRunning()
         {
-            return BackupJobsListingViewModel.IsProcessusDetected;
+            return BackupJobsListingViewModel._isProcessusNotDetected;
         }
 
         public bool IsFileModified(FileInfo fileInfo, string destinationPath)
