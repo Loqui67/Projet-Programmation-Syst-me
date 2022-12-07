@@ -1,14 +1,9 @@
-﻿using System;
+﻿using AppWPF.developpement.ViewModels;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using System.Text.Json;
-using System.Security.Cryptography.X509Certificates;
-using System.Text.RegularExpressions;
-using AppWPF.developpement.ViewModels;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AppWPF.developpement.Models
 {
@@ -30,7 +25,7 @@ namespace AppWPF.developpement.Models
         public long fileSizeLeft = 0;
         public long fileNumberLeft = 0;
         private TimeSpan fileTransferTime;
-        public static string LogExtension = "json";
+        public static string LogExtension = "0"; //0 : json, 1 : xml
         private List<string> files;
         private List<string> directories;
 
@@ -57,7 +52,7 @@ namespace AppWPF.developpement.Models
             fileSizeLeft = fileSizeTotal;
             fileNumberLeft = fileNumberTotal;
             await Task.Run(SaveBackup);
-            if (LogExtension == "json") FileManager.WriteDailyLogToFile(GenerateLog());
+            if (LogExtension == "0") FileManager.WriteDailyLogToFile(GenerateLog());
             else FileManager.SerializeToXML(GenerateLog());
             _saveBackupJobViewModel.IsLoadingStats = "Collapsed";
         }
@@ -76,7 +71,8 @@ namespace AppWPF.developpement.Models
             {
                 string fileToCopy = file.Replace(SourcePath, DestinationPath);
                 FileInfo fileInfo = new(file);
-                if (!File.Exists(fileToCopy) || Type == "0" || IsFileModified(fileInfo, fileToCopy)) {
+                if (!File.Exists(fileToCopy) || Type == "0" || IsFileModified(fileInfo, fileToCopy))
+                {
                     files.Add(file);
                     fileSizeTotal += fileInfo.Length;
                     fileNumberTotal++;
@@ -101,7 +97,7 @@ namespace AppWPF.developpement.Models
                 }
             }
         }
-        
+
         public async Task SaveBackup()
         {
             if (Type == "0") Directory.Delete(DestinationPath, true);
@@ -114,7 +110,8 @@ namespace AppWPF.developpement.Models
             foreach (string file in files)
             {
                 string fileToCopy = file.Replace(SourcePath, DestinationPath);
-                await Task.Run(() => {
+                await Task.Run(() =>
+                {
                     FileInfo fileInfo = new FileInfo(file);
                     _saveBackupJobViewModel.BackupJobFileTransfering = fileInfo.Name;
                     _saveBackupJobViewModel.BackupJobFileTransferingCount = FileLeftSlashFileTotal();
@@ -144,7 +141,7 @@ namespace AppWPF.developpement.Models
 
         public float ProgressBarValue()
         {
-             return (100 - (fileSizeLeft * 100 / fileSizeTotal));
+            return (100 - (fileSizeLeft * 100 / fileSizeTotal));
         }
 
         public string FileLeftSlashFileTotal()

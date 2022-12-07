@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-//Fichier servant à la sauvegarde des logs(BakcupJob).
+﻿//Fichier servant à la sauvegarde des logs(BakcupJob).
 //File used to save logs(BakcupJob).
 namespace AppWPF.developpement.Models
 {

@@ -2,10 +2,6 @@
 using AppWPF.developpement.Models;
 using AppWPF.developpement.Stores;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AppWPF.developpement.ViewModels
@@ -23,7 +19,7 @@ namespace AppWPF.developpement.ViewModels
         public ICommand DeleteCommand { get; }
         public ICommand SaveCommand { get; }
 
-        
+
         private bool _isDeleting;
         public bool IsDeleting
         {
@@ -35,7 +31,7 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
-        public bool _isSaving;
+        private bool _isSaving;
         public bool IsSaving
         {
             get => _isSaving;
@@ -52,7 +48,6 @@ namespace AppWPF.developpement.ViewModels
             EditCommand = new OpenEditBackupJobCommand(this, backupJobsStore, modalNavigationStore);
             DeleteCommand = new DeleteBackupJobCommand(this, backupJobsStore);
             SaveCommand = new OpenSaveBackupJobCommand(this, backupJobsStore, modalNavigationStore);
-            //SaveCommand = new SaveBackupJobCommand(this, backupJobsStore);
         }
 
 

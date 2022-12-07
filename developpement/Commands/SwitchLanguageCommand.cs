@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using AppWPF.developpement.Models;
+﻿using AppWPF.developpement.Models;
 using AppWPF.developpement.ViewModels;
-using AppWPF.developpement.Views;
+using System;
+using System.Windows;
 
 namespace AppWPF.developpement.Commands
 {
@@ -43,6 +37,6 @@ namespace AppWPF.developpement.Commands
             }
             Application.Current.Resources.MergedDictionaries.Add(dictionary);
         }
-        
+
     }
 }

@@ -3,11 +3,11 @@
 namespace AppWPF.developpement.Components
 {
     /// <summary>
-    /// Logique d'interaction pour BackupJobsListing.xaml
+    /// Logique d'interaction pour ProcessusListing.xaml
     /// </summary>
-    public partial class BackupJobsListing : UserControl
+    public partial class ProcessusListing : UserControl
     {
-        public BackupJobsListing()
+        public ProcessusListing()
         {
             InitializeComponent();
         }

@@ -2,9 +2,6 @@
 using AppWPF.developpement.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AppWPF.developpement.Stores
@@ -15,7 +12,7 @@ namespace AppWPF.developpement.Stores
 
         public event Action<BackupJob> BackupJobAdded;
         public event Action<BackupJob> BackupJobUpdated;
-        public event Action<Guid> BackupJobDeleted;        
+        public event Action<Guid> BackupJobDeleted;
         public event Action AllBackupJobsDeleted;
         public event Action BackupJobsLoaded;
 

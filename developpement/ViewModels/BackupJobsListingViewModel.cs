@@ -1,13 +1,9 @@
-﻿using AppWPF.developpement.Commands;
-using AppWPF.developpement.Models;
+﻿using AppWPF.developpement.Models;
 using AppWPF.developpement.Stores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace AppWPF.developpement.ViewModels
 {
@@ -17,7 +13,7 @@ namespace AppWPF.developpement.ViewModels
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly BackupJobsStore _backupJobsStore;
 
-        public IEnumerable<BackupJobsListingItemViewModel> BackupJobsListingItemViewModels 
+        public IEnumerable<BackupJobsListingItemViewModel> BackupJobsListingItemViewModels
             => _backupJobsListingItemViewModels;
 
 
@@ -29,7 +25,7 @@ namespace AppWPF.developpement.ViewModels
             _modalNavigationStore = modalNavigationStore;
             _backupJobsStore = backupJobsStore;
 
-            
+
 
             _backupJobsStore.BackupJobAdded += BackupJobsStore_BackupJobAdded;
             _backupJobsStore.BackupJobUpdated += BackupJobsStore_BackupJobUpdated;
@@ -50,7 +46,7 @@ namespace AppWPF.developpement.ViewModels
             _backupJobsStore.BackupJobsLoaded -= BackupJobsStore_BackupJobsLoaded;
             base.Dispose();
         }
-        
+
         private void BackupJobsStore_BackupJobUpdated(BackupJob backupJob)
         {
             BackupJobsListingItemViewModel backupJobViewModel = _backupJobsListingItemViewModels.FirstOrDefault(vm => vm.BackupJob.Id == backupJob.Id);

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-//Fichier servant pour les logs d'activités.
+﻿//Fichier servant pour les logs d'activités.
 //File used for activity logs.
 namespace AppWPF.developpement.Models
 {

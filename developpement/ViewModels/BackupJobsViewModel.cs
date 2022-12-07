@@ -1,18 +1,13 @@
 ﻿using AppWPF.developpement.Commands;
 using AppWPF.developpement.Models;
 using AppWPF.developpement.Stores;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AppWPF.developpement.ViewModels
 {
     public class BackupJobsViewModel : ViewModelBase
     {
-        public static Config config = FileManager.LoadConfig();
+        public static Config config;
         public BackupJobsListingViewModel BackupJobsListingViewModel { get; }
 
         private bool _isLoading;
@@ -30,29 +25,33 @@ namespace AppWPF.developpement.ViewModels
 
         public ICommand DeleteAllBackupJobsCommand { get; }
         public ICommand SaveAllBackupJobsCommand { get; }
-        
+
         public ICommand LoadBackupJobsCommand { get; }
 
-        public ICommand SwitchLanguageFr { get; }
-        public ICommand SwitchLanguageEn { get; }
+        public ICommand SwitchLanguageFrCommand { get; }
+        public ICommand SwitchLanguageEnCommand { get; }
 
-        public BackupJobsViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
+        public ICommand OpenSettingsCommand { get; }
+
+        public BackupJobsViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore, ProcessusStore processusStore)
         {
             BackupJobsListingViewModel = new BackupJobsListingViewModel(modalNavigationStore, backupJobsStore);
             LoadBackupJobsCommand = new LoadBackupJobsCommand(this, backupJobsStore);
             AddBackupJobCommand = new OpenAddBackupJobCommand(modalNavigationStore, backupJobsStore);
             DeleteAllBackupJobsCommand = new DeleteAllBackupJobsCommand(backupJobsStore);
             SaveAllBackupJobsCommand = new SaveAllBackupJobsCommand(backupJobsStore);
-            SwitchLanguageFr = new SwitchLanguageCommand("fr");
-            SwitchLanguageEn = new SwitchLanguageCommand("en");
+            SwitchLanguageFrCommand = new SwitchLanguageCommand("fr");
+            SwitchLanguageEnCommand = new SwitchLanguageCommand("en");
+            OpenSettingsCommand = new OpenSettingsCommand(modalNavigationStore, processusStore);
         }
 
-        public static BackupJobsViewModel LoadViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
+        public static BackupJobsViewModel LoadViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore, ProcessusStore processusStore)
         {
-            BackupJobsViewModel viewModel = new BackupJobsViewModel(modalNavigationStore, backupJobsStore); 
+            BackupJobsViewModel viewModel = new BackupJobsViewModel(modalNavigationStore, backupJobsStore, processusStore);
+            config = FileManager.LoadConfig();
             viewModel.LoadBackupJobsCommand.Execute(null);
-            if (config.DefaultLanguage == "fr") viewModel.SwitchLanguageFr.Execute(null);
-            else viewModel.SwitchLanguageEn.Execute(null);
+            if (config.DefaultLanguage == "fr") viewModel.SwitchLanguageFrCommand.Execute(null);
+            else viewModel.SwitchLanguageEnCommand.Execute(null);
             BackupJob.LogExtension = config.LogExtension;
             return viewModel;
         }

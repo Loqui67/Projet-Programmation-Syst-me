@@ -1,25 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows.Input;
 
 namespace AppWPF.developpement.ViewModels
 {
     public class BackupJobDetailsFormViewModel : ViewModelBase
     {
-		private string _name;
-		public string Name
-		{
-			get { return _name; }
-			set { 
-				_name = value; 
-				OnPropertyChanged(nameof(Name));
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                OnPropertyChanged(nameof(Name));
                 OnPropertyChanged(nameof(CanSubmit));
             }
-		}
+        }
 
         private string _sourcePath;
         public string SourcePath
@@ -69,12 +65,12 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
-        public bool CanSubmit => 
-            !string.IsNullOrWhiteSpace(Name) && 
+        public bool CanSubmit =>
+            !string.IsNullOrWhiteSpace(Name) &&
             Directory.Exists(SourcePath) &&
-            Directory.Exists(DestinationPath) && 
+            Directory.Exists(DestinationPath) &&
             !string.IsNullOrWhiteSpace(Type);
-        
+
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
 

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using System.IO;
 
 namespace AppWPF.developpement.Models
 {
@@ -16,6 +16,7 @@ namespace AppWPF.developpement.Models
         private static readonly string appDataFolderPath = CreateFolderIfNotExistAndReturnString(Path.Combine(appData, appDataFolder));
         private static readonly string backupJobJsonFileName = Path.Combine(appDataFolderPath, "SaveBackupJob.json");
         private static readonly string activeStateFileName = Path.Combine(appDataFolderPath, "activeState.json");
+        private static readonly string configFileName = Path.Combine(appDataFolderPath, "config.json");
         private static readonly JsonSerializerOptions optionsWriteIndented = new()
         {
             WriteIndented = true
@@ -29,34 +30,36 @@ namespace AppWPF.developpement.Models
             return path;
         }
 
-        private static void CreateFileIfNotExist(string path)
+        private static bool CreateFileIfNotExist(string path)
         {
-            if (!File.Exists(path)) File.Create(path);
+            if (File.Exists(path)) return true;
+            File.Create(path);
+            return false;
         }
 
         public static Config LoadConfig()
         {
             try
             {
-                string path = Path.Combine(appDataFolderPath, "config.xml");
-                CreateFileIfNotExist(path);
-                XmlSerializer serializer = new(typeof(Config));
-                using FileStream stream = new(path, FileMode.Open);
-                return (Config)serializer.Deserialize(stream);
+                if (!CreateFileIfNotExist(configFileName)) return new Config { DefaultLanguage = "en", LogExtension = "0", AllProcessus = new List<Processus>() };
+                string json = File.ReadAllText(configFileName);
+                return JsonSerializer.Deserialize<Config>(json);
             }
             catch
             {
-                return new Config();
+                return new Config { DefaultLanguage = "en", LogExtension = "0", AllProcessus = new List<Processus>() };
             }
         }
 
         public static void SaveConfig(Config config)
         {
-            string path = Path.Combine(appDataFolderPath, "config.xml");
-            CreateFileIfNotExist(path);
-            XmlSerializer serializer = new(typeof(Config));
-            using FileStream stream = new(path, FileMode.Create);
-            serializer.Serialize(stream, config);
+            try
+            {
+                CreateFileIfNotExist(configFileName);
+                string json = JsonSerializer.Serialize(config, optionsWriteIndented);
+                File.WriteAllText(configFileName, json);
+            }
+            catch (Exception) { }
         }
 
         //ecrit dans le fichier les différents travaux de sauvegarde

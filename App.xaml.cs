@@ -1,11 +1,5 @@
 ﻿using AppWPF.developpement.Stores;
 using AppWPF.developpement.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace AppWPF
@@ -19,16 +13,18 @@ namespace AppWPF
     {
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly BackupJobsStore _backupJobStore;
+        private readonly ProcessusStore _processusStore;
 
         public App()
         {
             _modalNavigationStore = new ModalNavigationStore();
             _backupJobStore = new BackupJobsStore();
+            _processusStore = new ProcessusStore();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            BackupJobsViewModel backupJobsViewModel = BackupJobsViewModel.LoadViewModel(_modalNavigationStore, _backupJobStore);
+            BackupJobsViewModel backupJobsViewModel = BackupJobsViewModel.LoadViewModel(_modalNavigationStore, _backupJobStore, _processusStore);
             MainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_modalNavigationStore, backupJobsViewModel)

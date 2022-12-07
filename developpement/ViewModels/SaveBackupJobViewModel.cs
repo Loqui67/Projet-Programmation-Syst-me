@@ -1,17 +1,11 @@
 ﻿using AppWPF.developpement.Commands;
 using AppWPF.developpement.Models;
 using AppWPF.developpement.Stores;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
 using System.Windows.Input;
 
 namespace AppWPF.developpement.ViewModels
 {
-    public class SaveBackupJobViewModel : ViewModelBase 
+    public class SaveBackupJobViewModel : ViewModelBase
     {
         public ICommand SaveCommand { get; }
         public ICommand CancelCommand { get; }

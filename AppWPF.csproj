@@ -18,6 +18,7 @@
     <None Remove="developpement\Views\drapeau-anglais.png" />
     <None Remove="developpement\Views\icon recherche.png" />
     <None Remove="developpement\Views\play green.png" />
+    <None Remove="developpement\Views\roue dentee icon.png" />
     <None Remove="drapeau france.png" />
     <None Remove="drapeau-anglais.png" />
     <None Remove="icon recherche.png" />
@@ -40,6 +41,7 @@
     <Resource Include="developpement\Views\drapeau-anglais.png" />
     <Resource Include="developpement\Views\icon recherche.png" />
     <Resource Include="developpement\Views\play green.png" />
+    <Resource Include="developpement\Views\roue dentee icon.png" />
     <Resource Include="drapeau france.png" />
     <Resource Include="drapeau-anglais.png" />
     <Resource Include="icon recherche.png" />
