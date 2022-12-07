@@ -1,5 +1,6 @@
 ﻿using System;
-
+//Fichier servant à la mise en place de processus.
+//File used to set up processes.
 namespace AppWPF.developpement.Models
 {
     public class Processus

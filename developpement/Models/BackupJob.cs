@@ -40,6 +40,8 @@ namespace AppWPF.developpement.Models
             Type = type;
         }
 
+        ///Création d'une méthode pour sauvegarder les travaux de sauvegardes dans le ViewModel
+        ///Creating a method to save backup jobs in the ViewModel
         public async Task Save(SaveBackupJobViewModel saveBackupJobViewModel)
         {
             files = new List<string>();
@@ -58,6 +60,8 @@ namespace AppWPF.developpement.Models
         }
 
 
+        ///Création d'une méthode pour obtenir des statistiques pour les sauvegardes
+        ///Created a method to get statistics for backups
         private void GetStats()
         {
             //Déclaration des variables.
@@ -78,6 +82,7 @@ namespace AppWPF.developpement.Models
                     fileNumberTotal++;
                 }
             }
+            
             foreach (string directory in allDirectories)
             {
                 string folderToCopy = directory.Replace(SourcePath, DestinationPath);
@@ -98,6 +103,8 @@ namespace AppWPF.developpement.Models
             }
         }
 
+        ///Création d'une méthode pour sauvegarder les fichiers et dossiers
+        ///Creating a method to back up files and folders
         public async Task SaveBackup()
         {
             if (Type == "0") Directory.Delete(DestinationPath, true);
@@ -123,7 +130,8 @@ namespace AppWPF.developpement.Models
             }
         }
 
-
+        ///Création d'une méthode pour vérifier si un fichier a été modifié
+        ///Creating a method to check if a file has been modified
         public bool IsFileModified(FileInfo fileInfo, string destinationPath)
         {
             string fileToCopy = fileInfo.FullName.Replace(SourcePath, destinationPath);
@@ -139,11 +147,15 @@ namespace AppWPF.developpement.Models
             }
         }
 
+        ///Création d'une méthode qui permet de générer la valeur de la barre de progression
+        ///Creation of a method that allows to generate the value of the progress bar
         public float ProgressBarValue()
         {
             return (100 - (fileSizeLeft * 100 / fileSizeTotal));
         }
 
+        ///Création d'une méthode qui permet de faire une division pour obtenir le nombre de fichiers restants sur le nombre total de fichiers
+        ///Creation of a method that allows you to do a division to obtain the number of files remaining out of the total number of files
         public string FileLeftSlashFileTotal()
         {
             return (fileNumberTotal - fileNumberLeft + 1) + "/" + fileNumberTotal;

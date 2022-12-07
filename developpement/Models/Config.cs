@@ -2,6 +2,7 @@
 
 namespace AppWPF.developpement.Models
 {
+    ///Class de configuration
     public class Config
     {
         public string DefaultLanguage { get; set; }

@@ -9,6 +9,8 @@ using System.Xml.Serialization;
 
 namespace AppWPF.developpement.Models
 {
+    ///Création d'une classe qui permet de gérer les fichiers
+    ///Create a class to manage files
     public static class FileManager
     {
         private static readonly string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -30,6 +32,8 @@ namespace AppWPF.developpement.Models
             return path;
         }
 
+        //Méthode qui permet de créer un fichier si il n'éxiste pas déja 
+        //Method that allows to create a file if it does not already exist
         private static bool CreateFileIfNotExist(string path)
         {
             if (File.Exists(path)) return true;
@@ -37,6 +41,8 @@ namespace AppWPF.developpement.Models
             return false;
         }
 
+        ///Méthode qui permet de charger une configuration déja éxistante
+        ///Method that allows to load an already existing configuration
         public static Config LoadConfig()
         {
             try
@@ -51,6 +57,8 @@ namespace AppWPF.developpement.Models
             }
         }
 
+        ///Méthode qui permet de sauvegarder une configuration
+        ///Method to save a configuration
         public static void SaveConfig(Config config)
         {
             try
@@ -73,7 +81,8 @@ namespace AppWPF.developpement.Models
             await fs.WriteAsync(jsonBytes);
         }
 
-
+        ///Méthode qui permet d'ajouter un travail de sauvegarde à un fichier 
+        ///Method to add a backup job to a file
         public static async Task AddBackupJobToFile(BackupJob backupJob)
         {
             List<BackupJob>? backupJobs = ReadBackupJobFile();
@@ -82,6 +91,8 @@ namespace AppWPF.developpement.Models
             await WriteBackupJobToFile(backupJobs);
         }
 
+        ///Méthode qui permet de supprimer un travail de sauvegarde qui est stocket dans un fichier
+        ///Method to delete a backup job that is stored in a file
         public static async Task RemoveBackupJobFromFile(Guid backupJobId)
         {
             List<BackupJob>? backupJobs = ReadBackupJobFile();
@@ -90,11 +101,15 @@ namespace AppWPF.developpement.Models
             await WriteBackupJobToFile(backupJobs);
         }
 
+        ///Méthode qui permet d'enlever tous les travaux de sauvegarde d'un fichier
+        ///Method to remove all backup jobs from a file
         public static async Task RemoveAllBackupJobFromFile()
         {
             await WriteBackupJobToFile(new List<BackupJob>());
         }
 
+        ///Méthode qui permet de mettre à jour un travail de sauvegarde dans un fichier
+        ///Method to update a backup job to a file
         public static async Task UpdateBackupJobInFile(BackupJob backupJob)
         {
             List<BackupJob>? backupJobs = ReadBackupJobFile();
@@ -153,7 +168,8 @@ namespace AppWPF.developpement.Models
             return new List<Log>();
         }
 
-
+        ///Méthode qui permet de créer un fichier de log journalière en XML
+        ///Method which allows to create a daily log file in XML
         public static void SerializeToXML(Log log)
         {
             string path = CreateFolderIfNotExistAndReturnString(Path.Combine(appDataFolderPath, "logs"));
@@ -165,6 +181,8 @@ namespace AppWPF.developpement.Models
             writer.Close();
         }
 
+        ///Méthode qui permet de lire un fichier de log journalière en json
+        ///Method which allows to read a daily log file in json
         public static List<Log> DeserializeFromXML(string path)
         {
             if (File.Exists(GetDailyFileName() + ".xml"))
