@@ -18,12 +18,13 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="SaveBackupJob" Grid.Row="0" Grid.Column="1"/>
-        <TextBlock Text="Processing..." Grid.Row="1" Grid.Column="0" Visibility="{Binding IsLoadingStats}"/>
+        <TextBlock Text="{DynamicResource SaveBackup}" Grid.Row="0" Grid.Column="1"/>
+        <TextBlock Text="{DynamicResource Processing}" Grid.Row="1" Grid.Column="0" Visibility="{Binding IsLoadingStats}"/>
         <ProgressBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="20" Value="{Binding BackupJobProgressBarValue}"/>
         <TextBlock Text="{Binding BackupJobFileTransfering}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <TextBlock Text="{Binding BackupJobFileTransfering}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
         <TextBlock Text="{Binding BackupJobFileTransferingCount}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right"/>
-        <Button Content="Cancel" Grid.Row="3" Grid.Column="0" Margin="10" Command="{Binding CancelCommand}"/>
-        <Button Content="Save" Grid.Row="3" Grid.Column="2" Margin="10" Command="{Binding SaveCommand}"/>
+        <Button Content="{DynamicResource Cancel}" Grid.Row="3" Grid.Column="0" Margin="10" Command="{Binding CancelCommand}"/>
+        <Button Content="{DynamicResource Save}" Grid.Row="3" Grid.Column="2" Margin="10" Command="{Binding SaveCommand}"/>
     </Grid>
 </UserControl>

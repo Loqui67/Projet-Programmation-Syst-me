@@ -27,7 +27,7 @@
                     <ColumnDefinition Width="*" MaxWidth="250"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="Name"/>
+                <TextBlock Grid.Column="0" Text="{DynamicResource Name}"/>
                 <TextBox Grid.Column="1" Margin="20 0 0 0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
 
@@ -37,7 +37,7 @@
                     <ColumnDefinition Width="*" MaxWidth="250"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="Source path"/>
+                <TextBlock Grid.Column="0" Text="{DynamicResource SourcePath}"/>
                 <TextBox Grid.Column="1" Margin="20 0 0 0" Text="{Binding SourcePath, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
 
@@ -47,7 +47,7 @@
                     <ColumnDefinition Width="*" MaxWidth="250"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="Destination path"/>
+                <TextBlock Grid.Column="0" Text="{DynamicResource DestinationPath}"/>
                 <TextBox Grid.Column="1" Margin="20 0 0 0" Text="{Binding DestinationPath, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
 
@@ -57,18 +57,18 @@
                     <ColumnDefinition Width="*" MaxWidth="250"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="Type"/>
+                <TextBlock Grid.Column="0" Text="{DynamicResource Type}"/>
                 <ComboBox  Grid.Column="1" x:Name="Type" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250" SelectedIndex="{Binding Type}">
-                    <ComboBoxItem Tag="1" Content="Full save"/>
-                    <ComboBoxItem Tag="2" Content="differential save"/>
+                    <ComboBoxItem Tag="1" Content="{DynamicResource FullSave}"/>
+                    <ComboBoxItem Tag="2" Content="{DynamicResource DifferentialSave}"/>
                 </ComboBox>
             </Grid>
 
         </Grid>
 
         <WrapPanel Grid.Row="1" Margin="0 20 0 0">
-            <Button Content="Submit" Command="{Binding SubmitCommand}" Margin="0 0 10 0" IsEnabled="{Binding CanSubmit}"/>
-            <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="0 0 5 0"/>
+            <Button Content="{DynamicResource Submit}" Command="{Binding SubmitCommand}" Margin="0 0 10 0" IsEnabled="{Binding CanSubmit}"/>
+            <Button Content="{DynamicResource Cancel}" Command="{Binding CancelCommand}" Margin="0 0 5 0"/>
             <custom:LoadingSpinner IsLoading="{Binding IsSubmitting}" Diameter="25" Thickness="2"/>
         </WrapPanel>
     </Grid>

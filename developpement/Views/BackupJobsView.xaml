@@ -21,7 +21,7 @@
                 </Style>
             </StackPanel.Style>
             <custom:LoadingSpinner Diameter="100" IsLoading="True" Margin="0 20 0 0" Thickness="2"/>
-            <TextBlock TextAlignment="Center" Text="Loading BackupJobs" Margin="0 10 0 0"/>
+            <TextBlock TextAlignment="Center" Text="{DynamicResource LoadBackup}" Margin="0 10 0 0"/>
         </StackPanel>
         <Grid>
             <Grid.Background>
@@ -46,17 +46,17 @@
                     <ImageBrush ImageSource="roue dentee icon.png"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="fr" Margin="0,10,60,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Height="34" Grid.RowSpan="2" HorizontalAlignment="Right" Width="34" Command="{Binding SwitchLanguageFrCommand}">
+            <Button x:Name="fr" Margin="0,10,60,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Height="34" Grid.RowSpan="2" HorizontalAlignment="Right" Width="34" Command="{Binding SwitchLanguageFrCommand}" ToolTip="{DynamicResource French}">
                 <Button.Background>
                     <ImageBrush ImageSource="drapeau france.png"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="en" Margin="0,11,20,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Height="34" Grid.RowSpan="2" HorizontalAlignment="Right" Width="34" Command="{Binding SwitchLanguageEnCommand}">
+            <Button x:Name="en" Margin="0,11,20,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Height="33" Grid.RowSpan="2" HorizontalAlignment="Right" Width="33" Command="{Binding SwitchLanguageEnCommand}" ToolTip="{DynamicResource English}">
                 <Button.Background>
                     <ImageBrush ImageSource="drapeau-anglais.png"/>
                 </Button.Background>
             </Button>
-            <Button Content="" HorizontalAlignment="Left" Margin="612,10,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="33" Height="33" Grid.RowSpan="2"  Command="{Binding DeleteAllBackupJobsCommand}">
+            <Button Content="" HorizontalAlignment="Left" Margin="612,10,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="33" Height="33" Grid.RowSpan="2"  Command="{Binding DeleteAllBackupJobsCommand}" ToolTip="{DynamicResource DeleteAll}">
                 <Button.Background>
                     <ImageBrush ImageSource="delete icon.png"/>
                 </Button.Background>
@@ -70,12 +70,12 @@
                     <components:BackupJobsListing DataContext="{Binding BackupJobsListingViewModel}"/>
                 </Grid>
             </GroupBox>
-            <Button Content="" HorizontalAlignment="Left" Margin="575,11,0,0" VerticalAlignment="Top" Width="33" Height="33" BorderBrush="{x:Null}" Grid.RowSpan="2" Command="{Binding AddBackupJobCommand}">
+            <Button Content="" HorizontalAlignment="Left" Margin="575,11,0,0" VerticalAlignment="Top" Width="33" Height="33" BorderBrush="{x:Null}" Grid.RowSpan="2" Command="{Binding AddBackupJobCommand}" ToolTip="{DynamicResource AddBackup}">
                 <Button.Background>
                     <ImageBrush ImageSource="create icon.png"/>
                 </Button.Background>
             </Button>
-            <Button Content="" HorizontalAlignment="Left" Margin="537,9,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.192,-0.279" Height="34" Width="33" Foreground="Black" Grid.RowSpan="2"  Command="{Binding SaveAllBackupJobsCommand}">
+            <Button Content="" HorizontalAlignment="Left" Margin="537,9,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.192,-0.279" Height="34" Width="33" Foreground="Black" Grid.RowSpan="2"  Command="{Binding SaveAllBackupJobsCommand}" ToolTip="{DynamicResource ExecAll}">
                 <Button.Background>
                     <ImageBrush ImageSource="play green.png"/>
                 </Button.Background>
@@ -84,14 +84,14 @@
                 </Button.BorderBrush>
 
             </Button>
-            <TextBox HorizontalAlignment="Left" Margin="22,17,0,0" TextWrapping="Wrap" Text="  Research" VerticalAlignment="Top" Width="494" Height="20" Grid.RowSpan="2">
+            <TextBox HorizontalAlignment="Left" Margin="22,17,0,0" TextWrapping="Wrap" Text="{DynamicResource Search}" VerticalAlignment="Top" Width="494" Height="20" Grid.RowSpan="2">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
                     </Style>
                 </TextBox.Resources>
             </TextBox>
-            <Button Content="" HorizontalAlignment="Left" Margin="494,18,0,0" VerticalAlignment="Top" Height="17" Width="17" BorderBrush="{x:Null}" Grid.RowSpan="2">
+            <Button Content="" HorizontalAlignment="Left" Margin="494,18,0,0" VerticalAlignment="Top" Height="17" Width="17" BorderBrush="{x:Null}" Grid.RowSpan="2" ToolTip="{DynamicResource Search}">
                 <Button.Background>
                     <ImageBrush ImageSource="icon recherche.png"/>
                 </Button.Background>
