@@ -11,12 +11,11 @@ namespace AppWPF.developpement.Commands
     {
         ///Variables qui instancient plusieurs classes
         ///Variables that instantiate multiple classes
-        private readonly SettingsViewModel _settingsViewModel;
         private readonly ProcessusStore _processusStore;
 
         ///Méthode qui permet de charger un processus 
         ///Method to load a process
-        public LoadProcessusCommand(SettingsViewModel settingsViewModel, ProcessusStore processusStore)
+        public LoadProcessusCommand(ProcessusStore processusStore)
         {
             _processusStore = processusStore;
         }

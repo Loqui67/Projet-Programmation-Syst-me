@@ -15,7 +15,7 @@ namespace AppWPF.developpement.Commands
 
         ///méthode qui permet d'ouvrir les parametres
         ///method to open settings
-        public OpenSettingsCommand(ModalNavigationStore modalNavigationStore, ProcessusStore processusStore)
+        public OpenSettingsCommand(ModalNavigationStore modalNavigationStore, ProcessusStore processusStore, ExtensionCryptageStore extensionCryptageStore)
         {
             _modalNavigationStore = modalNavigationStore;
             _processusStore = processusStore;
