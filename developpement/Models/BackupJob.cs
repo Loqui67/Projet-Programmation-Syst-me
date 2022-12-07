@@ -27,6 +27,7 @@ namespace AppWPF.developpement.Models
         private TimeSpan fileTransferTime;
         public static string LogExtension = "0"; //0 : json, 1 : xml
         private List<string> files;
+        private List<string> filesToEncrypt;
         private List<string> directories;
 
         private SaveBackupJobViewModel? _saveBackupJobViewModel;
@@ -43,14 +44,20 @@ namespace AppWPF.developpement.Models
         public async Task Save(SaveBackupJobViewModel saveBackupJobViewModel)
         {
             if (IsProcessusRunning()) return;
+            
             files = new List<string>();
+            filesToEncrypt = new List<string>();
             directories = new List<string>();
             _saveBackupJobViewModel = saveBackupJobViewModel;
+
             _saveBackupJobViewModel.IsLoadingStats = "Visible";
+            
             await Task.Run(GetStats);
             await Task.Run(SaveBackup);
+            
             if (LogExtension == "0") FileManager.WriteDailyLogToFile(GenerateLog());
             else FileManager.SerializeToXML(GenerateLog());
+            
             _saveBackupJobViewModel.IsLoadingStats = "Collapsed";
         }
 
@@ -72,9 +79,16 @@ namespace AppWPF.developpement.Models
                 FileInfo fileInfo = new(file);
                 if (!File.Exists(fileToCopy) || Type == "0" || IsFileModified(fileInfo, fileToCopy))
                 {
-                    files.Add(file);
                     fileSizeTotal += fileInfo.Length;
                     fileNumberTotal++;
+                    if (BackupJobsViewModel.config.AllExtensionCryptage.Exists(extensionCryptage => extensionCryptage.Name == fileInfo.Extension))
+                    {
+                        filesToEncrypt.Add(file);
+                    } 
+                    else
+                    {
+                        files.Add(file);
+                    }
                 }
             }
             foreach (string directory in allDirectories)
@@ -106,6 +120,20 @@ namespace AppWPF.developpement.Models
             {
                 string folderToCopy = directory.Replace(SourcePath, DestinationPath);
                 await Task.Run(() => Directory.CreateDirectory(folderToCopy));
+            }
+            //Do two things at the same time.
+
+            //Création des tâches.
+
+            foreach (string fileToEncrypt in filesToEncrypt)
+            {
+                string fileToCopy = fileToEncrypt.Replace(SourcePath, DestinationPath);
+                await Task.Run(() => 
+                {
+                    FileInfo fileInfo = new FileInfo(fileToEncrypt);
+                    fileSizeLeft -= fileInfo.Length;
+                    fileNumberLeft--;
+                });
             }
 
             foreach (string file in files)
