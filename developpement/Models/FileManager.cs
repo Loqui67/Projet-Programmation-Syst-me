@@ -41,7 +41,7 @@ namespace AppWPF.developpement.Models
         {
             try
             {
-                if (!CreateFileIfNotExist(configFileName)) return new Config { DefaultLanguage = "en", LogExtension = "0", AllProcessus = new List<Processus>() };
+                if (!CreateFileIfNotExist(configFileName)) return new Config { DefaultLanguage = "en", LogExtension = "0", AllProcessus = new List<Processus>(), AllExtensionCryptage = new List<ExtensionCryptage>() };
                 string json = File.ReadAllText(configFileName);
                 return JsonSerializer.Deserialize<Config>(json);
             }

@@ -7,5 +7,6 @@ namespace AppWPF.developpement.Models
         public string DefaultLanguage { get; set; }
         public string LogExtension { get; set; }
         public List<Processus> AllProcessus { get; set; }
+        public List<ExtensionCryptage> AllExtensionCryptage { get; set; }
     }
 }

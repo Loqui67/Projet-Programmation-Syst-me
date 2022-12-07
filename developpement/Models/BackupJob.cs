@@ -42,26 +42,25 @@ namespace AppWPF.developpement.Models
 
         public async Task Save(SaveBackupJobViewModel saveBackupJobViewModel)
         {
+            if (IsProcessusRunning()) return;
             files = new List<string>();
             directories = new List<string>();
-            fileSizeTotal = 0;
-            fileNumberTotal = 0;
             _saveBackupJobViewModel = saveBackupJobViewModel;
             _saveBackupJobViewModel.IsLoadingStats = "Visible";
             await Task.Run(GetStats);
-            fileSizeLeft = fileSizeTotal;
-            fileNumberLeft = fileNumberTotal;
             await Task.Run(SaveBackup);
             if (LogExtension == "0") FileManager.WriteDailyLogToFile(GenerateLog());
             else FileManager.SerializeToXML(GenerateLog());
             _saveBackupJobViewModel.IsLoadingStats = "Collapsed";
         }
 
-
+        
         private void GetStats()
         {
             //Déclaration des variables.
             //Declaration of variables.
+            fileSizeTotal = 0;
+            fileNumberTotal = 0;
             List<string> allFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories).ToList();
             List<string> allDirectories = Directory.GetDirectories(SourcePath, "*", SearchOption.AllDirectories).ToList();
 
@@ -96,6 +95,8 @@ namespace AppWPF.developpement.Models
                     fileNumberLeft++;
                 }
             }
+            fileSizeLeft = fileSizeTotal;
+            fileNumberLeft = fileNumberTotal;
         }
 
         public async Task SaveBackup()
@@ -123,6 +124,10 @@ namespace AppWPF.developpement.Models
             }
         }
 
+        public bool IsProcessusRunning()
+        {
+            return BackupJobsListingViewModel.IsProcessusDetected;
+        }
 
         public bool IsFileModified(FileInfo fileInfo, string destinationPath)
         {

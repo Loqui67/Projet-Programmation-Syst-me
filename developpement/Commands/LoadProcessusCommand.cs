@@ -7,12 +7,10 @@ namespace AppWPF.developpement.Commands
 {
     public class LoadProcessusCommand : AsyncCommandBase
     {
-        private readonly SettingsViewModel _settingsViewModel;
         private readonly ProcessusStore _processusStore;
 
-        public LoadProcessusCommand(SettingsViewModel settingsViewModel, ProcessusStore processusStore)
+        public LoadProcessusCommand(ProcessusStore processusStore)
         {
-            _settingsViewModel = settingsViewModel;
             _processusStore = processusStore;
         }
 
