@@ -37,6 +37,5 @@ namespace AppWPF.developpement.Commands
             }
             Application.Current.Resources.MergedDictionaries.Add(dictionary);
         }
-
     }
 }
