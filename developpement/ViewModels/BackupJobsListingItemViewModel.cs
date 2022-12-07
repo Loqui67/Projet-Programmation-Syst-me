@@ -23,9 +23,11 @@ namespace AppWPF.developpement.ViewModels
         public ICommand DeleteCommand { get; }
         public ICommand SaveCommand { get; }
 
-        ///Création de plusieurs variables/méthodes qui vont être ensuite "envoyé" vers la vue
-        ///Creation of several variables/méthodes which will then be "sent" to the view
+        ///Variable privée permettant de vérifier si le fichier est entrain d'être supprimé 
+        ///Private variable to check if the file is being deleted
         private bool _isDeleting;
+        ///Variable Publique permettant de vérifier si le fichier est entrain d'être supprimé
+        ///Variable Public to check if the file is being deleted
         public bool IsDeleting
         {
             get => _isDeleting;
@@ -36,7 +38,11 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
+        ///Variable privée permettant de vérifier si le fichier est entrain d'être sauvegardé
+        ///Private variable to check if the file is being saved
         private bool _isSaving;
+        ///Variable publique permettant de vérifier si le fichier est entrain d'être sauvegardé
+        ///Public variable to check if the file is being saved
         public bool IsSaving
         {
             get => _isSaving;
@@ -55,7 +61,8 @@ namespace AppWPF.developpement.ViewModels
             SaveCommand = new OpenSaveBackupJobCommand(this, backupJobsStore, modalNavigationStore);
         }
 
-
+        ///Méthode permettant de mettre à jour les données de la vue
+        ///Method to update view data
         public void Update(BackupJob backupJob)
         {
             BackupJob = backupJob;

@@ -21,7 +21,11 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
+        ///Variable privée permettant de vérifier le chemin d'accès du dossier source
+        ///Private variable to check the source folder path
         private string _sourcePath;
+        ///Variable publique permettant de vérifier le chemin d'accès du dossier source
+        ///Public variable to check the source folder path
         public string SourcePath
         {
             get { return _sourcePath; }
@@ -33,7 +37,11 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
+        ///Variable privée permettant de vérifier le chemin d'accès du dossier de destination
+        ///Private variable to check the destination folder path
         private string _destinationPath;
+        ///Variable publique permettant de vérifier le chemin d'accès du dossier de destination
+        ///Public variable to check the destination folder path
         public string DestinationPath
         {
             get { return _destinationPath; }
@@ -45,7 +53,11 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
+        ///Variable privée permettant de vérifier le type de fichier
+        ///Variable private to check the file type
         private string _type;
+        ///Variable publique permettant de vérifier le type de fichier
+        ///Public variable to check the file type
         public string Type
         {
             get { return _type; }
@@ -57,7 +69,11 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
+        ///Variable privée permettant de vérifier si le fichier est bien parvenue 
+        ///Private variable to check if the file has arrived
         private bool _isSubmitting;
+        ///Variable privée permettant de vérifier si le fichier est bien parvenue 
+        ///Private variable to check if the file has arrived
         public bool IsSubmitting
         {
             get { return _isSubmitting; }
@@ -69,6 +85,8 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
+        ///Variable permettant de vérifier si le fichier peut etre envoyé
+        ///Variable to check if the file can be sent
         public bool CanSubmit =>
             !string.IsNullOrWhiteSpace(Name) &&
             Directory.Exists(SourcePath) &&
@@ -78,6 +96,8 @@ namespace AppWPF.developpement.ViewModels
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
 
+        ///Méthode permettant de donner les détails du travail de sauvegarde
+        ///Method to give the details of the backup job
         public BackupJobDetailsFormViewModel(ICommand submitCommand, ICommand cancelCommand)
         {
             SubmitCommand = submitCommand;

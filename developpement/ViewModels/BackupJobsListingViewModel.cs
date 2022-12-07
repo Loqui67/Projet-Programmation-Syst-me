@@ -62,6 +62,8 @@ namespace AppWPF.developpement.ViewModels
             base.Dispose();
         }
 
+        ///Méthode permettant de passer de l'état de stockage d'un travail de sauvegarde à l'état de mise à jour du travail de sauvegarde
+        ///Method for passing from the storage state of a backup job to the update state of the backup job
         private void BackupJobsStore_BackupJobUpdated(BackupJob backupJob)
         {
             BackupJobsListingItemViewModel backupJobViewModel = _backupJobsListingItemViewModels.FirstOrDefault(vm => vm.BackupJob.Id == backupJob.Id);
@@ -71,7 +73,8 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
-
+        ///Méthode permettant de passer de l'état de stockage d'un travail de sauvegarde à l'état de mise à jour du travail de chargement
+        ///Method for passing from the storage state of a backup job to the update state of the loading job
         private void BackupJobsStore_BackupJobsLoaded()
         {
             _backupJobsListingItemViewModels.Clear();
@@ -82,6 +85,8 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
+        ///Méthode permettant de passer de l'état de stockage d'un travail de sauvegarde à l'état de suppression du travail de sauvegarde
+        ///Method for passing from the storage state of a backup job to the deletion state of the backup job
         private void BackupJobsStore_BackupJobDeleted(Guid id)
         {
             BackupJobsListingItemViewModel itemViewModel = _backupJobsListingItemViewModels.FirstOrDefault(y => y.BackupJob?.Id == id);
@@ -92,17 +97,22 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
+        ///Méthode permettant de passer de l'état de stockage d'un travail de sauvegarde à l'état de suppression de tout les travaux de sauvegarde
+        ///Method for passing from the storage state of a backup job to the deletion state of all backup jobs
         private void BackupJobsStore_AllBackupJobsDeleted()
         {
             _backupJobsListingItemViewModels.Clear();
         }
 
-
+        ///Méthode permettant de passer de l'état de stockage d'un travail de sauvegarde à l'état d'ajout de travail de sauvegarde
+        ///Method for passing from the storage state of a backup job to the addition state of the backup job
         private void BackupJobsStore_BackupJobAdded(BackupJob backupJob)
         {
             AddBackupJob(backupJob);
         }
 
+        ///Méthode qui permet d'ajouter un travail de sauvegarde
+        ///Method that allows to add a backup job
         private void AddBackupJob(BackupJob backupJob)
         {
             BackupJobsListingItemViewModel itemViewModel = new BackupJobsListingItemViewModel(backupJob, _backupJobsStore, _modalNavigationStore);
