@@ -16,7 +16,16 @@ namespace AppWPF.developpement.ViewModels
         public IEnumerable<BackupJobsListingItemViewModel> BackupJobsListingItemViewModels
             => _backupJobsListingItemViewModels;
 
-
+        private bool _isProcessusDetected;
+        public bool IsProcessusDetected
+        {
+            get => _isProcessusDetected;
+            set
+            {
+                _isProcessusDetected = value;
+                OnPropertyChanged(nameof(IsProcessusDetected));
+            }
+        }
 
 
         public BackupJobsListingViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)

@@ -1,6 +1,11 @@
 ﻿using AppWPF.developpement.Commands;
 using AppWPF.developpement.Models;
 using AppWPF.developpement.Stores;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace AppWPF.developpement.ViewModels
@@ -10,6 +15,9 @@ namespace AppWPF.developpement.ViewModels
         public static Config config;
         public BackupJobsListingViewModel BackupJobsListingViewModel { get; }
 
+        private Thread _thread;
+        
+
         private bool _isLoading;
         public bool IsLoading
         {
@@ -17,9 +25,10 @@ namespace AppWPF.developpement.ViewModels
             set
             {
                 _isLoading = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsLoading));
             }
         }
+       
 
         public ICommand AddBackupJobCommand { get; }
 
@@ -33,8 +42,22 @@ namespace AppWPF.developpement.ViewModels
 
         public ICommand OpenSettingsCommand { get; }
 
+        private void CheckForProcessus()
+        {
+            while (true)
+            {
+                Trace.WriteLine("a");
+                Thread.Sleep(1000);
+                Process? processus = Process.GetProcesses().FirstOrDefault(p => config.AllProcessus.Select(x => x.Name).Contains(p.ProcessName), null);
+                if (processus != null) { Trace.WriteLine(processus.ProcessName); BackupJobsListingViewModel.IsProcessusDetected = false; }
+                else BackupJobsListingViewModel.IsProcessusDetected = true;
+            }
+        }
+
         public BackupJobsViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore, ProcessusStore processusStore)
         {
+            _thread = new Thread(CheckForProcessus);
+            _thread.Start();
             BackupJobsListingViewModel = new BackupJobsListingViewModel(modalNavigationStore, backupJobsStore);
             LoadBackupJobsCommand = new LoadBackupJobsCommand(this, backupJobsStore);
             AddBackupJobCommand = new OpenAddBackupJobCommand(modalNavigationStore, backupJobsStore);

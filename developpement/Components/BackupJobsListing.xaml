@@ -8,19 +8,21 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Border BorderBrush="Gray" BorderThickness="1">
-            <ListView BorderThickness="0" ItemsSource="{Binding BackupJobsListingItemViewModels}">
+            <ListView BorderThickness="0" ItemsSource="{Binding BackupJobsListingItemViewModels}"  IsEnabled="{Binding IsProcessusDetected}" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="False">
                 
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Focusable" Value="false"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <local:BackupJobsListingItem/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <local:BackupJobsListingItem/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
             </ListView>
         </Border>
     </Grid>

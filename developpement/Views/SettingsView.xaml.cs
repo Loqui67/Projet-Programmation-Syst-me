@@ -12,15 +12,5 @@ namespace AppWPF.developpement.Views
         {
             InitializeComponent();
         }
-
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Process[] processList = Process.GetProcesses();
-            ListViewItem item = new ListViewItem();
-            foreach (var process in processList)
-            {
-                //listViewProcess.Items.Add(process);
-            }
-        }
     }
 }
