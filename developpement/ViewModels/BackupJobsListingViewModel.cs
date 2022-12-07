@@ -7,15 +7,21 @@ using System.Linq;
 
 namespace AppWPF.developpement.ViewModels
 {
+    ///Création d'une classe pour la gestion des travaux de sauvegarde héritant de la classe ViewModelBase
+    ///Creating a class for managing backup jobs inheriting from the ViewModelBase class
     public class BackupJobsListingViewModel : ViewModelBase
     {
         private readonly ObservableCollection<BackupJobsListingItemViewModel> _backupJobsListingItemViewModels;
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly BackupJobsStore _backupJobsStore;
 
+        ///Création de plusieurs variables/méthodes pour la gestion des travaux de sauvegarde qui seront "envoyé" à la vue
+        ///Creation of several variables/méthodes for the management of backup jobs that will be "sent" to the view
         public IEnumerable<BackupJobsListingItemViewModel> BackupJobsListingItemViewModels
             => _backupJobsListingItemViewModels;
 
+        ///Variable pour voir si le processus est détecté
+        ///Variable to see if the process is detected
         private bool _isProcessusDetected;
         public bool IsProcessusDetected
         {

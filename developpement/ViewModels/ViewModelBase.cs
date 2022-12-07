@@ -2,6 +2,8 @@
 
 namespace AppWPF.developpement.ViewModels
 {
+    ///Classe permettant de notifier les vues des changements de propriétés
+    ///Class for notifying views of property changes
     public class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

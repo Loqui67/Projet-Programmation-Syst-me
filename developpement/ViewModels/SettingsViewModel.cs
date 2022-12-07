@@ -4,11 +4,19 @@ using System.Windows.Input;
 
 namespace AppWPF.developpement.ViewModels
 {
+    ///Classe utilisé pour les paramétres du ViewModel
+    ///Class used for ViewModel parameters
     public class SettingsViewModel : ViewModelBase
     {
+        ///Variable privée utilisé pour stocker les extensions de log
+        ///Private variable used to store log extensions
         private string _logExtension = BackupJobsViewModel.config.LogExtension;
 
+        ///Variable utilisé pour stocker la liste des processus
+        ///Variable used to store the list of processes
         public ProcessusListingViewModel ProcessusListingViewModel { get; }
+        ///Variable publique utilisé pour stocker les extensions de log
+        ///Public variable used to store log extensions
         public string LogExtension
         {
             get { return _logExtension; }
@@ -19,8 +27,12 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
+        ///Variable privé utilisé pour stocker les processus à ajouter
+        ///Private variable used to store the processes to add
         private string _processToAdd = "";
 
+        ///Variable publique utilisé pour stocker les processus à ajouter
+        ///Public variable used to store the processes to add
         public string ProcessToAdd
         {
             get { return _processToAdd; }
@@ -37,6 +49,8 @@ namespace AppWPF.developpement.ViewModels
         public ICommand SubmitSettingsCommand { get; }
         public ICommand LoadProcessusCommand { get; }
 
+        ///Méthode utilisé pour les paramétrés le ViewModel
+        ///Method used to parameter the ViewModel
         public SettingsViewModel(ModalNavigationStore modalNavigationStore, ProcessusStore processusStore)
         {
             ProcessusListingViewModel = new ProcessusListingViewModel(processusStore);

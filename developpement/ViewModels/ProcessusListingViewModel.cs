@@ -7,14 +7,19 @@ using System.Linq;
 
 namespace AppWPF.developpement.ViewModels
 {
+    ///Classe qui permet de gérer la liste des processus
+    ///Class that manages the list of processes
     public class ProcessusListingViewModel : ViewModelBase
     {
+        ///Variable qui permet de gérer la liste des processus
+        ///Variable that manages the list of processes
         private readonly ObservableCollection<ProcessusListingItemViewModel> _processusListingItemViewModels;
+        ///Variable qui permet de stoker la liste des processus
+        ///Variable that stores the list of processes
         private readonly ProcessusStore _processusStore;
-
+        
         public IEnumerable<ProcessusListingItemViewModel> ProcessusListingItemViewModels
         => _processusListingItemViewModels;
-
         public ProcessusListingViewModel(ProcessusStore processusStore)
         {
             _processusListingItemViewModels = new ObservableCollection<ProcessusListingItemViewModel>();
@@ -37,7 +42,8 @@ namespace AppWPF.developpement.ViewModels
         }
 
 
-
+        ///Méthode qui permet de passer des processus stocké aux processus chargé
+        ///Method that allows switching from stored processes to loaded processes
         private void ProcessusStore_ProcessusLoaded()
         {
             _processusListingItemViewModels.Clear();
@@ -48,6 +54,8 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
+        ///Méthode qui permet de passer des processus stocké aux processus supprimé
+        ///Method that allows switching from stored processes to deleted processes
         private void ProcessusStore_ProcessusDeleted(Guid id)
         {
             ProcessusListingItemViewModel itemViewModel = _processusListingItemViewModels.FirstOrDefault(y => y.Processus.Id == id);
@@ -58,11 +66,15 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
+        ///Méthode qui permet de passer des processus stocké aux processus ajouté
+        ///Method that allows switching from stored processes to added processes
         private void ProcessusStore_ProcessusAdded(Processus processus)
         {
             AddProcessus(processus);
         }
 
+        ///Méthode qui permet d'ajouter un procéssus à la liste
+        ///Method that allows to add a process to the list
         private void AddProcessus(Processus processus)
         {
             ProcessusListingItemViewModel itemViewModel = new ProcessusListingItemViewModel(processus, _processusStore);

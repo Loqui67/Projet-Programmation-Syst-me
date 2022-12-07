@@ -3,8 +3,12 @@ using System.Windows.Input;
 
 namespace AppWPF.developpement.ViewModels
 {
+    ///Classer servant à la gestion des données de la fenêtre de détails d'un travail de sauvegarde
+    ///File used for data management of the backup job details window
     public class BackupJobDetailsFormViewModel : ViewModelBase
     {
+        ///Création des variables servant à la gestion des données de la fenêtre de détails d'un travail de sauvegarde
+        ///Creating Variables Used to Manage Backup Job Details Window Data
         private string _name;
         public string Name
         {
