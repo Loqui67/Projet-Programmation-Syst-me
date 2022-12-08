@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AppWPF.developpement.Models
@@ -31,7 +32,7 @@ namespace AppWPF.developpement.Models
         private List<string> filesToEncrypt;
         private List<string> directories;
 
-        private SaveBackupJobViewModel? _saveBackupJobViewModel;
+        private SaveBackupJobStatusViewModel? _saveBackupJobStatusViewModel;
 
         public BackupJob(Guid id, string name, string sourcePath, string destinationPath, string type)
         {
@@ -44,15 +45,13 @@ namespace AppWPF.developpement.Models
 
         ///Création d'une méthode pour sauvegarder les travaux de sauvegardes dans le ViewModel
         ///Creating a method to save backup jobs in the ViewModel
-        public async Task Save(SaveBackupJobViewModel saveBackupJobViewModel)
+        public async Task CompleteSaveProcedure(SaveBackupJobStatusViewModel saveBackupJobStatusViewModel)
         {
             if (!IsProcessusNotRunning()) return;
-            files = new List<string>();
-            filesToEncrypt = new List<string>();
-            directories = new List<string>();
-            _saveBackupJobViewModel = saveBackupJobViewModel;
+            Reset();
+            _saveBackupJobStatusViewModel = saveBackupJobStatusViewModel;
 
-            _saveBackupJobViewModel.IsLoadingStats = "Visible";
+            _saveBackupJobStatusViewModel.IsLoadingStats = "Visible";
             await Task.Run(GetStats);
             await Task.Run(SaveBackup);
 
@@ -60,18 +59,27 @@ namespace AppWPF.developpement.Models
             else FileManager.SerializeToXML(GenerateLog());
 
 
-            _saveBackupJobViewModel.IsLoadingStats = "Collapsed";
+            _saveBackupJobStatusViewModel.IsLoadingStats = "Collapsed";
+        }
+
+        private void Reset()
+        {
+            files = new List<string>();
+            filesToEncrypt = new List<string>();
+            directories = new List<string>();
+            fileSizeTotal = 0;
+            fileNumberTotal = 0;
+            fileSizeLeft = 0;
+            fileNumberLeft = 0;
         }
 
 
         ///Création d'une méthode pour obtenir des statistiques pour les sauvegardes
         ///Created a method to get statistics for backups
-        private void GetStats()
+        public void GetStats()
         {
             //Déclaration des variables.
             //Declaration of variables.
-            fileSizeTotal = 0;
-            fileNumberTotal = 0;
             List<string> allFiles = Directory.GetFiles(SourcePath, "*", SearchOption.AllDirectories).ToList();
             List<string> allDirectories = Directory.GetDirectories(SourcePath, "*", SearchOption.AllDirectories).ToList();
 
@@ -103,16 +111,6 @@ namespace AppWPF.developpement.Models
                     directories.Add(directory);
                 }
             }
-
-            foreach (string file in files)
-            {
-                FileInfo fileInfo = new FileInfo(file);
-                if (!File.Exists(file.Replace(SourcePath, DestinationPath)))
-                {
-                    fileSizeLeft += fileInfo.Length;
-                    fileNumberLeft++;
-                }
-            }
             fileSizeLeft = fileSizeTotal;
             fileNumberLeft = fileNumberTotal;
         }
@@ -128,10 +126,32 @@ namespace AppWPF.developpement.Models
                 await Task.Run(() => Directory.CreateDirectory(folderToCopy));
             }
             Trace.WriteLine(filesToEncrypt.Count);
+
+            await EncryptFiles();
+
+
+            foreach (string file in files)
+            {
+                string fileToCopy = file.Replace(SourcePath, DestinationPath);
+                await Task.Run(() =>
+                {
+                    FileInfo fileInfo = new FileInfo(file);
+                    _saveBackupJobStatusViewModel.BackupJobFileTransfering = fileInfo.Name;
+                    _saveBackupJobStatusViewModel.BackupJobFileTransferingCount = FileLeftSlashFileTotal();
+                    _saveBackupJobStatusViewModel.BackupJobProgressBarValue = ProgressBarValue();
+                    File.Copy(file, fileToCopy, true);
+                    fileSizeLeft -= fileInfo.Length;
+                    fileNumberLeft--;
+                });
+            }
+        }
+        
+        private async Task EncryptFiles()
+        {
             foreach (string fileToEncrypt in filesToEncrypt)
             {
                 string fileToCopy = fileToEncrypt.Replace(SourcePath, DestinationPath);
-                await Task.Run(() => 
+                await Task.Run(() =>
                 {
                     string path = "\"" + fileToEncrypt + "\"" + " " + "\"" + fileToCopy + "\"";
 
@@ -140,21 +160,6 @@ namespace AppWPF.developpement.Models
                     Process.Start(process);
 
                     FileInfo fileInfo = new FileInfo(fileToEncrypt);
-                    fileSizeLeft -= fileInfo.Length;
-                    fileNumberLeft--;
-                });
-            }
-
-            foreach (string file in files)
-            {
-                string fileToCopy = file.Replace(SourcePath, DestinationPath);
-                await Task.Run(() =>
-                {
-                    FileInfo fileInfo = new FileInfo(file);
-                    _saveBackupJobViewModel.BackupJobFileTransfering = fileInfo.Name;
-                    _saveBackupJobViewModel.BackupJobFileTransferingCount = FileLeftSlashFileTotal();
-                    _saveBackupJobViewModel.BackupJobProgressBarValue = ProgressBarValue();
-                    File.Copy(file, fileToCopy, true);
                     fileSizeLeft -= fileInfo.Length;
                     fileNumberLeft--;
                 });

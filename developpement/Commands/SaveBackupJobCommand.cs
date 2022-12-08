@@ -13,16 +13,16 @@ namespace AppWPF.developpement.Commands
     {
         ///Variables qui permettent d'instancier plusieurs classes
         ///Variables that allow to instantiate several classes
-        private readonly SaveBackupJobViewModel _saveBackupJobViewModel;
+        private readonly SaveBackupJobStatusViewModel _saveBackupJobStatusViewModel;
         private readonly BackupJob _backupJob;
         private readonly BackupJobsStore _backupJobsStore;
         private readonly ModalNavigationStore _modalNavigationStore;
 
         ///Méthode qui permet de sauvegarder tous les travaux de sauvegardes 
         ///Method that saves all backup jobs
-        public SaveBackupJobCommand(SaveBackupJobViewModel saveBackupJobViewModel, BackupJob backupJob, BackupJobsStore backupJobsStore, ModalNavigationStore modalNavigationStore)
+        public SaveBackupJobCommand(SaveBackupJobStatusViewModel saveBackupJobStatusViewModel, BackupJob backupJob, BackupJobsStore backupJobsStore, ModalNavigationStore modalNavigationStore)
         {
-            _saveBackupJobViewModel = saveBackupJobViewModel;
+            _saveBackupJobStatusViewModel = saveBackupJobStatusViewModel;
             _backupJob = backupJob;
             _backupJobsStore = backupJobsStore;
             _modalNavigationStore = modalNavigationStore;
@@ -30,12 +30,12 @@ namespace AppWPF.developpement.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
-            _saveBackupJobViewModel.BackupJobProgressBarValue = 0;
-            _saveBackupJobViewModel.BackupJobFileTransfering = "";
-            _saveBackupJobViewModel.BackupJobFileTransferingCount = "";
+            _saveBackupJobStatusViewModel.BackupJobProgressBarValue = 0;
+            _saveBackupJobStatusViewModel.BackupJobFileTransfering = "";
+            _saveBackupJobStatusViewModel.BackupJobFileTransferingCount = "";
             try
             {
-                await _backupJobsStore.Save(_backupJob, _saveBackupJobViewModel);
+                await _backupJobsStore.Save(_backupJob, _saveBackupJobStatusViewModel);
             }
             catch (Exception) { }
             finally

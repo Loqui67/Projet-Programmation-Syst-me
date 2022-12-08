@@ -79,10 +79,6 @@
                 <Button.Background>
                     <ImageBrush ImageSource="play green.png"/>
                 </Button.Background>
-                <Button.BorderBrush>
-                    <ImageBrush/>
-                </Button.BorderBrush>
-
             </Button>
             <TextBox HorizontalAlignment="Left" Margin="22,17,0,0" TextWrapping="Wrap" Text="{DynamicResource Search}" VerticalAlignment="Top" Width="494" Height="20" Grid.RowSpan="2">
                 <TextBox.Resources>

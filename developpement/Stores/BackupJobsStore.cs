@@ -61,22 +61,37 @@ namespace AppWPF.developpement.Stores
             BackupJobsLoaded?.Invoke();
         }
 
-        public async Task Save(BackupJob backupJob, SaveBackupJobViewModel saveBackupJobViewModel)
+        public async Task Save(BackupJob backupJob, SaveBackupJobStatusViewModel saveBackupJobStatusViewModel)
         {
-            await Task.Run(() => backupJob.Save(saveBackupJobViewModel));
+            await Task.Run(() => backupJob.CompleteSaveProcedure(saveBackupJobStatusViewModel));
             BackupJobSaved?.Invoke(backupJob);
         }
 
-        public async Task SaveAll()
+        public async Task SaveAll(SaveAllBackupJobsViewModel saveAllBackupJobsViewModel, SaveBackupJobStatusViewModel saveBackupJobStatusViewModel)
         {
             await Task.Run(() =>
             {
+                int total = backupJobs.Count;
+                int i = 0;
                 foreach (BackupJob backupJob in backupJobs)
                 {
-                    backupJob.Save(null);
+                    i++;
+                    saveAllBackupJobsViewModel.CurrentBackupJob = backupJob.Name;
+                    saveAllBackupJobsViewModel.AllBackupJobProgression = i + "/" + total.ToString();
+                    backupJob.CompleteSaveProcedure(saveBackupJobStatusViewModel);
+                    saveAllBackupJobsViewModel.ProgressBarAllBackupJobsValue = i * 100 / total;
                 }
-            });
-            AllBackupJobsSaved?.Invoke();
+                saveAllBackupJobsViewModel.CurrentBackupJob = "";
+                saveAllBackupJobsViewModel.AllBackupJobProgression = "";
+                AllBackupJobsSaved?.Invoke();
+            });                    
+
+        }
+
+        public async Task SaveAllV2(SaveAllBackupJobsViewModel saveAllBackupJobsViewModel, SaveBackupJobStatusViewModel saveBackupJobStatusViewModel)
+        {
+            //await Task.WhenAll(backupJobs.ForEach(backupJob => backupJob.CompleteSaveProcedure(saveBackupJobStatusViewModel)));
         }
     }
 }
+//note a essayer : creer un model pour les save et passer les arguments backupjob directement => peut faciliter la gestion en parallèle

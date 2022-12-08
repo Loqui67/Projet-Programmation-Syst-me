@@ -9,6 +9,7 @@
         xmlns:modalcontrol="clr-namespace:ModalControl;assembly=ModalControl"
         x:Class="AppWPF.MainWindow"
         mc:Ignorable="d"
+        Closing="Window_Closing"
         Title="Easy Save" Height="800" Width="1280">
 
     <Window.Resources>
@@ -20,6 +21,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type vms:SaveBackupJobViewModel}">
             <views:SaveBackupJob/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:SaveAllBackupJobsViewModel}">
+            <views:SaveAllBackupJobs/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vms:SettingsViewModel}">
             <views:SettingsView/>

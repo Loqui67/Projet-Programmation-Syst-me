@@ -14,6 +14,56 @@ namespace AppWPF.developpement.ViewModels
     ///Class inherited from ViewModelBase and allows saving all backup jobs and "sending" them to the view
     public class SaveAllBackupJobsViewModel : ViewModelBase
     {
+        public SaveBackupJobStatusViewModel SaveBackupJobStatusViewModel { get; }
+
+        private float _progressBarAllBackupJobsValue = 0;
+
+        public float ProgressBarAllBackupJobsValue
+        {
+            get { return _progressBarAllBackupJobsValue; }
+            set
+            {
+                _progressBarAllBackupJobsValue = value;
+                OnPropertyChanged(nameof(ProgressBarAllBackupJobsValue));
+            }
+        }
+
+        private string _allBackupJobProgression = "";
+
+        public string AllBackupJobProgression
+        {
+            get { return _allBackupJobProgression; }
+            set
+            {
+                _allBackupJobProgression = value;
+                OnPropertyChanged(nameof(AllBackupJobProgression));
+            }
+        }
+
+        private string _currentBackupJob = "";
+
+        public string CurrentBackupJob
+        {
+            get { return _currentBackupJob; }
+            set
+            {
+                _currentBackupJob = value;
+                OnPropertyChanged(nameof(CurrentBackupJob));
+            }
+        }
+
+        private bool _isSaving = true;
+
+        public bool IsNotSaving
+        {
+            get { return _isSaving; }
+            set
+            {
+                _isSaving = value;
+                OnPropertyChanged(nameof(IsNotSaving));
+            }
+        }
+
         ///Variables permettant de stocker la valeur de la sauvegarde de tous travaux de commandes
         ///Variables storing the value of saving all backup jobs
         public ICommand SaveAllBackupJobsCommand { get; }
@@ -25,8 +75,9 @@ namespace AppWPF.developpement.ViewModels
         ///Method for saving all backup jobs in the ViewModel
         public SaveAllBackupJobsViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
         {
-            SaveAllBackupJobsCommand = new SaveAllBackupJobsCommand(backupJobsStore);
+            SaveBackupJobStatusViewModel = new SaveBackupJobStatusViewModel();
             CancelSaveAllBackupJobsCommand = new CloseModalCommand(modalNavigationStore);
+            SaveAllBackupJobsCommand = new SaveAllBackupJobsCommand(backupJobsStore, this, SaveBackupJobStatusViewModel, modalNavigationStore);
         }
     }
 }
