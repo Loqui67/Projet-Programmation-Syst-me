@@ -17,9 +17,7 @@ namespace AppWPF.developpement.ViewModels
         public ProcessusListingViewModel ProcessusListingViewModel { get; }
 
         public ExtensionCryptageListingViewModel ExtensionCryptageListingViewModel { get; }
-        ///Variable publique utilisé pour stocker les extensions de log
-        ///Public variable used to store log extensions
-
+        public ExtensionPriorityListingViewModel ExtensionPriorityListingViewModel { get; }
 
         public string LogExtension
         {
@@ -59,32 +57,50 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
+        private string _extensionPriorityToAdd = "";
+
+        public string ExtensionPriorityToAdd
+        {
+            get { return _extensionPriorityToAdd; }
+            set
+            {
+                _extensionPriorityToAdd = value;
+                OnPropertyChanged(nameof(ExtensionPriorityToAdd));
+            }
+        }
+
 
         public ICommand SetLogExtensionCommand { get; }
         public ICommand AddProcessCommand { get; }
         public ICommand AddExtensionCryptageCommand { get; }
+        public ICommand AddExtensionPriorityCommand { get; }
         public ICommand SubmitSettingsCommand { get; }
         public ICommand LoadProcessusCommand { get; }
         public ICommand LoadExtensionCryptageCommand { get; }
+        public ICommand LoadExtensionPriorityCommand { get; }
 
         ///Méthode utilisé pour les paramétrés le ViewModel
         ///Method used to parameter the ViewModel
-        public SettingsViewModel(ModalNavigationStore modalNavigationStore, ProcessusStore processusStore, ExtensionCryptageStore extensionCryptageStore)
+        public SettingsViewModel(ModalNavigationStore modalNavigationStore, ProcessusStore processusStore, ExtensionCryptageStore extensionCryptageStore, ExtensionPriorityStore extensionPriorityStore)
         {
             ProcessusListingViewModel = new ProcessusListingViewModel(processusStore);
             ExtensionCryptageListingViewModel = new ExtensionCryptageListingViewModel(extensionCryptageStore);
+            ExtensionPriorityListingViewModel = new ExtensionPriorityListingViewModel(extensionPriorityStore);
             AddProcessCommand = new AddProcessCommand(this, processusStore);
             SubmitSettingsCommand = new SubmitSettingsCommand(modalNavigationStore, this, processusStore);
             LoadProcessusCommand = new LoadProcessusCommand(processusStore);
             LoadExtensionCryptageCommand = new LoadExtensionCryptageCommand(extensionCryptageStore);
+            LoadExtensionPriorityCommand = new LoadExtensionPriorityCommand(extensionPriorityStore);
             AddExtensionCryptageCommand = new AddExtensionCryptageCommand(this, extensionCryptageStore);
+            AddExtensionPriorityCommand = new AddExtensionPriorityCommand(this, extensionPriorityStore);
         }
 
-        public static SettingsViewModel LoadViewModel(ModalNavigationStore modalNavigationStore, ProcessusStore processusStore, ExtensionCryptageStore extensionCryptageStore)
+        public static SettingsViewModel LoadViewModel(ModalNavigationStore modalNavigationStore, ProcessusStore processusStore, ExtensionCryptageStore extensionCryptageStore, ExtensionPriorityStore extensionPriorityStore)
         {
-            SettingsViewModel viewModel = new SettingsViewModel(modalNavigationStore, processusStore, extensionCryptageStore);
+            SettingsViewModel viewModel = new SettingsViewModel(modalNavigationStore, processusStore, extensionCryptageStore, extensionPriorityStore);
             viewModel.LoadProcessusCommand.Execute(null);
             viewModel.LoadExtensionCryptageCommand.Execute(null);
+            viewModel.LoadExtensionPriorityCommand.Execute(null);
             return viewModel;
         }
     }

@@ -18,6 +18,7 @@ namespace AppWPF
         private readonly BackupJobsStore _backupJobStore;
         private readonly ProcessusStore _processusStore;
         private readonly ExtensionCryptageStore _extensionCryptageStore;
+        private readonly ExtensionPriorityStore _extensionPriorityStore;
 
         public App()
         {
@@ -25,11 +26,12 @@ namespace AppWPF
             _backupJobStore = new BackupJobsStore();
             _processusStore = new ProcessusStore();
             _extensionCryptageStore = new ExtensionCryptageStore();
+            _extensionPriorityStore = new ExtensionPriorityStore();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            BackupJobsViewModel backupJobsViewModel = BackupJobsViewModel.LoadViewModel(_modalNavigationStore, _backupJobStore, _processusStore, _extensionCryptageStore);
+            BackupJobsViewModel backupJobsViewModel = BackupJobsViewModel.LoadViewModel(_modalNavigationStore, _backupJobStore, _processusStore, _extensionCryptageStore, _extensionPriorityStore);
             MainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_modalNavigationStore, backupJobsViewModel)

@@ -49,13 +49,16 @@ namespace AppWPF.developpement.Models
         {
             try
             {
-                if (!CreateFileIfNotExist(configFileName)) return new Config { DefaultLanguage = "en", LogExtension = "0", AllProcessus = new List<Processus>(), AllExtensionCryptage = new List<ExtensionCryptage>() };
+                if (!CreateFileIfNotExist(configFileName)) return new Config { DefaultLanguage = "en", LogExtension = "0", 
+                    AllProcessus = new List<Processus>(), AllExtensionCryptage = new List<ExtensionCryptage>(), 
+                    AllExtensionPriority = new List<ExtensionPriority>() };
                 string json = File.ReadAllText(configFileName);
                 return JsonSerializer.Deserialize<Config>(json);
             }
             catch
             {
-                return new Config { DefaultLanguage = "en", LogExtension = "0", AllProcessus = new List<Processus>() };
+                return new Config { DefaultLanguage = "en", LogExtension = "0", AllProcessus = new List<Processus>(), 
+                    AllExtensionCryptage = new List<ExtensionCryptage>(), AllExtensionPriority = new List<ExtensionPriority>() };
             }
         }
 

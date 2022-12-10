@@ -12,6 +12,8 @@ namespace AppWPF.developpement.Models
     public class SaveFiles
     {
         public List<FilesInfo> Files { get; set; }
+        public List<FilesInfo> FilesToEncryptAndPriority { get; set; }
+        public List<FilesInfo> FilesPriority { get; set; }
         public List<FilesInfo> FilesToEncrypt { get; set; }
         public List<string> Directories { get; set; }
         public long FileSizeTotal { get; set; }
@@ -26,6 +28,8 @@ namespace AppWPF.developpement.Models
         {
             List<string> allDirectory = Directory.GetDirectories(backupJob.SourcePath, "*", SearchOption.AllDirectories).ToList();
             List<string> allFiles = Directory.GetFiles(backupJob.SourcePath, "*", SearchOption.AllDirectories).ToList();
+            FilesToEncryptAndPriority = new List<FilesInfo>();
+            FilesPriority = new List<FilesInfo>();
             FilesToEncrypt = new List<FilesInfo>();
             Files = new List<FilesInfo>();
             Directories = new List<string>();
@@ -48,7 +52,16 @@ namespace AppWPF.developpement.Models
                     
                     FileSizeTotal += fileInfo.Length;
                     FileNumberTotal++;
-                    if (BackupJobsViewModel.config.AllExtensionCryptage.Exists(extensionCryptage => extensionCryptage.Name == fileInfo.Extension))
+                    if ((BackupJobsViewModel.config.AllExtensionCryptage.Exists(extensionCryptage => extensionCryptage.Name == fileInfo.Extension)) &&
+                        (BackupJobsViewModel.config.AllExtensionPriority.Exists(extensionPriority => extensionPriority.Name == fileInfo.Extension)))
+                    {
+                        FilesToEncryptAndPriority.Add(new FilesInfo(fileInfo.Name, fileInfo.FullName, fileInfo.Length));
+                    }
+                    else if (BackupJobsViewModel.config.AllExtensionPriority.Exists(extensionPriority => extensionPriority.Name == fileInfo.Extension))
+                    {
+                        FilesPriority.Add(new FilesInfo(fileInfo.Name, fileInfo.FullName, fileInfo.Length));
+                    }
+                    else if (BackupJobsViewModel.config.AllExtensionCryptage.Exists(extensionCryptage => extensionCryptage.Name == fileInfo.Extension))
                     {
                         FilesToEncrypt.Add(new FilesInfo(fileInfo.Name, fileInfo.FullName, fileInfo.Length));
                     }
