@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,15 +12,15 @@ namespace AppWPF.developpement.ViewModels
 
         ///Variable privée permettant de faire fonctionner la barre de progression pour la sauvegarde
         ///Private variable used  to make the progress bar work for the backup
-        private float _BackupJobProgressBarValue;
+        private float _backupJobProgressBarValue;
         ///Variable publique permettant de faire fonctionner la barre de progression pour la sauvegarde
         ///Public variable used  to make the progress bar work for the backup
         public float BackupJobProgressBarValue
         {
-            get { return _BackupJobProgressBarValue; }
+            get { return _backupJobProgressBarValue; }
             set
             {
-                _BackupJobProgressBarValue = value;
+                _backupJobProgressBarValue = value;
                 OnPropertyChanged(nameof(BackupJobProgressBarValue));
             }
         }

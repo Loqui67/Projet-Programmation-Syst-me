@@ -55,8 +55,8 @@ namespace AppWPF.developpement.Models
             await Task.Run(GetStats);
             await Task.Run(SaveBackup);
 
-            if (LogExtension == "0") FileManager.WriteDailyLogToFile(GenerateLog());
-            else FileManager.SerializeToXML(GenerateLog());
+            //if (LogExtension == "0") FileManager.WriteDailyLogJson(GenerateLog());
+            //else FileManager.WriteDailyLogXml(GenerateLog());
 
 
             _saveBackupJobStatusViewModel.IsLoadingStats = "Collapsed";
@@ -154,7 +154,6 @@ namespace AppWPF.developpement.Models
                 await Task.Run(() =>
                 {
                     string path = "\"" + fileToEncrypt + "\"" + " " + "\"" + fileToCopy + "\"";
-
                     ProcessStartInfo process = new ProcessStartInfo("..\\..\\..\\CryptoSoft\\CryptoSoft.exe");
                     process.Arguments = path;
                     Process.Start(process);
@@ -200,24 +199,6 @@ namespace AppWPF.developpement.Models
         public string FileLeftSlashFileTotal()
         {
             return (fileNumberTotal - fileNumberLeft + 1) + "/" + fileNumberTotal;
-        }
-
-
-
-        //Création d'une méthode pour générer un log.
-        //Creation of a method to generate a log.
-        public Log GenerateLog()
-        {
-            return new Log
-            {
-                name = Name,
-                sourcePath = SourcePath,
-                destinationPath = DestinationPath,
-                type = Type,
-                fileSize = fileSizeTotal.ToString() + " B",
-                fileTransferTime = fileTransferTime.TotalMilliseconds.ToString() + " ms",
-                date = DateTime.Now.ToString("F")
-            };
         }
     }
 }

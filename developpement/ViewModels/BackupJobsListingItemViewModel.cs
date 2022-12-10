@@ -17,7 +17,13 @@ namespace AppWPF.developpement.ViewModels
         public string Name => BackupJob.Name;
         public string SourcePath => BackupJob.SourcePath;
         public string DestinationPath => BackupJob.DestinationPath;
-        public string Type => BackupJob.Type;
+        public string Type
+        {
+            get
+            {
+                if (BackupJob.Type == "0") { return "Full"; } else { return "Differential"; }
+            }
+        }
 
         public ICommand EditCommand { get; }
         public ICommand DeleteCommand { get; }

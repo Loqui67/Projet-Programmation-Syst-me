@@ -42,7 +42,7 @@ namespace AppWPF
             if (count > 1)
             {
                 MessageBox.Show("L'application est déjà lancée", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                Application.Current.Shutdown();
+                Environment.Exit(0);
             }
             else
             {

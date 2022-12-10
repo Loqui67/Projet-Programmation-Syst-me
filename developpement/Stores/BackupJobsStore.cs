@@ -63,35 +63,29 @@ namespace AppWPF.developpement.Stores
 
         public async Task Save(BackupJob backupJob, SaveBackupJobStatusViewModel saveBackupJobStatusViewModel)
         {
-            await Task.Run(() => backupJob.CompleteSaveProcedure(saveBackupJobStatusViewModel));
+            await Task.Run(async () =>
+            {
+                SaveFiles saveFiles = new SaveFiles();
+                await saveFiles.GetInfos(backupJob);
+                await new BackupJobSaver(saveBackupJobStatusViewModel).StartSave(saveFiles, backupJob);
+            });
             BackupJobSaved?.Invoke(backupJob);
         }
 
         public async Task SaveAll(SaveAllBackupJobsViewModel saveAllBackupJobsViewModel, SaveBackupJobStatusViewModel saveBackupJobStatusViewModel)
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
-                int total = backupJobs.Count;
-                int i = 0;
+                List<SaveFiles> saveFilesList = new List<SaveFiles>();
                 foreach (BackupJob backupJob in backupJobs)
                 {
-                    i++;
-                    saveAllBackupJobsViewModel.CurrentBackupJob = backupJob.Name;
-                    saveAllBackupJobsViewModel.AllBackupJobProgression = i + "/" + total.ToString();
-                    backupJob.CompleteSaveProcedure(saveBackupJobStatusViewModel);
-                    saveAllBackupJobsViewModel.ProgressBarAllBackupJobsValue = i * 100 / total;
+                    SaveFiles saveFiles = new SaveFiles();
+                    await saveFiles.GetInfos(backupJob);
+                    saveFilesList.Add(saveFiles);
                 }
-                saveAllBackupJobsViewModel.CurrentBackupJob = "";
-                saveAllBackupJobsViewModel.AllBackupJobProgression = "";
-                AllBackupJobsSaved?.Invoke();
+                await new BackupJobSaver(saveBackupJobStatusViewModel).StartListSaveInParallel(saveFilesList, saveAllBackupJobsViewModel, backupJobs);
             });                    
 
         }
-
-        public async Task SaveAllV2(SaveAllBackupJobsViewModel saveAllBackupJobsViewModel, SaveBackupJobStatusViewModel saveBackupJobStatusViewModel)
-        {
-            //await Task.WhenAll(backupJobs.ForEach(backupJob => backupJob.CompleteSaveProcedure(saveBackupJobStatusViewModel)));
-        }
     }
 }
-//note a essayer : creer un model pour les save et passer les arguments backupjob directement => peut faciliter la gestion en parallèle

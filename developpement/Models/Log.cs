@@ -1,15 +1,33 @@
 ﻿//Fichier servant à la sauvegarde des logs(BakcupJob).
 //File used to save logs(BakcupJob).
+using System;
+
 namespace AppWPF.developpement.Models
 {
     public class Log
     {
-        public string name { set; get; }
-        public string sourcePath { set; get; }
-        public string destinationPath { set; get; }
-        public string type { set; get; }
-        public string fileSize { set; get; }
-        public string fileTransferTime { set; get; }
-        public string date { set; get; }
+        public string Name { get; }
+        public string SourcePath { get; }
+        public string DestinationPath { get; }
+        public string Type { get; }
+        public long FileSize { get; }
+        public long FileNumber { get; }
+        public TimeSpan FileTransferTime { get; }
+        public TimeSpan FileEncryptTime { get; }
+        public string Date { get; }
+
+        public Log(string name, string sourcePath, string destinationPath, string type, long fileSize, long fileNumber, TimeSpan fileTransferTime, TimeSpan fileEncryptTime, string date)
+        {
+            Name = name;
+            SourcePath = sourcePath;
+            DestinationPath = destinationPath;
+            Type = type;
+            FileSize = fileSize;
+            FileNumber = fileNumber;
+            FileTransferTime = fileTransferTime;
+            FileEncryptTime = fileEncryptTime;
+            Date = date;
+            
+        }
     }
 }
