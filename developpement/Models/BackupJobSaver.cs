@@ -44,7 +44,8 @@ namespace AppWPF.developpement.Models
             t = new Thread(async () => {
                 Action action = () => SetIsSaving(true);
                 action.Invoke();
-                await Task.WhenAll(EncryptFiles(saveFiles), CopyFiles(saveFiles));
+                await Task.WhenAll(EncryptFiles(saveFiles, true), CopyFiles(saveFiles, true));
+                await Task.WhenAll(EncryptFiles(saveFiles, false), CopyFiles(saveFiles, false));
                 await WriteToDailyLog(CreateLog(saveFiles));
                 action = () => { 
                     SetIsSaving(false); 
