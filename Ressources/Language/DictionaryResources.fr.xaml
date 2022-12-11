@@ -21,6 +21,9 @@
     <system:String x:Key="Processing">Sauvegarde en cours...</system:String>
     <system:String x:Key="Cancel">Annuler</system:String>
     <system:String x:Key="Save">Sauvegarder</system:String>
+    <system:String x:Key="Stop">Arreter</system:String>
+    <system:String x:Key="Pause">Pause</system:String>
+    <system:String x:Key="Resume">Reprendre</system:String>
     <system:String x:Key="FullSave">Sauvegarde complète</system:String>
     <system:String x:Key="DifferentialSave">Sauvegarde différentiel</system:String>
     <system:String x:Key="Submit">Soumettre</system:String>

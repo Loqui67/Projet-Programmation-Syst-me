@@ -21,6 +21,9 @@
     <system:String x:Key="Processing">Processing...</system:String>
     <system:String x:Key="Cancel">Cancel</system:String>
     <system:String x:Key="Save">Save</system:String>
+    <system:String x:Key="Stop">Stop</system:String>
+    <system:String x:Key="Pause">Pause</system:String>
+    <system:String x:Key="Resume">Resume</system:String>
     <system:String x:Key="FullSave">Full save</system:String>
     <system:String x:Key="DifferentialSave">Differential save</system:String>
     <system:String x:Key="Submit">Submit</system:String>

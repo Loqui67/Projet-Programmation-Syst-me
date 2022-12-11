@@ -41,7 +41,7 @@ namespace AppWPF
 
             if (count > 1)
             {
-                MessageBox.Show((string)Application.Current.FindResource("AlreadyRunning"), (string)Application.Current.FindResource("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show((string)Current.FindResource("AlreadyRunning"), (string)Current.FindResource("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
                 Environment.Exit(0);
             }
             else

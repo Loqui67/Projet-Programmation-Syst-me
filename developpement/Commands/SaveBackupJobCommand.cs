@@ -11,6 +11,8 @@ namespace AppWPF.developpement.Commands
     ///Class that saves all backup jobs
     public class SaveBackupJobCommand : AsyncCommandBase
     {
+        private readonly SaveBackupJobViewModel _saveBackupJobViewModel;
+
         ///Variables qui permettent d'instancier plusieurs classes
         ///Variables that allow to instantiate several classes
         private readonly SaveBackupJobStatusViewModel _saveBackupJobStatusViewModel;
@@ -20,8 +22,9 @@ namespace AppWPF.developpement.Commands
 
         ///Méthode qui permet de sauvegarder tous les travaux de sauvegardes 
         ///Method that saves all backup jobs
-        public SaveBackupJobCommand(SaveBackupJobStatusViewModel saveBackupJobStatusViewModel, BackupJob backupJob, BackupJobsStore backupJobsStore, ModalNavigationStore modalNavigationStore)
+        public SaveBackupJobCommand(SaveBackupJobViewModel saveBackupJobViewModel, SaveBackupJobStatusViewModel saveBackupJobStatusViewModel, BackupJob backupJob, BackupJobsStore backupJobsStore, ModalNavigationStore modalNavigationStore)
         {
+            _saveBackupJobViewModel = saveBackupJobViewModel;
             _saveBackupJobStatusViewModel = saveBackupJobStatusViewModel;
             _backupJob = backupJob;
             _backupJobsStore = backupJobsStore;
@@ -35,13 +38,9 @@ namespace AppWPF.developpement.Commands
             _saveBackupJobStatusViewModel.BackupJobFileTransferingCount = "";
             try
             {
-                await _backupJobsStore.Save(_backupJob, _saveBackupJobStatusViewModel);
+                await _backupJobsStore.Save(_backupJob, _saveBackupJobStatusViewModel, _saveBackupJobViewModel, _modalNavigationStore);
             }
             catch (Exception) { }
-            finally
-            {
-                _modalNavigationStore.Close();
-            }
         }
     }
 }

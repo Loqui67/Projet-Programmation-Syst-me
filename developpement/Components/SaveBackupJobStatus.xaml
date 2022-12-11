@@ -16,7 +16,6 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="{DynamicResource Processing}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Visibility="{Binding IsLoadingStats}"/>
         <ProgressBar Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Height="20" Value="{Binding BackupJobProgressBarValue}"/>
         <TextBlock Text="{Binding BackupJobFileTransfering}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
         <TextBlock Text="{Binding BackupJobFileTransferingCount}" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right"/>

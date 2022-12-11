@@ -61,31 +61,49 @@ namespace AppWPF.developpement.Stores
             BackupJobsLoaded?.Invoke();
         }
 
-        public async Task Save(BackupJob backupJob, SaveBackupJobStatusViewModel saveBackupJobStatusViewModel)
+        public async Task Save(BackupJob backupJob, SaveBackupJobStatusViewModel saveBackupJobStatusViewModel, SaveBackupJobViewModel saveBackupJobViewModel, ModalNavigationStore _modalNavigationStore)
         {
+            BackupJobSaver.saveBackupJobStatusViewModel = saveBackupJobStatusViewModel;
+            BackupJobSaver.saveBackupJobViewModel = saveBackupJobViewModel;
+            BackupJobSaver.modalNavigationStore = _modalNavigationStore;
             await Task.Run(async () =>
             {
-                SaveFiles saveFiles = new();
+                SaveFiles saveFiles = new SaveFiles();
                 await saveFiles.GetInfos(backupJob);
-                await new BackupJobSaver(saveBackupJobStatusViewModel).StartSave(saveFiles, backupJob);
+                await BackupJobSaver.StartSave(saveFiles, backupJob);
             });
             BackupJobSaved?.Invoke(backupJob);
         }
 
         public async Task SaveAll(SaveAllBackupJobsViewModel saveAllBackupJobsViewModel, SaveBackupJobStatusViewModel saveBackupJobStatusViewModel)
         {
+            BackupJobSaver.saveBackupJobStatusViewModel = saveBackupJobStatusViewModel;
             await Task.Run(async () =>
             {
-                List<SaveFiles> saveFilesList = new();
+                List<SaveFiles> saveFilesList = new List<SaveFiles>();
                 foreach (BackupJob backupJob in backupJobs)
                 {
                     SaveFiles saveFiles = new SaveFiles();
                     await saveFiles.GetInfos(backupJob);
                     saveFilesList.Add(saveFiles);
                 }
-                await new BackupJobSaver(saveBackupJobStatusViewModel).StartListSaveInParallel(saveFilesList, saveAllBackupJobsViewModel, backupJobs);
-            });                    
+                await BackupJobSaver.StartListSaveInParallel(saveFilesList, saveAllBackupJobsViewModel, backupJobs);
+            });
+        }
 
+        public static void PauseSave()
+        {
+            BackupJobSaver.PauseSave();
+        }
+
+        public static void ResumeSave()
+        {
+            BackupJobSaver.ResumeSave();
+        }
+
+        public static void StopSave()
+        {
+            BackupJobSaver.StopSave();
         }
     }
 }

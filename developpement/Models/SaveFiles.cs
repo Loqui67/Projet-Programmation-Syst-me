@@ -42,7 +42,7 @@ namespace AppWPF.developpement.Models
 
             foreach (string file in allFiles)
             {
-                FileInfo fileInfo = new(file);
+                FileInfo fileInfo = new FileInfo(file);
                 if (!File.Exists(file.Replace(backupJob.SourcePath, backupJob.DestinationPath)) || IsFileModified(fileInfo, backupJob) || backupJob.Type == "0")
                 {
                     
@@ -67,7 +67,7 @@ namespace AppWPF.developpement.Models
         {
             try
             {
-                FileInfo fileInfoDestination = new(fileInfo.FullName.Replace(backupJob.SourcePath, backupJob.DestinationPath));
+                FileInfo fileInfoDestination = new FileInfo(fileInfo.FullName.Replace(backupJob.SourcePath, backupJob.DestinationPath));
 
                 if (fileInfo.LastWriteTime > fileInfoDestination.LastWriteTime)
                 {
