@@ -80,18 +80,7 @@
                     <ImageBrush ImageSource="play green.png"/>
                 </Button.Background>
             </Button>
-            <TextBox HorizontalAlignment="Left" Margin="22,17,0,0" TextWrapping="Wrap" Text="{DynamicResource Search}" VerticalAlignment="Top" Width="494" Height="20" Grid.RowSpan="2">
-                <TextBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </TextBox.Resources>
-            </TextBox>
-            <Button Content="" HorizontalAlignment="Left" Margin="494,18,0,0" VerticalAlignment="Top" Height="17" Width="17" BorderBrush="{x:Null}" Grid.RowSpan="2" ToolTip="{DynamicResource Search}">
-                <Button.Background>
-                    <ImageBrush ImageSource="icon recherche.png"/>
-                </Button.Background>
-            </Button>
+            <Image HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="100" Width="300" Grid.RowSpan="2" Source="/developpement/Views/EasySave_logo.png"/>
         </Grid>
     </Grid>
 </UserControl>

@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>True</UseWindowsForms>
+    <ApplicationIcon>Ressources\ImagesWPF\EasySave-icone.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +18,8 @@
     <None Remove="developpement\Views\delete icon.png" />
     <None Remove="developpement\Views\drapeau france.png" />
     <None Remove="developpement\Views\drapeau-anglais.png" />
+    <None Remove="developpement\Views\EasySave_icone.png" />
+    <None Remove="developpement\Views\EasySave_logo.png" />
     <None Remove="developpement\Views\icon recherche.png" />
     <None Remove="developpement\Views\play green.png" />
     <None Remove="developpement\Views\roue dentee icon.png" />
@@ -24,6 +27,10 @@
     <None Remove="drapeau-anglais.png" />
     <None Remove="icon recherche.png" />
     <None Remove="play green.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Ressources\ImagesWPF\EasySave-icone.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +47,8 @@
     <Resource Include="developpement\Views\delete icon.png" />
     <Resource Include="developpement\Views\drapeau france.png" />
     <Resource Include="developpement\Views\drapeau-anglais.png" />
+    <Resource Include="developpement\Views\EasySave_icone.png" />
+    <Resource Include="developpement\Views\EasySave_logo.png" />
     <Resource Include="developpement\Views\icon recherche.png" />
     <Resource Include="developpement\Views\play green.png" />
     <Resource Include="developpement\Views\roue dentee icon.png" />

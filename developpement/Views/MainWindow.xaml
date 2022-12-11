@@ -10,7 +10,7 @@
         x:Class="AppWPF.MainWindow"
         mc:Ignorable="d"
         Closing="Window_Closing"
-        Title="Easy Save" Height="800" Width="1280">
+        Title="Easy Save" Height="800" Width="1280" Icon="/developpement/Views/EasySave_icone.png">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type vms:AddBackupJobViewModel}">
