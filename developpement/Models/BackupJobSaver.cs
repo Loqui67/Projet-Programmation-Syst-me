@@ -20,7 +20,7 @@ namespace AppWPF.developpement.Models
 
         private SaveBackupJobStatusViewModel _saveBackupJobStatusViewModel;
         private BackupJob BackupJob { get; set; }
-
+        
         private string Name => BackupJob.Name;
         private string SourcePath => BackupJob.SourcePath;
         private string DestinationPath => BackupJob.DestinationPath;
@@ -35,7 +35,8 @@ namespace AppWPF.developpement.Models
         {
             BackupJob = backupJob;
             await CreateDirectories(saveFiles.Directories);
-            await Task.WhenAll(EncryptFiles(saveFiles), CopyFiles(saveFiles));
+            await Task.WhenAll(EncryptFiles(saveFiles, true), CopyFiles(saveFiles, true));
+            await Task.WhenAll(EncryptFiles(saveFiles, false), CopyFiles(saveFiles, false));
             await WriteToDailyLog(CreateLog(saveFiles));
         }
 
@@ -53,10 +54,6 @@ namespace AppWPF.developpement.Models
                 await StartSave(saveFiles, backupJobs[index - 1]);
                 AllSavesProgression(saveAllBackupJobsViewModel, index, total);
             }));
-
-
-
-
         }
 
         private async Task CreateDirectories(List<string> directories)
@@ -71,17 +68,28 @@ namespace AppWPF.developpement.Models
             }
         }
 
-        private async Task EncryptFiles(SaveFiles saveFiles)
+        private async Task EncryptFiles(SaveFiles saveFiles, bool isPriority)
         {
-            if (saveFiles.FilesToEncrypt.Count == 0)
+            List<FilesInfo> encrypt = new();
+            if (isPriority == true)
+            {
+                encrypt = saveFiles.FilesToEncryptAndPriority;
+            }
+            else
+            {
+                encrypt = saveFiles.FilesToEncrypt;
+            }
+            
+            if (encrypt.Count == 0)
             {
                 saveFiles.FileEncryptTime = new TimeSpan(0);
                 return;
             }
             try
             {
+                
                 DateTime start = DateTime.Now;
-                foreach (FilesInfo fileToEncrypt in saveFiles.FilesToEncrypt)
+                foreach (FilesInfo fileToEncrypt in encrypt)
                 {
                     await Task.Run(() =>
                     {
@@ -105,10 +113,21 @@ namespace AppWPF.developpement.Models
         }
 
 
-        private async Task CopyFiles(SaveFiles saveFiles)
+        private async Task CopyFiles(SaveFiles saveFiles, bool isPriority)
         {
+            List<FilesInfo> files = new();
+            if (isPriority == true)
+            {
+                files = saveFiles.FilesPriority;
+            }
+            else
+            {
+                files = saveFiles.Files;
+            }
+
             DateTime start = DateTime.Now;
-            foreach (FilesInfo file in saveFiles.Files)
+            
+            foreach (FilesInfo file in files)
             {
                 await Task.Run(async () =>
                 {
