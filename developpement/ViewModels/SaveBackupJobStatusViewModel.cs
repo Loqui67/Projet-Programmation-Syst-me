@@ -55,21 +55,6 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
-        ///Variable privée utilisé pour savoir l'état de chargement
-        ///Private variable used to know the loading state
-        private string _isLoadingStats = "Collapsed";
-        ///Variable publique utilisé pour savoir l'état de chargement
-        ///Public variable used to know the loading state
-        public string IsLoadingStats
-        {
-            get { return _isLoadingStats; }
-            set
-            {
-                _isLoadingStats = value;
-                OnPropertyChanged(nameof(IsLoadingStats));
-            }
-        }
-
         public SaveBackupJobStatusViewModel()
         {
             BackupJobProgressBarValue = 0;

@@ -21,7 +21,7 @@ namespace AppWPF.developpement.Models
         private static readonly string activeStateFileName = System.IO.Path.Combine(appDataFolderPath, "activeState.json");
         private static readonly string configFileName = System.IO.Path.Combine(appDataFolderPath, "config.json");
         private static readonly string dailyLogsFolder = System.IO.Path.Combine(appDataFolderPath, "logs");
-        private static readonly JsonSerializerOptions optionsWriteIndented = new()
+        private static readonly JsonSerializerOptions optionsWriteIndented = new JsonSerializerOptions()
         {
             WriteIndented = true
         };
@@ -80,7 +80,7 @@ namespace AppWPF.developpement.Models
         public static async Task WriteBackupJobToFile(List<BackupJob> backupJobs)
         {
             CreateFileIfNotExist(backupJobJsonFileName);
-            using FileStream fs = new(backupJobJsonFileName, FileMode.Truncate);
+            using FileStream fs = new FileStream(backupJobJsonFileName, FileMode.Truncate);
             string jsonString = JsonSerializer.Serialize(backupJobs, optionsWriteIndented);
             byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
             await fs.WriteAsync(jsonBytes);

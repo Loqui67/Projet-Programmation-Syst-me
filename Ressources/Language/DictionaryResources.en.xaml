@@ -21,6 +21,9 @@
     <system:String x:Key="Processing">Processing...</system:String>
     <system:String x:Key="Cancel">Cancel</system:String>
     <system:String x:Key="Save">Save</system:String>
+    <system:String x:Key="Stop">Stop</system:String>
+    <system:String x:Key="Pause">Pause</system:String>
+    <system:String x:Key="Resume">Resume</system:String>
     <system:String x:Key="FullSave">Full save</system:String>
     <system:String x:Key="DifferentialSave">Differential save</system:String>
     <system:String x:Key="Submit">Submit</system:String>
@@ -30,5 +33,9 @@
     <system:String x:Key="Type">Type</system:String>
     <system:String x:Key="Edit">Edit</system:String>
     <system:String x:Key="Delete">Delete</system:String>
+    <system:String x:Key="AskBeforeQuit">Are you sure you want to quit ?</system:String>
+    <system:String x:Key="Quit">Quit</system:String>
+    <system:String x:Key="Error">Error</system:String>
+    <system:String x:Key="AlreadyRunning">This app is already running !</system:String>
 
 </ResourceDictionary>

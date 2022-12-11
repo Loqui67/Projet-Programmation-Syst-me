@@ -1,6 +1,7 @@
 ﻿using AppWPF.developpement.Commands;
 using AppWPF.developpement.Models;
 using AppWPF.developpement.Stores;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace AppWPF.developpement.ViewModels
@@ -19,13 +20,45 @@ namespace AppWPF.developpement.ViewModels
         ///Variable to make the Cancel function work
         public ICommand CancelCommand { get; }
 
+        public ICommand PauseSaveCommand { get; }
+        public ICommand StopSaveCommand { get; }
+        public ICommand ResumeSaveCommand { get; }
+
+
+        private bool _isSaving;
+        public bool IsSaving
+        {
+            get { return _isSaving; }
+            set
+            {
+                _isSaving = value;
+                OnPropertyChanged(nameof(IsSaving));
+            }
+        }
+
+        private bool _isPaused;
+
+        public bool IsPaused
+        {
+            get { return _isPaused; }
+            set
+            {
+                _isPaused = value;
+                OnPropertyChanged(nameof(IsPaused));
+            }
+        }
+
+
         ///Méthode utilisa pour sauvegarder les travaux de sauvegarde dans le ViewModel
         ///Method used to save backup jobs in the ViewModel
         public SaveBackupJobViewModel(BackupJob backupJob, BackupJobsStore backupJobsStore, ModalNavigationStore modalNavigationStore)
         {
             SaveBackupJobStatusViewModel = new SaveBackupJobStatusViewModel();
-            SaveCommand = new SaveBackupJobCommand(SaveBackupJobStatusViewModel, backupJob, backupJobsStore, modalNavigationStore);
+            SaveCommand = new SaveBackupJobCommand(this, SaveBackupJobStatusViewModel, backupJob, backupJobsStore, modalNavigationStore);
             CancelCommand = new CloseModalCommand(modalNavigationStore);
+            PauseSaveCommand = new PauseSaveCommand();
+            StopSaveCommand = new StopSaveCommand(this, modalNavigationStore);
+            ResumeSaveCommand = new ResumeSaveCommand();
         }
     }
 }

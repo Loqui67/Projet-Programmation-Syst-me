@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AppWPF.developpement.Views" xmlns:components="clr-namespace:AppWPF.developpement.Components"
+             xmlns:local="clr-namespace:AppWPF.developpement.Views" 
+             xmlns:components="clr-namespace:AppWPF.developpement.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -16,7 +17,59 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <components:SaveBackupJobStatus DataContext="{Binding SaveBackupJobStatusViewModel}" Grid.Row ="0" Grid.Column="0" Grid.ColumnSpan="2"/>
-        <Button Content="{DynamicResource Cancel}" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Width="100" Margin="10" Command="{Binding CancelCommand}"/>
-        <Button Content="{DynamicResource Save}" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Width="100" Margin="10" Command="{Binding SaveCommand}"/>
+
+        <Grid x:Name="SaveCancel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsSaving}" Value="False">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Button Content="{DynamicResource Cancel}" HorizontalAlignment="Left" Width="100" Margin="10" Command="{Binding CancelCommand}"/>
+            <Button Content="{DynamicResource Save}" HorizontalAlignment="Right" Width="100" Margin="10" Command="{Binding SaveCommand}"/>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsSaving}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Button Content="{DynamicResource Stop}" HorizontalAlignment="Left" Width="100" Margin="10" Command="{Binding StopSaveCommand}"/>
+            <Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsPaused}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Button Content="{DynamicResource Resume}" HorizontalAlignment="Right" Width="100" Margin="10" Command="{Binding ResumeSaveCommand}"/>
+            </Grid>
+            <Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsPaused}" Value="False">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Button Content="{DynamicResource Pause}" HorizontalAlignment="Right" Width="100" Margin="10" Command="{Binding PauseSaveCommand}"/>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

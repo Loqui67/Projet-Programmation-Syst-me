@@ -46,7 +46,7 @@ namespace AppWPF.developpement.Models
 
             foreach (string file in allFiles)
             {
-                FileInfo fileInfo = new(file);
+                FileInfo fileInfo = new FileInfo(file);
                 if (!File.Exists(file.Replace(backupJob.SourcePath, backupJob.DestinationPath)) || IsFileModified(fileInfo, backupJob) || backupJob.Type == "0")
                 {
                     
