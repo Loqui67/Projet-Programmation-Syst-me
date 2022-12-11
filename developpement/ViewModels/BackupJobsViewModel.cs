@@ -14,8 +14,6 @@ namespace AppWPF.developpement.ViewModels
     ///Creation of a class inheriting from ViewModelBase which allows to "send" the data to the view
     public class BackupJobsViewModel : ViewModelBase
     {
-        ///Création de plusieurs variables pour la vue
-        ///Creating multiple variables for the view
         public static Config config;
         public BackupJobsListingViewModel BackupJobsListingViewModel { get; }
 
@@ -34,27 +32,13 @@ namespace AppWPF.developpement.ViewModels
                 OnPropertyChanged(nameof(IsLoading));
             }
         }
-        ///Variables permettant de srocket le résultats des commandes qui disent si les travaux de sauvegardes sont :
-        ///Variables allowing to srocket the results of the commands which say if the backup jobs are:
-        ///Ajouter
-        ///Add
-        public ICommand AddBackupJobCommand { get; }
 
-        ///Supprimé
-        ///Deleted
+        public ICommand AddBackupJobCommand { get; }
         public ICommand DeleteAllBackupJobsCommand { get; }
-        ///Sauvegardé
-        ///Saved
         public ICommand SaveAllBackupJobsCommand { get; }
-        ///Charger
-        ///loaded
         public ICommand LoadBackupJobsCommand { get; }
-        ///Variables permettant de savoir si on change de language
-        ///Variable allowing to know if we change language
         public ICommand SwitchLanguageFrCommand { get; }
         public ICommand SwitchLanguageEnCommand { get; }
-        ///Variable servant à ouvrir les paramètres
-        ///Variable used to open parameters
         public ICommand OpenSettingsCommand { get; }
 
         ///Méthodes permettant de regarder si un processus est en cours
@@ -70,8 +54,6 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
-        ///Méthode permettant de changer de langue
-        ///Method to change language
         public BackupJobsViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore, ProcessusStore processusStore, ExtensionCryptageStore extensionCryptageStore)
         {
             _thread = new Thread(CheckForProcessus);

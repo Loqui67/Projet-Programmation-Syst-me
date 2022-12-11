@@ -19,6 +19,11 @@ namespace AppWPF.developpement.ViewModels
         ///Variable to make the Cancel function work
         public ICommand CancelCommand { get; }
 
+        public ICommand PauseSaveCommand { get; }
+        public ICommand StopSaveCommand { get; }
+        public ICommand ResumeSaveCommand { get; }
+
+
         ///Méthode utilisa pour sauvegarder les travaux de sauvegarde dans le ViewModel
         ///Method used to save backup jobs in the ViewModel
         public SaveBackupJobViewModel(BackupJob backupJob, BackupJobsStore backupJobsStore, ModalNavigationStore modalNavigationStore)

@@ -65,7 +65,7 @@ namespace AppWPF.developpement.Stores
         {
             await Task.Run(async () =>
             {
-                SaveFiles saveFiles = new SaveFiles();
+                SaveFiles saveFiles = new();
                 await saveFiles.GetInfos(backupJob);
                 await new BackupJobSaver(saveBackupJobStatusViewModel).StartSave(saveFiles, backupJob);
             });
@@ -76,7 +76,7 @@ namespace AppWPF.developpement.Stores
         {
             await Task.Run(async () =>
             {
-                List<SaveFiles> saveFilesList = new List<SaveFiles>();
+                List<SaveFiles> saveFilesList = new();
                 foreach (BackupJob backupJob in backupJobs)
                 {
                     SaveFiles saveFiles = new SaveFiles();

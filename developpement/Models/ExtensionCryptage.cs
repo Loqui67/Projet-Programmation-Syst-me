@@ -13,7 +13,7 @@ namespace AppWPF.developpement.Models
 
         public ExtensionCryptage(string name)
         {
-            this.Name = name;
+            Name = name;
             Id = Guid.NewGuid();
         }
     }

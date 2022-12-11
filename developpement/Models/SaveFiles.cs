@@ -67,7 +67,7 @@ namespace AppWPF.developpement.Models
         {
             try
             {
-                FileInfo fileInfoDestination = new FileInfo(fileInfo.FullName.Replace(backupJob.SourcePath, backupJob.DestinationPath));
+                FileInfo fileInfoDestination = new(fileInfo.FullName.Replace(backupJob.SourcePath, backupJob.DestinationPath));
 
                 if (fileInfo.LastWriteTime > fileInfoDestination.LastWriteTime)
                 {

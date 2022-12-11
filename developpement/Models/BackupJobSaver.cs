@@ -53,10 +53,6 @@ namespace AppWPF.developpement.Models
                 await StartSave(saveFiles, backupJobs[index - 1]);
                 AllSavesProgression(saveAllBackupJobsViewModel, index, total);
             }));
-
-
-
-
         }
 
         private async Task CreateDirectories(List<string> directories)

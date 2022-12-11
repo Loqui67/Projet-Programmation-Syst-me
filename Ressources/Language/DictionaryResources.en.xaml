@@ -30,5 +30,9 @@
     <system:String x:Key="Type">Type</system:String>
     <system:String x:Key="Edit">Edit</system:String>
     <system:String x:Key="Delete">Delete</system:String>
+    <system:String x:Key="AskBeforeQuit">Are you sure you want to quit ?</system:String>
+    <system:String x:Key="Quit">Quit</system:String>
+    <system:String x:Key="Error">Error</system:String>
+    <system:String x:Key="AlreadyRunning">This app is already running !</system:String>
 
 </ResourceDictionary>
