@@ -18,14 +18,69 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <Label Content="Save all backup jobs" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-        <TextBox Text="All backup jobs progress :" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20"/>
+        <Label Content="{DynamicResource SaveAll}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+        <TextBlock Text="{DynamicResource SaveAllProgress}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 20 0 0"/>
         <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Margin="0 0 0 20" Text="{Binding CurrentBackupJob}"/>
-        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100" Margin="0 0 0 20" Text="{Binding AllBackupJobProgression}"/>
-        
+        <TextBlock Grid.Column="1" Grid.Row="1" TextAlignment="Right" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100" Margin="0 0 0 20" Text="{Binding AllBackupJobProgression}"/>
+
         <ProgressBar Grid.Row="1" Height="20" Grid.Column="0" Grid.ColumnSpan="2" Value="{Binding ProgressBarAllBackupJobsValue}"/>
-        <components:SaveBackupJobStatus HorizontalAlignment="Center" DataContext="{Binding SaveBackupJobStatusViewModel}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
-        <Button Content="{DynamicResource Cancel}" Grid.Row="3" Width="100" HorizontalAlignment="Left" Grid.Column="0" Margin="10" Command="{Binding CancelSaveAllBackupJobsCommand}" IsEnabled="{Binding IsNotSaving}"/>
-        <Button Content="{DynamicResource Save}" Grid.Row="3" Width="100" HorizontalAlignment="Right" Grid.Column="1" Margin="10" Command="{Binding SaveAllBackupJobsCommand}" IsEnabled="{Binding IsNotSaving}"/>
+        <Grid Grid.Row="3" Grid.ColumnSpan="2">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsSaving}" Value="False">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Button Content="{DynamicResource Cancel}" Width="100" HorizontalAlignment="Left" Margin="10" Command="{Binding CancelSaveAllBackupJobsCommand}"/>
+            <Button Content="{DynamicResource Save}" Width="100" HorizontalAlignment="Right" Margin="10" Command="{Binding SaveAllBackupJobsCommand}"/>
+        </Grid>
+
+
+        <Grid Grid.Row="3" Grid.ColumnSpan="2" >
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsSaving}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Button Content="{DynamicResource Stop}" HorizontalAlignment="Left" Width="100" Margin="10" Command="{Binding StopSaveCommand}"/>
+            <Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsPaused}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Button Content="{DynamicResource Resume}" HorizontalAlignment="Right" Width="100" Margin="10" Command="{Binding ResumeSaveCommand}"/>
+            </Grid>
+            <Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsPaused}" Value="False">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Button Content="{DynamicResource Pause}" HorizontalAlignment="Right" Width="100" Margin="10" Command="{Binding PauseSaveCommand}"/>
+            </Grid>
+        </Grid>
+        
+        
+        
     </Grid>
 </UserControl>

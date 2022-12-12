@@ -29,7 +29,7 @@
             </Grid.Background>
             <Grid.Style>
                 <Style TargetType="Grid">
-                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Setter Property="Visibility" Value="Visible"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsLoading}" Value="False">
                             <Setter Property="Visibility" Value="Visible"/>
@@ -80,7 +80,7 @@
                     <ImageBrush ImageSource="play green.png"/>
                 </Button.Background>
             </Button>
-            <Image HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="100" Width="300" Grid.RowSpan="2" Source="/developpement/Views/EasySave_logo.png"/>
+            <Image HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="55" Width="310" Grid.RowSpan="2" Source="/developpement/Views/EasySave_logo.png"/>
         </Grid>
     </Grid>
 </UserControl>

@@ -10,11 +10,9 @@ namespace AppWPF.developpement.Commands
 {
     public class StopSaveCommand : CommandBase
     {
-        private readonly SaveBackupJobViewModel _saveBackupJobViewModel;
         private readonly ModalNavigationStore _modalNavigationStore;
-        public StopSaveCommand(ViewModels.SaveBackupJobViewModel saveBackupJobViewModel, ModalNavigationStore modalNavigationStore)
+        public StopSaveCommand(ModalNavigationStore modalNavigationStore)
         {
-            _saveBackupJobViewModel = saveBackupJobViewModel;
             _modalNavigationStore = modalNavigationStore;
             
         }

@@ -18,14 +18,18 @@ namespace AppWPF.developpement.Models
         public List<string> Directories { get; set; }
         public long FileSizeTotal { get; set; }
         public long FileNumberTotal { get; set; }
-
-        public long FileSizeLeft { get; set; }
-        public long FileNumberLeft { get; set; }
         public TimeSpan FileTransferTime { get; set; }
         public TimeSpan FileEncryptTime { get; set; }
+
+        public BackupJob BackupJob { get; set; }
+        public string Name => BackupJob.Name;
+        public string SourcePath => BackupJob.SourcePath;
+        public string DestinationPath => BackupJob.DestinationPath;
+        public string Type => BackupJob.Type;
         
         public async Task GetInfos(BackupJob backupJob)
         {
+            BackupJob = backupJob;
             List<string> allDirectory = Directory.GetDirectories(backupJob.SourcePath, "*", SearchOption.AllDirectories).ToList();
             List<string> allFiles = Directory.GetFiles(backupJob.SourcePath, "*", SearchOption.AllDirectories).ToList();
             FilesToEncryptAndPriority = new List<FilesInfo>();
@@ -71,9 +75,6 @@ namespace AppWPF.developpement.Models
                     }
                 }
             }
-
-            FileSizeLeft = FileSizeTotal;
-            FileNumberLeft = FileNumberTotal;
         }
 
         private bool IsFileModified(FileInfo fileInfo, BackupJob backupJob)

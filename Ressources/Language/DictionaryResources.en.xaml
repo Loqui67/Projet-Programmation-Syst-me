@@ -37,5 +37,7 @@
     <system:String x:Key="Quit">Quit</system:String>
     <system:String x:Key="Error">Error</system:String>
     <system:String x:Key="AlreadyRunning">This app is already running !</system:String>
-
+    <system:String x:Key="BusinessSoftware">A business softare is detected</system:String>
+    <system:String x:Key="SaveAll">Execute all backup jobs</system:String>
+    <system:String x:Key="SaveAllProgress">All backup jobs progress :</system:String>
 </ResourceDictionary>
