@@ -3,30 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AppWPF" 
-        xmlns:views="clr-namespace:AppWPF.developpement.Views" 
-        xmlns:vms="clr-namespace:AppWPF.developpement.ViewModels" 
+        xmlns:local="clr-namespace:AppWPF.developpement.Views" 
+        xmlns:vms="clr-namespace:AppWPF.developpement.ViewModels"
         xmlns:modalcontrol="clr-namespace:ModalControl;assembly=ModalControl"
-        x:Class="AppWPF.MainWindow"
+        x:Class="AppWPF.developpement.Views.MainWindow"
         mc:Ignorable="d"
         Closing="Window_Closing"
         Title="Easy Save" Height="800" Width="1280" Icon="/developpement/Views/EasySave_icone.png">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type vms:AddBackupJobViewModel}">
-            <views:AddBackupJob/>
+            <local:AddBackupJob/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vms:EditBackupJobViewModel}">
-            <views:EditBackupJob/>
+            <local:EditBackupJob/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vms:SaveBackupJobViewModel}">
-            <views:SaveBackupJob/>
+            <local:SaveBackupJob/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vms:SaveAllBackupJobsViewModel}">
-            <views:SaveAllBackupJobs/>
+            <local:SaveAllBackupJobs/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vms:SettingsViewModel}">
-            <views:SettingsView/>
+            <local:SettingsView/>
         </DataTemplate>
     </Window.Resources>
 
@@ -35,7 +34,7 @@
             <modalcontrol:Modal Panel.ZIndex="1" IsOpen="{Binding IsModalOpen}">
                 <ContentControl Margin="50 25" Content="{Binding CurrentModalViewModel}"/>
             </modalcontrol:Modal>
-            <views:BackupJobsView DataContext="{Binding BackupJobsViewModel}" />
+            <local:BackupJobsView DataContext="{Binding BackupJobsViewModel}" />
         </Grid>
     </ScrollViewer>
 </Window>

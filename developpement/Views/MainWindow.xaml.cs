@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace AppWPF
+namespace AppWPF.developpement.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

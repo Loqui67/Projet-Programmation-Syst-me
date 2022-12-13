@@ -1,5 +1,6 @@
 ﻿using AppWPF.developpement.Stores;
 using AppWPF.developpement.ViewModels;
+using AppWPF.developpement.Views;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace AppWPF
         protected override void OnStartup(StartupEventArgs e)
         {
             BackupJobsViewModel backupJobsViewModel = BackupJobsViewModel.LoadViewModel(_modalNavigationStore, _backupJobStore, _processusStore, _extensionCryptageStore, _extensionPriorityStore);
-            MainWindow = new MainWindow()
+            MainWindow mainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_modalNavigationStore, backupJobsViewModel)
             };
@@ -48,7 +49,7 @@ namespace AppWPF
             }
             else
             {
-                MainWindow.Show();
+                mainWindow.Show();
             }
 
             base.OnStartup(e);
