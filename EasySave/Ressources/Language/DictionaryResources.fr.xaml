@@ -48,6 +48,6 @@
     <system:String x:Key="AddPriorityExtensionName">Ajouter les extensions des fichiers prioritaire</system:String>
     <system:String x:Key="LogFilesExtension">Choisissez le type d'extension pour les fichiers log</system:String>
     <system:String x:Key="AddExtensionButton">Ajouter l'extension</system:String>
-    <system:String x:Key="AddProcessButton">Ajouter un processus</system:String>
+    <system:String x:Key="AddProcessusButton">Ajouter un processus</system:String>
 
 </ResourceDictionary>

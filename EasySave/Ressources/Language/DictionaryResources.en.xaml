@@ -48,7 +48,7 @@
     <system:String x:Key="AddPriorityExtensionName">Add the name of the extension for priority files</system:String>
     <system:String x:Key="LogFilesExtension">Choose the extension type for log files</system:String>
     <system:String x:Key="AddExtensionButton">Add extension</system:String>
-    <system:String x:Key="AddProcessButton">Add process</system:String>
+    <system:String x:Key="AddProcessusButton">Add process</system:String>
 
 
 </ResourceDictionary>
