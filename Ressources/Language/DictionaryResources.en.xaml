@@ -37,5 +37,17 @@
     <system:String x:Key="Quit">Quit</system:String>
     <system:String x:Key="Error">Error</system:String>
     <system:String x:Key="AlreadyRunning">This app is already running !</system:String>
+    <system:String x:Key="Process">Process</system:String>
+    <system:String x:Key="CryptageExtension">Extension cryptage</system:String>
+    <system:String x:Key="PriorityExtension">Extension priority</system:String>
+    <system:String x:Key="AddProcess">Add the name of the process</system:String>
+    <system:String x:Key="AddCryptageExtensionName">Add the name of the extension for files to encrypt</system:String>
+    <system:String x:Key="AddPriorityExtensionName">Add the name of the extension for priority files</system:String>
+    <system:String x:Key="LogFilesExtension">Choose the extension type for log files</system:String>
+    <system:String x:Key="AddExtensionButton">Add extension</system:String>
+    <system:String x:Key="AddProcessButton">Add process</system:String>
+    <system:String x:Key="SaveAll">Save all backup jobs</system:String>
+    <system:String x:Key="ProgressSaveAll">All backup jobs progress :</system:String>
+
 
 </ResourceDictionary>

@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppWPF.developpement.Views" xmlns:components="clr-namespace:AppWPF.developpement.Components"
              mc:Ignorable="d" 
-             d:DesignHeight="460" d:DesignWidth="600">
+             d:DesignHeight="460" d:DesignWidth="700">
     <Grid Background="#FFC6EFFF">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="350"/>
             <ColumnDefinition Width="350"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="1">
@@ -20,11 +20,11 @@
                 <RowDefinition Height="25"/>
                 <RowDefinition Height="128"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Content="Process" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <Label Grid.Row="0" Content="{DynamicResource Process}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
             <components:ProcessusListing Grid.Row="1" DataContext="{Binding ProcessusListingViewModel}"/>
-            <Label Grid.Row="2" Content="Extension cryptage" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <Label Grid.Row="2" Content="{DynamicResource CryptageExtension}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
             <components:ExtensionCryptageListing Grid.Row="3" DataContext="{Binding ExtensionCryptageListingViewModel}"/>
-            <Label Grid.Row="4" Content="Extension priority" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <Label Grid.Row="4" Content="{DynamicResource PriorityExtension}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
             <components:ExtensionPriorityListing Grid.Row="5" DataContext="{Binding ExtensionPriorityListingViewModel}"/>
         </Grid>
 
@@ -44,24 +44,24 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
-            <Label Content="Add the name of the process" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" />
-            <TextBox HorizontalAlignment="Center" Text="{Binding ProcessToAdd, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Height="20" Grid.Row="1"/>
-            <Button HorizontalAlignment="Center" Command="{Binding AddProcessCommand}" Content="Add process" Margin="0 5 0 0" VerticalAlignment="Top" Width="180" Height="20" Grid.Row="2"/>
+            <Label Content="{DynamicResource AddProcess}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Width="280" />
+            <TextBox HorizontalAlignment="Center" Text="{Binding ProcessToAdd, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" Height="20" Grid.Row="1"/>
+            <Button HorizontalAlignment="Center" Command="{Binding AddProcessCommand}" Content="{DynamicResource AddProcessusButton}" Margin="0 5 0 0" VerticalAlignment="Top" Width="280" Height="20" Grid.Row="2"/>
 
-            <Label Content="Add the name of the extension &#xD;&#xA;for files to encrypt" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5" />
-            <TextBox HorizontalAlignment="Center" Text="{Binding ExtensionCryptageToAdd, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Height="20" Grid.Row="6"/>
-            <Button HorizontalAlignment="Center" Command="{Binding AddExtensionCryptageCommand}" Content="Add extension" Margin="0 5 0 0" VerticalAlignment="Top" Width="180" Height="20" Grid.Row="7"/>
+            <Label Content="{DynamicResource AddCryptageExtensionName}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5" Width="280" />
+            <TextBox HorizontalAlignment="Center" Text="{Binding ExtensionCryptageToAdd, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" Height="20" Grid.Row="6"/>
+            <Button HorizontalAlignment="Center" Command="{Binding AddExtensionCryptageCommand}" Content="{DynamicResource AddExtensionButton}" Margin="0 5 0 0" VerticalAlignment="Top" Width="280" Height="20" Grid.Row="7"/>
 
-            <Label Content="Add the name of the extension &#xD;&#xA;for priority files" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="8" />
-            <TextBox HorizontalAlignment="Center" Text="{Binding ExtensionPriorityToAdd, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Height="20" Grid.Row="9"/>
-            <Button HorizontalAlignment="Center" Command="{Binding AddExtensionPriorityCommand}" Content="Add extension" Margin="0 5 0 0" VerticalAlignment="Top" Width="180" Height="20" Grid.Row="10"/>
+            <Label Content="{DynamicResource AddPriorityExtensionName}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="8" Width="280" />
+            <TextBox HorizontalAlignment="Center" Text="{Binding ExtensionPriorityToAdd, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" Height="20" Grid.Row="9"/>
+            <Button HorizontalAlignment="Center" Command="{Binding AddExtensionPriorityCommand}" Content="{DynamicResource AddExtensionButton}" Margin="0 5 0 0" VerticalAlignment="Top" Width="280" Height="20" Grid.Row="10"/>
 
-            <Label Content="Choose the extension type for &#xD;&#xA;log files" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="3" />
-            <ComboBox HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Margin="0 5 0 0" Width="180" SelectedIndex="{Binding LogExtension}">
+            <Label Content="{DynamicResource LogFilesExtension}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="3" Width="280" />
+            <ComboBox HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Margin="0 5 0 0" Width="280" SelectedIndex="{Binding LogExtension}">
                 <ComboBoxItem Tag="0" Content=".JSON"/>
                 <ComboBoxItem Tag="1" Content=".XML"/>
             </ComboBox>
-            <Button Content="OK" Grid.Row="12" Height="20" HorizontalAlignment="Center" Margin="0 0 0 10" Width="180" VerticalAlignment="Bottom" Command="{Binding SubmitSettingsCommand}"/>
+            <Button Content="OK" Grid.Row="12" Height="20" HorizontalAlignment="Center" Margin="0 0 0 10" Width="280" VerticalAlignment="Bottom" Command="{Binding SubmitSettingsCommand}"/>
         </Grid>
 
     </Grid>

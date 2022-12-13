@@ -17,7 +17,7 @@
                 <Button Width="50" HorizontalAlignment="Right" Grid.Column="1" Margin="5" Command="{Binding DeleteCommand}">
                     <Button.Content>
                         <WrapPanel>
-                            <TextBlock Text="Delete"/>
+                            <TextBlock Text="{DynamicResource Delete}"/>
                             <custom:LoadingSpinner IsLoading="{Binding IsDeleting}" HorizontalAlignment="Right" Thickness="1" Diameter="15"/>
                         </WrapPanel>
                     </Button.Content>

@@ -37,5 +37,16 @@
     <system:String x:Key="Quit">Quitter</system:String>
     <system:String x:Key="Error">Erreur</system:String>
     <system:String x:Key="AlreadyRunning">L'application est déjà lancée !</system:String>
+    <system:String x:Key="Process">Processus métier</system:String>
+    <system:String x:Key="CryptageExtension">Extension de cryptage</system:String>
+    <system:String x:Key="PriorityExtension">Priority de cryptage</system:String>
+    <system:String x:Key="AddProcess">Ajouter un processus métier</system:String>
+    <system:String x:Key="AddCryptageExtensionName">Ajouter les extensions des fichiers à crypter</system:String>
+    <system:String x:Key="AddPriorityExtensionName">Ajouter les extensions des fichiers prioritaire</system:String>
+    <system:String x:Key="LogFilesExtension">Choisissez le type d'extension pour les fichiers log</system:String>
+    <system:String x:Key="AddExtensionButton">Ajouter l'extension</system:String>
+    <system:String x:Key="AddProcessButton">Ajouter un processus</system:String>
+    <system:String x:Key="SaveAll">Sauvegarder tous les travaux de sauvegarde</system:String>
+    <system:String x:Key="ProgressSaveAll">Progression de tous les travaux de sauvegarde :</system:String>
 
 </ResourceDictionary>
