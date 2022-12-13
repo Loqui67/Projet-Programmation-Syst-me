@@ -4,6 +4,7 @@ using AppWPF.developpement.Stores;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Sockets;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,12 +19,14 @@ namespace AppWPF.developpement.ViewModels
         public static Config config;
         public BackupJobsListingViewModel BackupJobsListingViewModel { get; }
 
-        private Thread _thread;
+        private Thread _threadProcess;
+        private Thread _threadSocket;
 
         ///Variable permettant de savoir si le chargement est en cours
         ///Variable allowing to know if the loading is in progress
         private bool _isLoading;
-      
+        private readonly ModalNavigationStore _modalNavigationStore;
+
         public bool IsLoading
         {
             get => _isLoading;
@@ -70,10 +73,43 @@ namespace AppWPF.developpement.ViewModels
             }
         }
 
+        private void SocketConnection()
+        {
+            PauseSaveCommand pauseSaveCommand = new();
+            ResumeSaveCommand resumeSaveCommand = new();
+            StopSaveCommand stopSaveCommand = new(_modalNavigationStore);
+            Server.Start();
+            Server.AcceptConnection();
+            while (true)
+            {
+                string receive = Server.Receive();
+                switch (receive)
+                {
+                    case "pause":
+                        pauseSaveCommand.Execute(null);
+                        break;
+                            
+                    case "resume":
+                        resumeSaveCommand.Execute(null);
+                        break;
+                            
+                    case "stop":
+                        stopSaveCommand.Execute(null);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
         public BackupJobsViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore, ProcessusStore processusStore, ExtensionCryptageStore extensionCryptageStore, ExtensionPriorityStore extensionPriorityStore)
         {
-            _thread = new Thread(CheckForProcessus);
-            _thread.Start();
+            _modalNavigationStore = modalNavigationStore;
+            _threadProcess = new Thread(CheckForProcessus);
+            _threadProcess.Start();
+            _threadSocket = new Thread(SocketConnection);
+            _threadSocket.Start();
             BackupJobsListingViewModel = new BackupJobsListingViewModel(modalNavigationStore, backupJobsStore);
             LoadBackupJobsCommand = new LoadBackupJobsCommand(this, backupJobsStore);
             AddBackupJobCommand = new OpenAddBackupJobCommand(modalNavigationStore, backupJobsStore);
@@ -82,6 +118,7 @@ namespace AppWPF.developpement.ViewModels
             SwitchLanguageFrCommand = new SwitchLanguageCommand("fr");
             SwitchLanguageEnCommand = new SwitchLanguageCommand("en");
             OpenSettingsCommand = new OpenSettingsCommand(modalNavigationStore, processusStore, extensionCryptageStore, extensionPriorityStore);
+            
         }
 
         public static BackupJobsViewModel LoadViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore, ProcessusStore processusStore, ExtensionCryptageStore extensionCryptageStore, ExtensionPriorityStore extensionPriorityStore)

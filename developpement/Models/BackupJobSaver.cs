@@ -45,8 +45,10 @@ namespace AppWPF.developpement.Models
                 Action action = () => SetIsSaving(true);
                 action.Invoke();
                 await Save(saveFiles, false);
-                List<Log> logs = new();
-                logs.Add(CreateLog(saveFiles));
+                List<Log> logs = new()
+                {
+                    CreateLog(saveFiles)
+                };
                 await WriteToDailyLog(logs);
                 action = () =>
                 {
@@ -57,6 +59,8 @@ namespace AppWPF.developpement.Models
                     isPausing = false;
                     isStoppingEncrypting = false;
                     isStoppingCopying = false;
+
+                    Server.Send("saveDone", null, null);
                 };
                 action.Invoke();
             });
@@ -186,7 +190,7 @@ namespace AppWPF.developpement.Models
                         saveAllBackupJobsViewModel.ProgressBarAllBackupJobsValue = ProgressBarValue();
                         saveAllBackupJobsViewModel.AllBackupJobProgression = FileLeftSlashFileTotal();
                     }
-                    
+                    Server.Send("progress", FileLeftSlashFileTotal(), ProgressBarValue());
 
                     await using (FileStream sourceStream = new(file.Path, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true))
                     {

@@ -64,12 +64,13 @@ namespace AppWPF.developpement.Stores
 
         public async Task Save(BackupJob backupJob, SaveBackupJobStatusViewModel saveBackupJobStatusViewModel, SaveBackupJobViewModel saveBackupJobViewModel, ModalNavigationStore _modalNavigationStore)
         {
+            Server.Send("save", null, null);
             BackupJobSaver.saveBackupJobStatusViewModel = saveBackupJobStatusViewModel;
             BackupJobSaver.saveBackupJobViewModel = saveBackupJobViewModel;
             BackupJobSaver.modalNavigationStore = _modalNavigationStore;
             await Task.Run(async () =>
             {
-                SaveFiles saveFiles = new SaveFiles();
+                SaveFiles saveFiles = new();
                 await saveFiles.GetInfos(backupJob);
                 await BackupJobSaver.StartSave(saveFiles);
             });
@@ -79,6 +80,7 @@ namespace AppWPF.developpement.Stores
 
         public async Task SaveAll(SaveAllBackupJobsViewModel saveAllBackupJobsViewModel, ModalNavigationStore modalNavigationStore)
         {
+            Server.Send("save", null, null);
             int countSaveDone = 0;
             int saveNumber = backupJobs.Count;
             BackupJobSaver.fileNumberTotal = 0;
@@ -88,7 +90,9 @@ namespace AppWPF.developpement.Stores
             BackupJobSaver.saveAllBackupJobsViewModel = saveAllBackupJobsViewModel;
             List<SaveFiles> saveFilesList = new();
             saveAllBackupJobsViewModel.CurrentBackupJob = countSaveDone + "/" + saveNumber;
-
+            
+            Server.Send("progress", saveAllBackupJobsViewModel.CurrentBackupJob, null);
+            
             saveAllBackupJobsViewModel.IsSaving = true;
             List<Log> logs = new();
             foreach (BackupJob backupJob in backupJobs)
@@ -113,6 +117,7 @@ namespace AppWPF.developpement.Stores
 
                     BackupJobSaver.WriteToDailyLog(logs);
                     modalNavigationStore.Close();
+                    Server.Send("saveDone", null, null);
                 });
                 Thread t = new(async () =>
                 {
@@ -130,16 +135,19 @@ namespace AppWPF.developpement.Stores
         public static void PauseSave()
         {
             BackupJobSaver.PauseSave();
+            Server.Send("pause", null, null);
         }
 
         public static void ResumeSave()
         {
             BackupJobSaver.ResumeSave();
+            Server.Send("resume", null, null);
         }
 
         public static void StopSave()
         {
             BackupJobSaver.StopSave();
+            Server.Send("stop", null, null);
         }
     }
 }

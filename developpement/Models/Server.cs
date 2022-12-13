@@ -4,7 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using AppWPF.developpement.Models;
 
 namespace AppWPF.developpement.Models
 {
@@ -19,36 +23,34 @@ namespace AppWPF.developpement.Models
         {
             serverSocket = new Socket(ip.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             serverSocket.Bind(new IPEndPoint(ip, 11000));
-            serverSocket.Listen(10);
-            serverSocket.BeginAccept(new AsyncCallback(AcceptCallback), null);
         }
 
-        private static void AcceptCallback(IAsyncResult ar)
+        public static void AcceptConnection()
         {
-            clientSocket = serverSocket.EndAccept(ar);
-            serverSocket.BeginAccept(new AsyncCallback(AcceptCallback), null);
+            serverSocket.Listen(10);
+            clientSocket = serverSocket.Accept();
             isSomeoneConnected = true;
         }
 
-        public static void Send(string message)
+        public static void Send(string? state, string? fileNumber, float? progress)
         {
-            byte[] buffer = Encoding.ASCII.GetBytes(message);
+            ObjectReceived data = new()
+            {
+                State = state,
+                FileNumber = fileNumber,
+                Progress = progress
+            };
+            
+            string json = JsonSerializer.Serialize(data);
+            byte[] buffer = Encoding.ASCII.GetBytes(json);
             clientSocket.Send(buffer);
         }
 
-        public static void SendObject(object obj)
-        {
-            byte[] buffer = Encoding.ASCII.GetBytes(obj.ToString());
-            clientSocket.Send(buffer);
-        }
-
-        public static void Receive()
+        public static string Receive()
         {
             byte[] buffer = new byte[1024];
             int received = clientSocket.Receive(buffer);
-            byte[] data = new byte[received];
-            Array.Copy(buffer, data, received);
-            string text = Encoding.ASCII.GetString(data);
+            return Encoding.ASCII.GetString(buffer, 0, received);
         }
 
         public static void Close()
