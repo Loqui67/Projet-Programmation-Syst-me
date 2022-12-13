@@ -37,6 +37,9 @@
     <system:String x:Key="Quit">Quit</system:String>
     <system:String x:Key="Error">Error</system:String>
     <system:String x:Key="AlreadyRunning">This app is already running !</system:String>
+    <system:String x:Key="BusinessSoftware">A business softare is detected</system:String>
+    <system:String x:Key="SaveAll">Execute all backup jobs</system:String>
+    <system:String x:Key="SaveAllProgress">All backup jobs progress :</system:String>
     <system:String x:Key="Process">Process</system:String>
     <system:String x:Key="CryptageExtension">Extension cryptage</system:String>
     <system:String x:Key="PriorityExtension">Extension priority</system:String>
@@ -46,8 +49,6 @@
     <system:String x:Key="LogFilesExtension">Choose the extension type for log files</system:String>
     <system:String x:Key="AddExtensionButton">Add extension</system:String>
     <system:String x:Key="AddProcessButton">Add process</system:String>
-    <system:String x:Key="SaveAll">Save all backup jobs</system:String>
-    <system:String x:Key="ProgressSaveAll">All backup jobs progress :</system:String>
 
 
 </ResourceDictionary>

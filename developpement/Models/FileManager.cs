@@ -144,13 +144,15 @@ namespace AppWPF.developpement.Models
 
         //ecrit dans le fichier les logs journalières
         //write in the file the daily logs
-        public static void WriteDailyLogJson(Log dailyLog)
+        public static void WriteDailyLogJson(List<Log> dailyLog)
         {
             string path = CreateFolderIfNotExistAndReturnString(System.IO.Path.Combine(appDataFolderPath, "logs"));
             List<Log>? logs;
             logs = ReadDailyLogJson(path);
-            logs.Add(dailyLog);
-
+            foreach (Log log in dailyLog)
+            {
+                logs.Add(log);
+            }
             using FileStream fs = File.Create(System.IO.Path.Combine(path, GetDailyFileName() + ".json"));
             string jsonString = JsonSerializer.Serialize(logs, optionsWriteIndented);
             byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
@@ -175,12 +177,15 @@ namespace AppWPF.developpement.Models
 
 
 
-        public static void WriteDailyLogXml(Log log)
+        public static void WriteDailyLogXml(List<Log> dailyLog)
         {
             string logsFilePath = CreateFolderIfNotExistAndReturnString(System.IO.Path.Combine(dailyLogsFolder, GetDailyFileName() + ".xml"));
             List<Log>? logs;
             logs = ReadDailyLogXml(logsFilePath);
-            logs.Add(log);
+            foreach (Log log in dailyLog)
+            {
+                logs.Add(log);
+            }
             XmlSerializer serializer = new XmlSerializer(typeof(List<Log>));
             TextWriter writer = new StreamWriter(logsFilePath);
             serializer.Serialize(writer, logs);
@@ -253,11 +258,6 @@ namespace AppWPF.developpement.Models
         private static string GetDailyFileName()
         {
             return DateTime.Now.ToString("yyyy-MM-dd") + "-log";
-        }
-
-        internal static List<string> GetFiles(string sourcePath)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -45,12 +46,27 @@ namespace AppWPF.developpement.ViewModels
         ///Methods to see if a process is running
         private void CheckForProcessus()
         {
+            bool boxAlreadyPrinted = false;
             while (true)
             {
                 Thread.Sleep(1000);
                 Process? processus = Process.GetProcesses().FirstOrDefault(p => config.AllProcessus.Select(x => x.Name).Contains(p.ProcessName), null);
-                if (processus != null) { BackupJobsListingViewModel.IsProcessusNotDetected = false; BackupJobSaver.PauseSave(); }
-                else BackupJobsListingViewModel.IsProcessusNotDetected = true;
+                if (processus != null)
+                {
+                    if (!boxAlreadyPrinted)
+                    {
+                        MessageBox.Show((string)Application.Current.FindResource("BusinessSoftware"), (string)Application.Current.FindResource("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
+                        boxAlreadyPrinted = true;
+                    }
+
+                    BackupJobsListingViewModel.IsProcessusNotDetected = false;
+                    BackupJobSaver.PauseSave();
+                }
+                else
+                {
+                    boxAlreadyPrinted = false;
+                    BackupJobsListingViewModel.IsProcessusNotDetected = true;
+                }
             }
         }
 

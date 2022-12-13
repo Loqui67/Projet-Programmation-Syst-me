@@ -18,37 +18,39 @@ namespace AppWPF.developpement.Models
     {
         public static long fileSizeLeft = 0;
         public static long fileNumberLeft = 0;
+        public static long fileSizeTotal = 0;
+        public static long fileNumberTotal = 0;
 
         public static SaveBackupJobStatusViewModel saveBackupJobStatusViewModel;
         public static SaveBackupJobViewModel saveBackupJobViewModel;
         public static ModalNavigationStore modalNavigationStore;
-        private static BackupJob BackupJob { get; set; }
+        public static SaveAllBackupJobsViewModel saveAllBackupJobsViewModel;
 
-        private static string Name => BackupJob.Name;
-        private static string SourcePath => BackupJob.SourcePath;
-        private static string DestinationPath => BackupJob.DestinationPath;
-        private static string Type => BackupJob.Type;
-
-        private static Thread t;
-
-        private static bool isPausing = false;
-        private static bool isStoppingEncrypting = false;
-        private static bool isStoppingCopying = false;
+        public static bool isPausing = false;
+        public static bool isStoppingEncrypting = false;
+        public static bool isStoppingCopying = false;
 
 
-        public static async Task StartSave(SaveFiles saveFiles, BackupJob backupJob)
+        public static async Task StartSave(SaveFiles saveFiles)
         {
-            BackupJob = backupJob;
-            await CreateDirectories(saveFiles.Directories);
-            //SetIsSaving(true);
-            t = new Thread(async () => {
+            isPausing = false;
+            await CreateDirectories(saveFiles);
+            Thread t = new(async () =>
+            {
+                fileNumberTotal = saveFiles.FileNumberTotal;
+                fileSizeTotal = saveFiles.FileSizeTotal;
+                fileNumberLeft = fileNumberTotal;
+                fileSizeLeft = fileSizeTotal;
+                
                 Action action = () => SetIsSaving(true);
                 action.Invoke();
-                await Task.WhenAll(EncryptFiles(saveFiles, true), CopyFiles(saveFiles, true));
-                await Task.WhenAll(EncryptFiles(saveFiles, false), CopyFiles(saveFiles, false));
-                await WriteToDailyLog(CreateLog(saveFiles));
-                action = () => { 
-                    SetIsSaving(false); 
+                await Save(saveFiles, false);
+                List<Log> logs = new();
+                logs.Add(CreateLog(saveFiles));
+                await WriteToDailyLog(logs);
+                action = () =>
+                {
+                    SetIsSaving(false);
                     SetIsPaused(false);
                     modalNavigationStore.Close();
 
@@ -60,16 +62,31 @@ namespace AppWPF.developpement.Models
             });
             t.Start();
         }
+        
+        public static async Task<Log> StartListSaveInParallel(SaveFiles saveFiles)
+        {
+            await CreateDirectories(saveFiles);
+            await Save(saveFiles, true);
+            return CreateLog(saveFiles);
+        }
+
+        private static async Task Save(SaveFiles saveFiles, bool AllSave)
+        {
+            await Task.WhenAll(EncryptFiles(saveFiles, true, AllSave), CopyFiles(saveFiles, true, AllSave));
+            await Task.WhenAll(EncryptFiles(saveFiles, false, AllSave), CopyFiles(saveFiles, false, AllSave));
+        }
 
         public static void PauseSave()
         {
             SetIsPaused(true);
+            SetIsPausedAllSave(true);
             isPausing = true;
         }
 
         public static void ResumeSave()
         {
             SetIsPaused(false);
+            SetIsPausedAllSave(false);
             isPausing = false;
         }
 
@@ -79,27 +96,13 @@ namespace AppWPF.developpement.Models
             isStoppingCopying = true;
         }
 
-        public static async Task StartListSaveInParallel(List<SaveFiles> saveFilesList, SaveAllBackupJobsViewModel saveAllBackupJobsViewModel, List<BackupJob> backupJobs)
+
+
+        private static async Task CreateDirectories(SaveFiles saveFiles)
         {
-            int total = backupJobs.Count;
-            int index = 0;
-            AllSavesProgression(saveAllBackupJobsViewModel, total, index);
-
-            //Execute all save in parallel
-
-            await Task.WhenAll(saveFilesList.Select(async saveFiles =>
+            foreach (string directory in saveFiles.Directories)
             {
-                index++;
-                await StartSave(saveFiles, backupJobs[index - 1]);
-                AllSavesProgression(saveAllBackupJobsViewModel, index, total);
-            }));
-        }
-
-        private static async Task CreateDirectories(List<string> directories)
-        {
-            foreach (string directory in directories)
-            {
-                string folderDestinationPath = directory.Replace(SourcePath, DestinationPath);
+                string folderDestinationPath = directory.Replace(saveFiles.SourcePath, saveFiles.DestinationPath);
                 if (!Directory.Exists(folderDestinationPath))
                 {
                     Directory.CreateDirectory(folderDestinationPath);
@@ -107,7 +110,7 @@ namespace AppWPF.developpement.Models
             }
         }
 
-        private static async Task EncryptFiles(SaveFiles saveFiles, bool isPriority)
+        private static async Task EncryptFiles(SaveFiles saveFiles, bool isPriority, bool AllSave)
         {
             List<FilesInfo> encrypt = new();
             if (isPriority == true)
@@ -132,15 +135,15 @@ namespace AppWPF.developpement.Models
                 {
                     await Task.Run(() =>
                     {
-                        string path = "\"" + fileToEncrypt.Path + "\"" + " " + "\"" + fileToEncrypt.Path.Replace(SourcePath, DestinationPath) + "\"";
-                        ProcessStartInfo process = new ProcessStartInfo("..\\..\\..\\CryptoSoft\\CryptoSoft.exe")
+                        string path = "\"" + fileToEncrypt.Path + "\"" + " " + "\"" + fileToEncrypt.Path.Replace(saveFiles.SourcePath, saveFiles.DestinationPath) + "\"";
+                        ProcessStartInfo process = new("..\\..\\..\\CryptoSoft\\CryptoSoft.exe")
                         {
                             Arguments = path
                         };
                         Process.Start(process);
                     });
-                    saveFiles.FileSizeLeft -= fileToEncrypt.Size;
-                    saveFiles.FileNumberLeft--;
+                    fileSizeLeft -= fileToEncrypt.Size;
+                    fileNumberLeft--;
                     
                     HandlePause();
                     if (isStoppingEncrypting) return;
@@ -156,7 +159,7 @@ namespace AppWPF.developpement.Models
         }
 
 
-        private static async Task CopyFiles(SaveFiles saveFiles, bool isPriority)
+        private static async Task CopyFiles(SaveFiles saveFiles, bool isPriority, bool AllSave)
         {
             List<FilesInfo> files = new();
             if (isPriority == true)
@@ -174,22 +177,29 @@ namespace AppWPF.developpement.Models
             {
                 await Task.Run(async () =>
                 {
-                    saveBackupJobStatusViewModel.BackupJobFileTransfering = file.Name;
-                    saveBackupJobStatusViewModel.BackupJobFileTransferingCount = FileLeftSlashFileTotal(saveFiles.FileNumberLeft, saveFiles.FileNumberTotal);
-                    saveBackupJobStatusViewModel.BackupJobProgressBarValue = ProgressBarValue(saveFiles.FileSizeLeft, saveFiles.FileSizeTotal);
+                    if (!AllSave)
+                    {
+                        saveBackupJobStatusViewModel.BackupJobFileTransfering = file.Name;
+                        saveBackupJobStatusViewModel.BackupJobFileTransferingCount = FileLeftSlashFileTotal();
+                        saveBackupJobStatusViewModel.BackupJobProgressBarValue = ProgressBarValue();
+                    } else {
+                        saveAllBackupJobsViewModel.ProgressBarAllBackupJobsValue = ProgressBarValue();
+                        saveAllBackupJobsViewModel.AllBackupJobProgression = FileLeftSlashFileTotal();
+                    }
+                    
 
-                    await using (FileStream sourceStream = new FileStream(file.Path, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true))
+                    await using (FileStream sourceStream = new(file.Path, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true))
                     {
                         try
                         {
-                            await using FileStream destinationStream = new FileStream(file.Path.Replace(SourcePath, DestinationPath), FileMode.Create, FileAccess.Write, FileShare.None, 4096, true);
+                            await using FileStream destinationStream = new(file.Path.Replace(saveFiles.SourcePath, saveFiles.DestinationPath), FileMode.Create, FileAccess.Write, FileShare.None, 4096, true);
                             await sourceStream.CopyToAsync(destinationStream);
                         }
                         catch (Exception) { }
                     }
                 });
-                saveFiles.FileSizeLeft -= file.Size;
-                saveFiles.FileNumberLeft--;
+                fileSizeLeft -= file.Size;
+                fileNumberLeft--;
 
                 HandlePause();
                 if (isStoppingCopying) return;
@@ -208,38 +218,32 @@ namespace AppWPF.developpement.Models
             }
         }
 
-        private static async Task WriteToDailyLog(Log log)
+        public static async Task WriteToDailyLog(List<Log> logs)
         {
-            if (Type == "0")
+            if (BackupJob.LogExtension == "0")
             {
-                FileManager.WriteDailyLogJson(log);
+                FileManager.WriteDailyLogJson(logs);
                 return;
             }
-            FileManager.WriteDailyLogXml(log);
+            FileManager.WriteDailyLogXml(logs);
         }
 
 
         private static Log CreateLog(SaveFiles saveFiles)
         {
-            return new Log(Name, SourcePath, DestinationPath, Type, saveFiles.FileSizeTotal, saveFiles.FileNumberTotal, saveFiles.FileTransferTime, saveFiles.FileEncryptTime, DateTime.Now.ToString("F"));
+            return new Log(saveFiles.Name, saveFiles.SourcePath, saveFiles.DestinationPath, saveFiles.Type, saveFiles.FileSizeTotal, saveFiles.FileNumberTotal, saveFiles.FileTransferTime, saveFiles.FileEncryptTime, DateTime.Now.ToString("F"));
         }
 
 
 
-        private static float ProgressBarValue(long fileSizeLeft, long fileSizeTotal)
+        private static float ProgressBarValue()
         {
             return (100 - (fileSizeLeft * 100 / fileSizeTotal));
         }
 
-        private static string FileLeftSlashFileTotal(long fileLeft, long fileTotal)
+        private static string FileLeftSlashFileTotal()
         {
-            return (fileTotal - fileLeft + 1) + "/" + fileTotal;
-        }
-
-        private static void AllSavesProgression(SaveAllBackupJobsViewModel saveAllBackupJobsViewModel, int total, int index)
-        {
-            saveAllBackupJobsViewModel.AllBackupJobProgression = index + "/" + total;
-            saveAllBackupJobsViewModel.ProgressBarAllBackupJobsValue = index / total * 100;
+            return (fileNumberTotal - fileNumberLeft + 1) + "/" + fileNumberTotal;
         }
 
         private static void SetIsSaving(bool isSaving)
@@ -249,7 +253,14 @@ namespace AppWPF.developpement.Models
 
         private static void SetIsPaused(bool isPaused)
         {
+            if (saveBackupJobViewModel == null) return;
             saveBackupJobViewModel.IsPaused = isPaused;
+        }
+
+        public static void SetIsPausedAllSave(bool isPaused)
+        {
+            if (saveAllBackupJobsViewModel == null) return;
+            saveAllBackupJobsViewModel.IsPaused = isPaused;
         }
     }
 }

@@ -18,7 +18,7 @@
         </Grid.ColumnDefinitions>
         <components:SaveBackupJobStatus DataContext="{Binding SaveBackupJobStatusViewModel}" Grid.Row ="0" Grid.Column="0" Grid.ColumnSpan="2"/>
 
-        <Grid x:Name="SaveCancel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Setter Property="Visibility" Value="Collapsed"/>

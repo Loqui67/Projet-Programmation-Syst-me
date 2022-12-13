@@ -57,7 +57,7 @@ namespace AppWPF.developpement.ViewModels
             SaveCommand = new SaveBackupJobCommand(this, SaveBackupJobStatusViewModel, backupJob, backupJobsStore, modalNavigationStore);
             CancelCommand = new CloseModalCommand(modalNavigationStore);
             PauseSaveCommand = new PauseSaveCommand();
-            StopSaveCommand = new StopSaveCommand(this, modalNavigationStore);
+            StopSaveCommand = new StopSaveCommand(modalNavigationStore);
             ResumeSaveCommand = new ResumeSaveCommand();
         }
     }
