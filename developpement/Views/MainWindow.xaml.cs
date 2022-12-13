@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace AppWPF
 {
@@ -14,6 +15,15 @@ namespace AppWPF
         public MainWindow()
         {
             InitializeComponent();
+        }
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show((string)Application.Current.FindResource("AskBeforeQuit"), (string)Application.Current.FindResource("Quit"), MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+            {
+                e.Cancel = true;
+                return;
+            }
+            Environment.Exit(0);
         }
     }
 }

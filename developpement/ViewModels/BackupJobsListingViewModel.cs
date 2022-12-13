@@ -22,14 +22,14 @@ namespace AppWPF.developpement.ViewModels
 
         ///Variable pour voir si le processus est détecté
         ///Variable to see if the process is detected
-        private bool _isProcessusDetected;
-        public bool IsProcessusDetected
+        public static bool _isProcessusNotDetected;
+        public bool IsProcessusNotDetected
         {
-            get => _isProcessusDetected;
+            get => _isProcessusNotDetected;
             set
             {
-                _isProcessusDetected = value;
-                OnPropertyChanged(nameof(IsProcessusDetected));
+                _isProcessusNotDetected = value;
+                OnPropertyChanged(nameof(IsProcessusNotDetected));
             }
         }
 

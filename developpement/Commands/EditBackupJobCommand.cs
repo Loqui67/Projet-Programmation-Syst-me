@@ -29,7 +29,7 @@ namespace AppWPF.developpement.Commands
         {
             BackupJobDetailsFormViewModel formViewModel = _editBackupJobViewModel.BackupJobDetailsFormViewModel;
             formViewModel.IsSubmitting = true;
-            BackupJob backupJob = new(
+            BackupJob backupJob = new BackupJob(
                 _editBackupJobViewModel.BackupJobId,
                 formViewModel.Name,
                 formViewModel.SourcePath,

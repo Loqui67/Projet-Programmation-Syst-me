@@ -21,6 +21,9 @@
     <system:String x:Key="Processing">Sauvegarde en cours...</system:String>
     <system:String x:Key="Cancel">Annuler</system:String>
     <system:String x:Key="Save">Sauvegarder</system:String>
+    <system:String x:Key="Stop">Arreter</system:String>
+    <system:String x:Key="Pause">Pause</system:String>
+    <system:String x:Key="Resume">Reprendre</system:String>
     <system:String x:Key="FullSave">Sauvegarde complète</system:String>
     <system:String x:Key="DifferentialSave">Sauvegarde différentiel</system:String>
     <system:String x:Key="Submit">Soumettre</system:String>
@@ -30,5 +33,12 @@
     <system:String x:Key="Type">Type</system:String>
     <system:String x:Key="Edit">Modifier</system:String>
     <system:String x:Key="Delete">Supprimer</system:String>
+    <system:String x:Key="AskBeforeQuit">Voulez-vous vraiment quitter l'application ?</system:String>
+    <system:String x:Key="Quit">Quitter</system:String>
+    <system:String x:Key="Error">Erreur</system:String>
+    <system:String x:Key="AlreadyRunning">L'application est déjà lancée !</system:String>
+    <system:String x:Key="BusinessSoftware">Un logiciel métier a été détecté !</system:String>
+    <system:String x:Key="SaveAll">Executer tout les travaux</system:String>
+    <system:String x:Key="SaveAllProgress">Progression de l'execution des travaux :</system:String>
 
 </ResourceDictionary>

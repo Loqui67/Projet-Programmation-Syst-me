@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Windows.Input;
+using AppWPF.developpement.Commands;
 
 namespace AppWPF.developpement.ViewModels
 {
@@ -95,6 +96,9 @@ namespace AppWPF.developpement.ViewModels
 
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
+        public ICommand BrowseSourcePathCommand { get; }
+        public ICommand BrowseDestinationPathCommand { get; }
+
 
         ///Méthode permettant de donner les détails du travail de sauvegarde
         ///Method to give the details of the backup job
@@ -102,6 +106,8 @@ namespace AppWPF.developpement.ViewModels
         {
             SubmitCommand = submitCommand;
             CancelCommand = cancelCommand;
+            BrowseSourcePathCommand = new BrowsePathCommand(this, true);
+            BrowseDestinationPathCommand = new BrowsePathCommand(this, false);
         }
     }
 }

@@ -20,7 +20,7 @@
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Name}" />
-                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Type}" />
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Type}"/>
                 <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding SourcePath}" />
                 <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding DestinationPath}" />
             <Button Command="{Binding SaveCommand}" Content="{DynamicResource Save}" Grid.Column="2" Grid.Row="0" Margin="5"/>

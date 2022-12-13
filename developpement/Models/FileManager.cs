@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
 using System.Xml.Serialization;
 
 namespace AppWPF.developpement.Models
@@ -15,11 +16,12 @@ namespace AppWPF.developpement.Models
     {
         private static readonly string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private static readonly string appDataFolder = "Projet Programmation Système";
-        private static readonly string appDataFolderPath = CreateFolderIfNotExistAndReturnString(Path.Combine(appData, appDataFolder));
-        private static readonly string backupJobJsonFileName = Path.Combine(appDataFolderPath, "SaveBackupJob.json");
-        private static readonly string activeStateFileName = Path.Combine(appDataFolderPath, "activeState.json");
-        private static readonly string configFileName = Path.Combine(appDataFolderPath, "config.json");
-        private static readonly JsonSerializerOptions optionsWriteIndented = new()
+        private static readonly string appDataFolderPath = CreateFolderIfNotExistAndReturnString(System.IO.Path.Combine(appData, appDataFolder));
+        private static readonly string backupJobJsonFileName = System.IO.Path.Combine(appDataFolderPath, "SaveBackupJob.json");
+        private static readonly string activeStateFileName = System.IO.Path.Combine(appDataFolderPath, "activeState.json");
+        private static readonly string configFileName = System.IO.Path.Combine(appDataFolderPath, "config.json");
+        private static readonly string dailyLogsFolder = System.IO.Path.Combine(appDataFolderPath, "logs");
+        private static readonly JsonSerializerOptions optionsWriteIndented = new JsonSerializerOptions()
         {
             WriteIndented = true
         };
@@ -47,13 +49,16 @@ namespace AppWPF.developpement.Models
         {
             try
             {
-                if (!CreateFileIfNotExist(configFileName)) return new Config { DefaultLanguage = "en", LogExtension = "0", AllProcessus = new List<Processus>() };
+                if (!CreateFileIfNotExist(configFileName)) return new Config { DefaultLanguage = "en", LogExtension = "0", 
+                    AllProcessus = new List<Processus>(), AllExtensionCryptage = new List<ExtensionCryptage>(), 
+                    AllExtensionPriority = new List<ExtensionPriority>() };
                 string json = File.ReadAllText(configFileName);
                 return JsonSerializer.Deserialize<Config>(json);
             }
             catch
             {
-                return new Config { DefaultLanguage = "en", LogExtension = "0", AllProcessus = new List<Processus>() };
+                return new Config { DefaultLanguage = "en", LogExtension = "0", AllProcessus = new List<Processus>(), 
+                    AllExtensionCryptage = new List<ExtensionCryptage>(), AllExtensionPriority = new List<ExtensionPriority>() };
             }
         }
 
@@ -75,7 +80,7 @@ namespace AppWPF.developpement.Models
         public static async Task WriteBackupJobToFile(List<BackupJob> backupJobs)
         {
             CreateFileIfNotExist(backupJobJsonFileName);
-            using FileStream fs = new(backupJobJsonFileName, FileMode.Truncate);
+            using FileStream fs = new FileStream(backupJobJsonFileName, FileMode.Truncate);
             string jsonString = JsonSerializer.Serialize(backupJobs, optionsWriteIndented);
             byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
             await fs.WriteAsync(jsonBytes);
@@ -139,14 +144,16 @@ namespace AppWPF.developpement.Models
 
         //ecrit dans le fichier les logs journalières
         //write in the file the daily logs
-        public static void WriteDailyLogToFile(Log dailyLog)
+        public static void WriteDailyLogJson(List<Log> dailyLog)
         {
-            string path = CreateFolderIfNotExistAndReturnString(Path.Combine(appDataFolderPath, "logs"));
+            string path = CreateFolderIfNotExistAndReturnString(System.IO.Path.Combine(appDataFolderPath, "logs"));
             List<Log>? logs;
-            logs = ReadDailyLogFile(path);
-            logs.Add(dailyLog);
-
-            using FileStream fs = File.Create(Path.Combine(path, GetDailyFileName() + ".json"));
+            logs = ReadDailyLogJson(path);
+            foreach (Log log in dailyLog)
+            {
+                logs.Add(log);
+            }
+            using FileStream fs = File.Create(System.IO.Path.Combine(path, GetDailyFileName() + ".json"));
             string jsonString = JsonSerializer.Serialize(logs, optionsWriteIndented);
             byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
             fs.Write(jsonBytes, 0, jsonBytes.Length);
@@ -154,9 +161,9 @@ namespace AppWPF.developpement.Models
 
         //lit le fichier des logs journalières
         //read the file of the daily logs
-        public static List<Log>? ReadDailyLogFile(string path)
+        public static List<Log>? ReadDailyLogJson(string path)
         {
-            string filePath = Path.Combine(path, GetDailyFileName() + ".json");
+            string filePath = System.IO.Path.Combine(path, GetDailyFileName() + ".json");
             if (File.Exists(filePath))
             {
                 using FileStream fs = File.OpenRead(filePath);
@@ -168,38 +175,33 @@ namespace AppWPF.developpement.Models
             return new List<Log>();
         }
 
-        ///Méthode qui permet de créer un fichier de log journalière en XML
-        ///Method which allows to create a daily log file in XML
-        public static void SerializeToXML(Log log)
+
+
+        public static void WriteDailyLogXml(List<Log> dailyLog)
         {
-            string path = CreateFolderIfNotExistAndReturnString(Path.Combine(appDataFolderPath, "logs"));
-            List<Log> logs = DeserializeFromXML(path);
-            logs.Add(log);
+            string logsFilePath = CreateFolderIfNotExistAndReturnString(System.IO.Path.Combine(dailyLogsFolder, GetDailyFileName() + ".xml"));
+            List<Log>? logs;
+            logs = ReadDailyLogXml(logsFilePath);
+            foreach (Log log in dailyLog)
+            {
+                logs.Add(log);
+            }
             XmlSerializer serializer = new XmlSerializer(typeof(List<Log>));
-            TextWriter writer = new StreamWriter(Path.Combine(path, GetDailyFileName() + ".xml"));
+            TextWriter writer = new StreamWriter(logsFilePath);
             serializer.Serialize(writer, logs);
             writer.Close();
         }
 
-        ///Méthode qui permet de lire un fichier de log journalière en json
-        ///Method which allows to read a daily log file in json
-        public static List<Log> DeserializeFromXML(string path)
+
+        public static List<Log>? ReadDailyLogXml(string logsFilePath)
         {
-            if (File.Exists(GetDailyFileName() + ".xml"))
-            {
-                XmlSerializer deserializer = new XmlSerializer(typeof(List<Log>));
-                TextReader reader = new StreamReader(Path.Combine(path, GetDailyFileName() + ".xml"));
-                object? obj = deserializer.Deserialize(reader);
-                List<Log>? logs = (List<Log>?)obj;
-                reader.Close();
-                if (logs == null) return new List<Log>();
-                return logs;
-            }
-            else
-            {
-                File.Create(GetDailyFileName() + ".json");
-                return new List<Log>();
-            }
+            XmlSerializer deserializer = new XmlSerializer(typeof(List<Log>));
+            TextReader reader = new StreamReader(logsFilePath);
+            object? obj = deserializer.Deserialize(reader);
+            List<Log>? logs = (List<Log>?)obj;
+            reader.Close();
+            if (logs == null) return new List<Log>();
+            return logs;
         }
 
         //ecrit le fichier des logs d'activités

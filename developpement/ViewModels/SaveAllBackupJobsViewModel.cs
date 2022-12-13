@@ -10,23 +10,82 @@ using System.Windows.Input;
 
 namespace AppWPF.developpement.ViewModels
 {
-    ///Classe hérité de ViewModelBase et permet de sauvegarder tous les travaux de sauvegarde et les "envoyé" vers la vue
-    ///Class inherited from ViewModelBase and allows saving all backup jobs and "sending" them to the view
     public class SaveAllBackupJobsViewModel : ViewModelBase
     {
-        ///Variables permettant de stocker la valeur de la sauvegarde de tous travaux de commandes
-        ///Variables storing the value of saving all backup jobs
-        public ICommand SaveAllBackupJobsCommand { get; }
-        ///Variable permettant de stocker la valeur de l'annulation de la sauvegarde des travaux de sauvegarde
-        ///Variable storing the value of canceling the backup job save
-        public ICommand CancelSaveAllBackupJobsCommand { get; }
+        private float _progressBarAllBackupJobsValue = 0;
 
-        ///Méthode permettant de sauvegarder tous les travaux de sauvegarde dans le ViewModel
-        ///Method for saving all backup jobs in the ViewModel
+        public float ProgressBarAllBackupJobsValue
+        {
+            get { return _progressBarAllBackupJobsValue; }
+            set
+            {
+                _progressBarAllBackupJobsValue = value;
+                OnPropertyChanged(nameof(ProgressBarAllBackupJobsValue));
+            }
+        }
+
+        private string _allBackupJobProgression = "";
+
+        public string AllBackupJobProgression
+        {
+            get { return _allBackupJobProgression; }
+            set
+            {
+                _allBackupJobProgression = value;
+                OnPropertyChanged(nameof(AllBackupJobProgression));
+            }
+        }
+
+        private string _currentBackupJob = "";
+
+        public string CurrentBackupJob
+        {
+            get { return _currentBackupJob; }
+            set
+            {
+                _currentBackupJob = value;
+                OnPropertyChanged(nameof(CurrentBackupJob));
+            }
+        }
+
+        private bool _isSaving = false;
+
+        public bool IsSaving
+        {
+            get { return _isSaving; }
+            set
+            {
+                _isSaving = value;
+                OnPropertyChanged(nameof(IsSaving));
+            }
+        }
+
+        private bool _isPaused = false;
+
+        public bool IsPaused
+        {
+            get { return _isPaused; }
+            set
+            {
+                _isPaused = value;
+                OnPropertyChanged(nameof(IsPaused));
+            }
+        }
+
+        public ICommand SaveAllBackupJobsCommand { get; }
+        public ICommand CancelSaveAllBackupJobsCommand { get; }
+        public ICommand PauseSaveCommand { get; }
+        public ICommand StopSaveCommand { get; }
+        public ICommand ResumeSaveCommand { get; }
+
         public SaveAllBackupJobsViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore)
         {
-            SaveAllBackupJobsCommand = new SaveAllBackupJobsCommand(backupJobsStore);
             CancelSaveAllBackupJobsCommand = new CloseModalCommand(modalNavigationStore);
+            SaveAllBackupJobsCommand = new SaveAllBackupJobsCommand(backupJobsStore, this, modalNavigationStore);
+            PauseSaveCommand = new PauseSaveCommand();
+            StopSaveCommand = new StopSaveCommand(modalNavigationStore);
+            ResumeSaveCommand = new ResumeSaveCommand();
         }
     }
 }
+//reste a bind _isSaving et _isPaused

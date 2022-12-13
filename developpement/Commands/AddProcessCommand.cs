@@ -1,6 +1,7 @@
 ﻿using AppWPF.developpement.Models;
 using AppWPF.developpement.Stores;
 using AppWPF.developpement.ViewModels;
+using System;
 using System.Threading.Tasks;
 
 namespace AppWPF.developpement.Commands
@@ -26,11 +27,13 @@ namespace AppWPF.developpement.Commands
         ///Method that allows you to execute asymmetrically.
         public override async Task ExecuteAsync(object parameter)
         {
-            if (!string.IsNullOrEmpty(_settingsViewModel.ProcessToAdd))
+            try
             {
-                await _processusStore.Add(new Processus(_settingsViewModel.ProcessToAdd));
-                _settingsViewModel.ProcessToAdd = "";
+                if (!string.IsNullOrEmpty(_settingsViewModel.ProcessToAdd))
+                    await _processusStore.Add(new Processus(_settingsViewModel.ProcessToAdd));
             }
+            catch (Exception) { }
+            _settingsViewModel.ProcessToAdd = "";
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AppWPF.developpement.Commands;
 using AppWPF.developpement.Models;
 using AppWPF.developpement.Stores;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace AppWPF.developpement.ViewModels
@@ -9,6 +10,9 @@ namespace AppWPF.developpement.ViewModels
     ///Class to save backup jobs in the ViewModel
     public class SaveBackupJobViewModel : ViewModelBase
     {
+
+        public SaveBackupJobStatusViewModel SaveBackupJobStatusViewModel { get; }
+
         ///Variable permettant de faire fonctionner la fonction Sauvegarder
         ///Variable to make the Save function work
         public ICommand SaveCommand { get; }
@@ -16,72 +20,45 @@ namespace AppWPF.developpement.ViewModels
         ///Variable to make the Cancel function work
         public ICommand CancelCommand { get; }
 
-        ///Variable privée permettant de faire fonctionner la barre de progression pour la sauvegarde
-        ///Private variable used  to make the progress bar work for the backup
-        private float _BackupJobProgressBarValue;
-        ///Variable publique permettant de faire fonctionner la barre de progression pour la sauvegarde
-        ///Public variable used  to make the progress bar work for the backup
-        public float BackupJobProgressBarValue
+        public ICommand PauseSaveCommand { get; }
+        public ICommand StopSaveCommand { get; }
+        public ICommand ResumeSaveCommand { get; }
+
+
+        private bool _isSaving;
+        public bool IsSaving
         {
-            get { return _BackupJobProgressBarValue; }
+            get { return _isSaving; }
             set
             {
-                _BackupJobProgressBarValue = value;
-                OnPropertyChanged(nameof(BackupJobProgressBarValue));
+                _isSaving = value;
+                OnPropertyChanged(nameof(IsSaving));
             }
         }
 
-        ///Variable privée permettant de faire fonctionner la barre de progression pour le transfert de fichier
-        ///Variable used to make the progress bar work for the file transfer
-        private string _backupJobFileTransfering;
-        ///Variable publique permettant de faire fonctionner la barre de progression pour le transfert de fichier
-        ///Public variable used to make the progress bar work for the file transfer
-        public string BackupJobFileTransfering
+        private bool _isPaused;
+
+        public bool IsPaused
         {
-            get { return _backupJobFileTransfering; }
+            get { return _isPaused; }
             set
             {
-                _backupJobFileTransfering = value;
-                OnPropertyChanged(nameof(BackupJobFileTransfering));
+                _isPaused = value;
+                OnPropertyChanged(nameof(IsPaused));
             }
         }
 
-        ///Variable privée permettant de compter le nombre de fichiers à transférer
-        ///Private variable used to count the number of files to transfer
-        private string _backupJobFileTransferingCount;
-        ///Variable publique permettant de compter le nombre de fichiers à transférer
-        ///Public variable used to count the number of files to transfer
-        public string BackupJobFileTransferingCount
-        {
-            get { return _backupJobFileTransferingCount; }
-            set
-            {
-                _backupJobFileTransferingCount = value;
-                OnPropertyChanged(nameof(BackupJobFileTransferingCount));
-            }
-        }
-
-        ///Variable privée utilisé pour savoir l'état de chargement
-        ///Private variable used to know the loading state
-        private string _isLoadingStats;
-        ///Variable publique utilisé pour savoir l'état de chargement
-        ///Public variable used to know the loading state
-        public string IsLoadingStats
-        {
-            get { return _isLoadingStats; }
-            set
-            {
-                _isLoadingStats = value;
-                OnPropertyChanged(nameof(IsLoadingStats));
-            }
-        }
 
         ///Méthode utilisa pour sauvegarder les travaux de sauvegarde dans le ViewModel
         ///Method used to save backup jobs in the ViewModel
         public SaveBackupJobViewModel(BackupJob backupJob, BackupJobsStore backupJobsStore, ModalNavigationStore modalNavigationStore)
         {
-            SaveCommand = new SaveBackupJobCommand(this, backupJob, backupJobsStore, modalNavigationStore);
+            SaveBackupJobStatusViewModel = new SaveBackupJobStatusViewModel();
+            SaveCommand = new SaveBackupJobCommand(this, SaveBackupJobStatusViewModel, backupJob, backupJobsStore, modalNavigationStore);
             CancelCommand = new CloseModalCommand(modalNavigationStore);
+            PauseSaveCommand = new PauseSaveCommand();
+            StopSaveCommand = new StopSaveCommand(modalNavigationStore);
+            ResumeSaveCommand = new ResumeSaveCommand();
         }
     }
 }

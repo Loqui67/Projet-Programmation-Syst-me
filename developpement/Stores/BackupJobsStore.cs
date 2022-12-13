@@ -2,6 +2,7 @@
 using AppWPF.developpement.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AppWPF.developpement.Stores
@@ -61,22 +62,84 @@ namespace AppWPF.developpement.Stores
             BackupJobsLoaded?.Invoke();
         }
 
-        public async Task Save(BackupJob backupJob, SaveBackupJobViewModel saveBackupJobViewModel)
+        public async Task Save(BackupJob backupJob, SaveBackupJobStatusViewModel saveBackupJobStatusViewModel, SaveBackupJobViewModel saveBackupJobViewModel, ModalNavigationStore _modalNavigationStore)
         {
-            await Task.Run(() => backupJob.Save(saveBackupJobViewModel));
+            BackupJobSaver.saveBackupJobStatusViewModel = saveBackupJobStatusViewModel;
+            BackupJobSaver.saveBackupJobViewModel = saveBackupJobViewModel;
+            BackupJobSaver.modalNavigationStore = _modalNavigationStore;
+            await Task.Run(async () =>
+            {
+                SaveFiles saveFiles = new SaveFiles();
+                await saveFiles.GetInfos(backupJob);
+                await BackupJobSaver.StartSave(saveFiles);
+            });
             BackupJobSaved?.Invoke(backupJob);
         }
 
-        public async Task SaveAll()
+
+        public async Task SaveAll(SaveAllBackupJobsViewModel saveAllBackupJobsViewModel, ModalNavigationStore modalNavigationStore)
         {
-            await Task.Run(() =>
+            int countSaveDone = 0;
+            int saveNumber = backupJobs.Count;
+            BackupJobSaver.fileNumberTotal = 0;
+            BackupJobSaver.fileSizeTotal = 0;
+
+
+            BackupJobSaver.saveAllBackupJobsViewModel = saveAllBackupJobsViewModel;
+            List<SaveFiles> saveFilesList = new();
+            saveAllBackupJobsViewModel.CurrentBackupJob = countSaveDone + "/" + saveNumber;
+
+            saveAllBackupJobsViewModel.IsSaving = true;
+            List<Log> logs = new();
+            foreach (BackupJob backupJob in backupJobs)
             {
-                foreach (BackupJob backupJob in backupJobs)
+                SaveFiles saveFiles = new();
+                await saveFiles.GetInfos(backupJob);
+                
+                BackupJobSaver.fileNumberTotal += saveFiles.FileNumberTotal;
+                BackupJobSaver.fileSizeTotal += saveFiles.FileSizeTotal;
+                BackupJobSaver.fileNumberLeft = BackupJobSaver.fileNumberTotal;
+                BackupJobSaver.fileSizeLeft = BackupJobSaver.fileSizeTotal;
+
+                saveFilesList.Add(saveFiles);
+
+                Action action = new(() =>
                 {
-                    backupJob.Save(null);
-                }
-            });
-            AllBackupJobsSaved?.Invoke();
+                    BackupJobSaver.SetIsPausedAllSave(false);
+                    BackupJobSaver.isStoppingEncrypting = false;
+                    BackupJobSaver.isStoppingCopying = false;
+                    BackupJobSaver.isPausing = false;
+                    saveAllBackupJobsViewModel.IsSaving = false;
+
+                    BackupJobSaver.WriteToDailyLog(logs);
+                    modalNavigationStore.Close();
+                });
+                Thread t = new(async () =>
+                {
+                    Log log = await BackupJobSaver.StartListSaveInParallel(saveFiles);
+                    logs.Add(log);
+                    countSaveDone++;
+                    saveAllBackupJobsViewModel.CurrentBackupJob = countSaveDone + "/" + saveNumber;
+                    if (countSaveDone == saveNumber) action.Invoke();
+                });
+                t.Start();
+            }
+        }
+
+
+        public static void PauseSave()
+        {
+            BackupJobSaver.PauseSave();
+        }
+
+        public static void ResumeSave()
+        {
+            BackupJobSaver.ResumeSave();
+        }
+
+        public static void StopSave()
+        {
+            BackupJobSaver.StopSave();
         }
     }
 }

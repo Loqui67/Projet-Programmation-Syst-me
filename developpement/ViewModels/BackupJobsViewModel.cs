@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -14,8 +15,6 @@ namespace AppWPF.developpement.ViewModels
     ///Creation of a class inheriting from ViewModelBase which allows to "send" the data to the view
     public class BackupJobsViewModel : ViewModelBase
     {
-        ///Création de plusieurs variables pour la vue
-        ///Creating multiple variables for the view
         public static Config config;
         public BackupJobsListingViewModel BackupJobsListingViewModel { get; }
 
@@ -34,46 +33,44 @@ namespace AppWPF.developpement.ViewModels
                 OnPropertyChanged(nameof(IsLoading));
             }
         }
-        ///Variables permettant de srocket le résultats des commandes qui disent si les travaux de sauvegardes sont :
-        ///Variables allowing to srocket the results of the commands which say if the backup jobs are:
-        ///Ajouter
-        ///Add
-        public ICommand AddBackupJobCommand { get; }
 
-        ///Supprimé
-        ///Deleted
+        public ICommand AddBackupJobCommand { get; }
         public ICommand DeleteAllBackupJobsCommand { get; }
-        ///Sauvegardé
-        ///Saved
         public ICommand SaveAllBackupJobsCommand { get; }
-        ///Charger
-        ///loaded
         public ICommand LoadBackupJobsCommand { get; }
-        ///Variables permettant de savoir si on change de language
-        ///Variable allowing to know if we change language
         public ICommand SwitchLanguageFrCommand { get; }
         public ICommand SwitchLanguageEnCommand { get; }
-        ///Variable servant à ouvrir les paramètres
-        ///Variable used to open parameters
         public ICommand OpenSettingsCommand { get; }
 
         ///Méthodes permettant de regarder si un processus est en cours
         ///Methods to see if a process is running
         private void CheckForProcessus()
         {
+            bool boxAlreadyPrinted = false;
             while (true)
             {
-                Trace.WriteLine("a");
                 Thread.Sleep(1000);
                 Process? processus = Process.GetProcesses().FirstOrDefault(p => config.AllProcessus.Select(x => x.Name).Contains(p.ProcessName), null);
-                if (processus != null) { Trace.WriteLine(processus.ProcessName); BackupJobsListingViewModel.IsProcessusDetected = false; }
-                else BackupJobsListingViewModel.IsProcessusDetected = true;
+                if (processus != null)
+                {
+                    if (!boxAlreadyPrinted)
+                    {
+                        MessageBox.Show((string)Application.Current.FindResource("BusinessSoftware"), (string)Application.Current.FindResource("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
+                        boxAlreadyPrinted = true;
+                    }
+
+                    BackupJobsListingViewModel.IsProcessusNotDetected = false;
+                    BackupJobSaver.PauseSave();
+                }
+                else
+                {
+                    boxAlreadyPrinted = false;
+                    BackupJobsListingViewModel.IsProcessusNotDetected = true;
+                }
             }
         }
 
-        ///Méthode permettant de changer de langue
-        ///Method to change language
-        public BackupJobsViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore, ProcessusStore processusStore)
+        public BackupJobsViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore, ProcessusStore processusStore, ExtensionCryptageStore extensionCryptageStore, ExtensionPriorityStore extensionPriorityStore)
         {
             _thread = new Thread(CheckForProcessus);
             _thread.Start();
@@ -84,12 +81,12 @@ namespace AppWPF.developpement.ViewModels
             SaveAllBackupJobsCommand = new OpenSaveAllBackupJobsCommand(modalNavigationStore, backupJobsStore);
             SwitchLanguageFrCommand = new SwitchLanguageCommand("fr");
             SwitchLanguageEnCommand = new SwitchLanguageCommand("en");
-            OpenSettingsCommand = new OpenSettingsCommand(modalNavigationStore, processusStore);
+            OpenSettingsCommand = new OpenSettingsCommand(modalNavigationStore, processusStore, extensionCryptageStore, extensionPriorityStore);
         }
 
-        public static BackupJobsViewModel LoadViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore, ProcessusStore processusStore)
+        public static BackupJobsViewModel LoadViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore, ProcessusStore processusStore, ExtensionCryptageStore extensionCryptageStore, ExtensionPriorityStore extensionPriorityStore)
         {
-            BackupJobsViewModel viewModel = new BackupJobsViewModel(modalNavigationStore, backupJobsStore, processusStore);
+            BackupJobsViewModel viewModel = new BackupJobsViewModel(modalNavigationStore, backupJobsStore, processusStore, extensionCryptageStore, extensionPriorityStore);
             config = FileManager.LoadConfig();
             viewModel.LoadBackupJobsCommand.Execute(null);
             if (config.DefaultLanguage == "fr") viewModel.SwitchLanguageFrCommand.Execute(null);
