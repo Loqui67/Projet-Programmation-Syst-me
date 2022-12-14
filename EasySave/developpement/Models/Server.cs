@@ -34,6 +34,7 @@ namespace EasySave.developpement.Models
 
         public static void Send(string? state, string? fileNumber, float? progress)
         {
+            if (clientSocket == null || !isSomeoneConnected) return;
             ObjectReceived data = new()
             {
                 State = state,
