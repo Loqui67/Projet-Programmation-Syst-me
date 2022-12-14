@@ -79,26 +79,35 @@ namespace EasySave.developpement.ViewModels
             ResumeSaveCommand resumeSaveCommand = new();
             StopSaveCommand stopSaveCommand = new(_modalNavigationStore);
             Server.Start();
-            Server.AcceptConnection();
             while (true)
             {
-                string receive = Server.Receive();
-                switch (receive)
+                Server.AcceptConnection();
+                bool isSomeoneConnected = true;
+                while (isSomeoneConnected)
                 {
-                    case "pause":
-                        pauseSaveCommand.Execute(null);
-                        break;
-                            
-                    case "resume":
-                        resumeSaveCommand.Execute(null);
-                        break;
-                            
-                    case "stop":
-                        stopSaveCommand.Execute(null);
-                        break;
+                    string receive = Server.Receive();
+                    switch (receive)
+                    {
+                        case "pause":
+                            pauseSaveCommand.Execute(null);
+                            break;
 
-                    default:
-                        break;
+                        case "resume":
+                            resumeSaveCommand.Execute(null);
+                            break;
+
+                        case "stop":
+                            stopSaveCommand.Execute(null);
+                            break;
+
+                        case "disconnect":
+                            Server.Close();
+                            isSomeoneConnected = false;
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
             }
         }
@@ -118,7 +127,6 @@ namespace EasySave.developpement.ViewModels
             SwitchLanguageFrCommand = new SwitchLanguageCommand("fr");
             SwitchLanguageEnCommand = new SwitchLanguageCommand("en");
             OpenSettingsCommand = new OpenSettingsCommand(modalNavigationStore, processusStore, extensionCryptageStore, extensionPriorityStore);
-            
         }
 
         public static BackupJobsViewModel LoadViewModel(ModalNavigationStore modalNavigationStore, BackupJobsStore backupJobsStore, ProcessusStore processusStore, ExtensionCryptageStore extensionCryptageStore, ExtensionPriorityStore extensionPriorityStore)

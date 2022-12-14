@@ -31,6 +31,7 @@ namespace IHM_Client.Models
 
         public static void Send(string message)
         {
+            if (!isConnect) return;
             byte[] buffer = Encoding.ASCII.GetBytes(message);
             socket.Send(buffer);
         }

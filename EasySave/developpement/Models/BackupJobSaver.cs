@@ -145,6 +145,8 @@ namespace EasySave.developpement.Models
                         };
                         Process.Start(process);
                     });
+                    long size = fileToEncrypt.Size;
+                    Thread.Sleep((int)size/1000);
                     fileSizeLeft -= fileToEncrypt.Size;
                     fileNumberLeft--;
                     

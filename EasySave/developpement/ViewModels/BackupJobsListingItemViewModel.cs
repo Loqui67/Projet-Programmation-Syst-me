@@ -2,6 +2,7 @@
 using EasySave.developpement.Models;
 using EasySave.developpement.Stores;
 using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace EasySave.developpement.ViewModels
@@ -21,7 +22,14 @@ namespace EasySave.developpement.ViewModels
         {
             get
             {
-                if (BackupJob.Type == "0") { return "Full"; } else { return "Differential"; }
+                if (BackupJob.Type == "0") 
+                { 
+                    return (string)Application.Current.FindResource("FullSave"); 
+                } 
+                else 
+                { 
+                    return (string)Application.Current.FindResource("DifferentialSave");
+                }
             }
         }
 

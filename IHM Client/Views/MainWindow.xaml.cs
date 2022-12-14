@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,7 +27,13 @@ namespace IHM_Client
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            ServerCommunication.Close();
+            ServerCommunication.Send("disconnect");
+            Thread.Sleep(200);
+            try
+            {
+                ServerCommunication.Close();
+            } catch (Exception) { }
+            Thread.Sleep(200);
             Environment.Exit(0);
         }
     }

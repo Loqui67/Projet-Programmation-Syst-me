@@ -56,9 +56,12 @@ namespace EasySave.developpement.Models
 
         public static void Close()
         {
-            clientSocket.Shutdown(SocketShutdown.Both);
-            clientSocket.Close();
-            serverSocket.Close();
+            try
+            {
+                clientSocket.Shutdown(SocketShutdown.Both);
+                clientSocket.Close();
+            } catch (Exception) { }
+            isSomeoneConnected = false;
         }
 
         public static void Start()

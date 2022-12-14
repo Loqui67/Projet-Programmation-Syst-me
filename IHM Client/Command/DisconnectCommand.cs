@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace IHM_Client.Command
@@ -22,6 +23,8 @@ namespace IHM_Client.Command
         {
             try
             {
+                ServerCommunication.Send("disconnect");
+                Thread.Sleep(200);
                 ServerCommunication.Close();
                 _viewModel.IsConnected = ServerCommunication.isConnect;
             }
